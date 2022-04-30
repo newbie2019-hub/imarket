@@ -4,22 +4,31 @@
     <v-container class="vh-100">
       <v-row justify="center" align="center" class="flex-md-row-reverse flex-lg-row h-100">
         <v-col cols="12" sm="11" md="10" lg="6">
-          <h1 class="heading lh-normal circular">Fastest <span class="blue--text">Order</span> & <span class="blue--text">Delivery</span> At Your Doorstep</h1>
-          <h2 class="font-weight-light">Incredibly fast and convenient delivery at the palm of your hand.</h2>
+          <h1 v-animate-css="'fadeInUp'" class="heading lh-normal circular">Fastest <span class="blue--text">Order</span> & <span class="blue--text">Delivery</span> At Your Doorstep</h1>
+          <h2 v-animate-css="{ classes: 'fadeInUp', delay: 450 }" class="font-weight-light">Incredibly fast and convenient delivery at the palm of your hand.</h2>
           <v-layout d-flex align-center>
-            <v-btn class="mt-4 rounded-pill btn-glow mr-8" color="orange darken-2" depressed large dark>Order Now</v-btn>
-            <a href="#" class="mt-3 text-decoration-wavy">Learn More</a>
+            <v-btn v-animate-css="{ classes: 'fadeInUp', delay: 650 }" class="mt-4 rounded-pill btn-glow mr-8" color="orange darken-2" depressed large dark>Order Now</v-btn>
+            <a href="#" v-animate-css="{ classes: 'fadeInUp', delay: 850 }" class="mt-3 text-decoration-wavy">Learn More</a>
           </v-layout>
         </v-col>
         <v-col cols="12" sm="11" md="10" lg="6">
           <v-row justify="center" align="center">
-            <div class="position-relative border ml-6">
-              <v-img lazy-src="@/assets/images/right-side.png" lazy-loading src="@/assets/images/right-side.png" max-width="420" class="rounded-pill img-header"></v-img>
+            <div class="position-relative ml-6">
+              <div v-animate-css="{ classes: 'fadeInUp', delay: 800 }" class="border">
+                <v-img
+                 
+                  lazy-src="@/assets/images/right-side.png"
+                  lazy-loading
+                  src="@/assets/images/right-side.png"
+                  max-width="420"
+                  class="rounded-pill img-header"
+                ></v-img>
+              </div>
               <div class="user-feedback">
-                <v-avatar size="100">
+                <v-avatar size="100" v-animate-css="{ classes: 'fadeInUp', delay: 900 }">
                   <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
                 </v-avatar>
-                <div class="box">
+                <div class="box"  v-animate-css="{ classes: 'fadeInUp', delay: 1000 }">
                   <p class="mb-0">Lazy or dont have time to go to the market? This app is just one click away!</p>
                 </div>
               </div>
@@ -29,23 +38,23 @@
       </v-row>
     </v-container>
 
-    <div class="orange darken-2 position-relative">
+    <div class="position-relative">
       <v-container class="pt-5 pb-5">
         <v-row justify="center" align="center" class="flex-md-row-reverse flex-lg-row h-100">
           <v-col cols="12" sm="11" md="5" lg="5">
             <v-img lazy-src="@/assets/images/mobileapp.png" lazy-loading src="@/assets/images/mobileapp.png" max-width="400" class=""></v-img>
           </v-col>
           <v-col cols="12" sm="11" md="7" lg="7">
-            <h1 class="font-weight-bold white--text">Get the I-Market Application</h1>
-            <h3 class="font-weight-light white--text darken-3 mt-3">
+            <h1 class="font-weight-bold">Get the I-Market Application</h1>
+            <h3 class="font-weight-light darken-3 mt-3">
               It's all at your fingertips – the fresh fruits, vegetables and meat. Find the right food in the market and we will deliver it to your doorstep. Go ahead, download us.
             </h3>
             <div class="mt-4">
-              <v-btn depressed color="white" class="mt-3 me-2" text large>
+              <v-btn depressed class="mt-3 me-2" text large>
                 <v-icon class="mr-2"> mdi-download </v-icon>
                 Android
               </v-btn>
-              <v-btn depressed color="white" class="mt-3" text large>
+              <v-btn depressed class="mt-3" text large>
                 <v-icon class="mr-2"> mdi-download </v-icon>
                 iOS
               </v-btn>
@@ -175,7 +184,7 @@
         </v-row>
         <v-layout justify-space-between class="ml-5 mr-5 mt-15">
           <h3 class="font-weight-bold">IMarket</h3>
-          <h3 class="font-weight-light">© 2022 | All  Rights Reserved</h3>
+          <h3 class="font-weight-light">© 2022 | All Rights Reserved</h3>
         </v-layout>
       </v-container>
     </div>

@@ -15,7 +15,8 @@
       </li>
     </ul>
     <div class="login">
-      <v-btn class="white--text rounded-pill" color="orange darken-2" depressed large> Login </v-btn>
+      <v-btn v-if="$route.path == '/'" link to="/login" class="white--text rounded-pill" color="orange darken-2" depressed large> Login </v-btn>
+      <v-btn v-else link to="/" class="white--text rounded-pill" color="orange darken-2" depressed large> Home </v-btn>
     </div>
   </nav>
 </template>
