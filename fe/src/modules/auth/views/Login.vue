@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navbar />
-    <v-container class="vh-100">
+    <v-container class="mt-5">
       <v-row justify="center" align="center" class="flex-md-column-reverse flex-lg-row h-100">
         <v-col cols="12" sm="11" md="7" lg="6">
           <h1 v-animate-css="'fadeInUp'" class="heading lh-normal circular">Fastest <span class="blue--text">Order</span> & <span class="blue--text">Delivery</span> At Your Doorstep</h1>
@@ -17,8 +17,8 @@
             <h1>Login</h1>
             <p>Welcome! Please enter your credentials to proceed to your account</p>
             <v-form lazy-validation v-model="valid" class="mt-6">
-              <v-text-field v-model="data.email" :rules="emailRule" label="Email" required outlined></v-text-field>
-              <v-text-field type="password" v-model="data.password" :rules="required" label="Password" required outlined></v-text-field>
+              <v-text-field prepend-inner-icon="mdi-email"  v-model="data.email" :rules="emailRule" label="Email" required outlined></v-text-field>
+              <v-text-field prepend-inner-icon="mdi-key"  type="password" v-model="data.password" :rules="required" label="Password" required outlined></v-text-field>
               <v-divider class="mb-8 mt-2"></v-divider>
               <v-btn class="mt-5 mb-5" depressed color="orange darken-2" dark large block>Login Account </v-btn>
             </v-form>

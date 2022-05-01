@@ -39,7 +39,7 @@
   }
 
   nav {
-    position: fixed;
+    position: relative;
     width: 100%;
     padding: 2rem 2.8rem;
     display: flex;

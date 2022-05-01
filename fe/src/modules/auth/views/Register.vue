@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navbar />
-    <v-container class="vh-100">
+    <v-container class="mt-5">
       <v-row justify="center" align="center" class="flex-md-column-reverse flex-lg-row h-100">
         <v-col cols="12" sm="11" md="6" lg="6">
           <h1 v-animate-css="'fadeInUp'" class="heading lh-normal circular">Fastest <span class="blue--text">Order</span> & <span class="blue--text">Delivery</span> At Your Doorstep</h1>
