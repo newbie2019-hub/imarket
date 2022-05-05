@@ -8,7 +8,8 @@ const moduleRoute = [
     name: 'Login',
     component: Login,
     meta: {
-      title: 'Login Account'
+      title: 'Login Account',
+      requiresAuth: false
     }
   },
   {
@@ -16,7 +17,8 @@ const moduleRoute = [
     name: 'Register',
     component: Register,
     meta: {
-      title: 'Register Account'
+      title: 'Register Account',
+      requiresAuth: false
     }
   },
   {

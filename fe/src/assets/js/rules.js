@@ -5,15 +5,8 @@ export const rules = {
    v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
   ],
   required: [(v) => !!v || 'Field is required'],
-  gender: [
-   {
-    text: 'Male',
-    value: 'Male',
-   },
-   {
-    text: 'Female',
-    value: 'Female',
-   },
-  ],
+  minChar: [(v) => v.length >= 11 || 'Input should be atleast 11 characters'],
+  isLoading: false
  })
 }
+

@@ -10,6 +10,22 @@ const routes = [
    }
  },
  {
+   path: '/imarket',
+   name: 'Market',
+   component: () => import(/* webpackChunkName: "imarket" */ '../views/Market.vue'),
+   meta: {
+    title: 'Market - Make your order and we will deliver it to you right ahead.'
+   }
+ },
+ {
+   path: '/cart-checkout',
+   name: 'Market',
+   component: () => import(/* webpackChunkName: "cart-checkout" */ '../views/Cart.vue'),
+   meta: {
+    title: 'Market - Checkout your items so we can deliver it to you'
+   }
+ },
+ {
    path: '*',
    name: '404 Error Page',
    component: () => import(/* webpackChunkName: "error" */ '../views/Error.vue'),

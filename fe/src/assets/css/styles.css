@@ -10,6 +10,10 @@ body {
  background-color: rgb(245, 245, 245) !important;
 }
 
+p.text-h5.font-rubik {
+ font-family: 'Rubik', sans-serif !important;
+}
+
 .user-feedback {
  position: absolute;
  bottom: 10px;
@@ -130,6 +134,14 @@ body {
  text-decoration: #3389df underline wavy !important;
 }
 
+.cursor-hover {
+ cursor: pointer;
+}
+
+.Vue-Toastification__toast {
+ box-shadow: none !important;
+}
+
 
 /* X-small device 
 */
@@ -154,6 +166,10 @@ body {
 
  .lh-normal {
   line-height: 4.5rem;
+ }
+
+ .lh-small {
+  line-height: 1.5rem !important;
  }
 
  .arrow-width {
@@ -214,6 +230,10 @@ body {
  .arrow-width {
   width: 690px;
   transform: rotate(0deg);
+ }
+
+ .heading {
+  font-size: 4rem;
  }
 
 }
