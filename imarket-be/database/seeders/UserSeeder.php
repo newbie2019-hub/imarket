@@ -15,6 +15,12 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(20)->create();
+        $x = 1;
+
+        while($x <= 25){
+            $userSeller = User::factory()->create();
+            $userSeller->assignRole('User');
+            $x++;
+        }
     }
 }

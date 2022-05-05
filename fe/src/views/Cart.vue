@@ -6,20 +6,38 @@
         <v-col cols="12" md="7" lg="7">
           <v-card elevation="0" class="pa-6">
             <p class="mb-0 ml-4 text-h5 font-weight-bold">My Orders</p>
+            <div class=" pr-5" v-if="Object.keys(cart).length == 0 || cart.cart_info.length == 0">
+              <p class="ml-4 mt-5 w-75">There are no items in your cart. Continue shopping and start adding items to your cart now.</p>
+            </div>
             <v-list>
               <div v-for="(product, i) in cart.cart_info" :key="i">
                 <v-list-item link>
                   <v-list-item-avatar size="50" tile>
-                    <v-img :src="'http://127.0.0.1:8000/images/products/' + product.product.product_info.image"></v-img>
+                    <v-img class="rounded-lg" :src="'http://127.0.0.1:8000/images/products/' + product.product.product_info.image"></v-img>
                   </v-list-item-avatar>
 
                   <v-list-item-content>
-                    <v-list-item-title>{{ product.product.product_info.name }}</v-list-item-title>
+                    <v-list-item-title class="font-weight-bold">{{ product.product.product_info.name }}</v-list-item-title>
                     <v-list-item-subtitle>Quantity: {{ product.quantity }}</v-list-item-subtitle>
-                    <v-list-item-subtitle>Subtotal: ₱ {{ formatCurrency(product.subtotal) }}</v-list-item-subtitle>
+                    <v-list-item-subtitle>Subtotal: PHP {{ formatCurrency(product.subtotal) }}</v-list-item-subtitle>
                   </v-list-item-content>
+
+                  <v-list-item-action>
+                    <v-btn
+                      @click.prevent="
+                        itemId = product.id;
+                        removeItemDialog = true;
+                      "
+                      class="red--text lighten-1"
+                      text
+                      small
+                    >
+                      <v-icon small>mdi-delete</v-icon>
+                      Remove
+                    </v-btn>
+                  </v-list-item-action>
                 </v-list-item>
-                <v-divider />
+                <v-divider inset></v-divider>
               </div>
             </v-list>
           </v-card>
@@ -32,9 +50,7 @@
               <v-layout justify-space-between>
                 <p class="text-h6 font-weight-bold lh-small">{{ user.info.address }}</p>
                 <v-btn icon class="ml-5 blue--text">
-                  <v-icon>
-                    mdi-pencil
-                  </v-icon>
+                  <v-icon> mdi-pencil </v-icon>
                 </v-btn>
               </v-layout>
               <v-layout d-flex>
@@ -65,45 +81,57 @@
               <p class="font-weight-bold">Total Payment</p>
               <p class="">PHP 1580.00</p>
             </v-layout>
-            <v-btn class="" color="orange darken-2" dark block depressed>CHECKOUT</v-btn>
+            <v-btn :disabled="Object.keys(cart).length == 0 || cart.cart_info.length == 0" @click.prevent="checkout" class="" color="orange darken-2 white--text" block depressed :loading="btnLoading">CHECKOUT</v-btn>
           </v-card>
         </v-col>
       </v-row>
-      <v-row>
-        <h2 class="font-weight-bold mb-3 mt-10">Latest Added</h2>
-        <v-layout v-if="isLoading" wrap>
-          <v-skeleton-loader v-for="n in 6" :key="n" class="mx-2" min-width="270" max-width="270" type="card"></v-skeleton-loader>
-        </v-layout>
-        <v-row dense no-gutters v-else class="">
-          <v-col sm="4" md="3" lg="3" v-for="(product, i) in latest_products" :key="i">
-            <v-hover :key="i" v-slot="{ hover }" class="cursor-hover">
-              <v-card class="mx-2 mb-3" :elevation="hover ? 2 : 0" :outlined="hover ? true : false">
-                <v-img :src="`http://127.0.0.1:8000/images/products/${product.product_info.image}`" contain></v-img>
-                <v-card-text class="position-relative pt-2">
-                  <v-btn
-                    @click.prevent="addToCart(product)"
-                    :loading="isCartLoading && productId == product.id"
-                    absolute
-                    :color="isAddedSuccess && productId == product.id ? 'green' : 'orange darken-2'"
-                    class="white--text"
-                    fab
-                    small
-                    right
-                    top
-                    depressed
-                  >
-                    <v-icon small>{{ isAddedSuccess && productId == product.id ? 'mdi-check' : 'mdi-cart-plus' }}</v-icon>
-                  </v-btn>
-                  <v-card-title class="pt-1 pl-1 black--text lh-small text-capitalize">{{ product.product_info.name }}</v-card-title>
-                  <v-card-subtitle class="pt-0 mt-n5 pl-1"> {{ product.user.info.last_name }}'s Store </v-card-subtitle>
-                  <h3 class="mt-n3 pl-1 orange--text darken-2 font-weight-regular">₱ {{ formatCurrency(product.product_info.price) }}</h3>
-                </v-card-text>
-              </v-card>
-            </v-hover>
-          </v-col>
-        </v-row>
+    </v-container>
+    <v-container>
+      <h2 class="font-weight-bold mb-3 mt-10">Latest Added</h2>
+      <v-layout v-if="isLoading" wrap>
+        <v-skeleton-loader v-for="n in 6" :key="n" class="mx-2" min-width="270" max-width="270" type="card"></v-skeleton-loader>
+      </v-layout>
+      <v-row dense no-gutters class="">
+        <v-col cols="10" sm="4" md="3" lg="3" v-for="(product, i) in latest_products" :key="i">
+          <v-hover :key="i" v-slot="{ hover }" class="cursor-hover">
+            <v-card class="mx-2 mb-3" :elevation="hover ? 2 : 0" :outlined="hover ? true : false">
+              <v-img :src="`http://127.0.0.1:8000/images/products/${product.product_info.image}`" contain></v-img>
+              <v-card-text class="position-relative pt-2">
+                <v-btn
+                  @click.prevent="addToCart(product)"
+                  :loading="isCartLoading && productId == product.id"
+                  absolute
+                  :color="isAddedSuccess && productId == product.id ? 'green' : 'orange darken-2'"
+                  class="white--text"
+                  fab
+                  small
+                  right
+                  top
+                  depressed
+                >
+                  <v-icon small>{{ isAddedSuccess && productId == product.id ? 'mdi-check' : 'mdi-cart-plus' }}</v-icon>
+                </v-btn>
+                <v-card-title class="pt-1 pl-1 black--text lh-small text-capitalize">{{ product.product_info.name }}</v-card-title>
+                <v-card-subtitle class="pt-0 mt-n5 pl-1"> {{ product.user.info.last_name }}'s Store </v-card-subtitle>
+                <h3 class="mt-n3 pl-1 orange--text darken-2 font-weight-regular">₱ {{ formatCurrency(product.product_info.price) }}</h3>
+              </v-card-text>
+            </v-card>
+          </v-hover>
+        </v-col>
       </v-row>
     </v-container>
+
+    <v-dialog v-model="removeItemDialog" max-width="500">
+      <v-card>
+        <v-card-title class="text-h5"> Confirm Delete </v-card-title>
+        <h4 class="font-weight-light ml-6 mr-5 mb-5">Are you sure you want to remove this item from your cart? <span class="red--text">Note: You cannot undo this action</span></h4>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="gray darken-1" text @click="removeItemDialog = false"> Cancel </v-btn>
+          <v-btn @click.prevent="deleteItem" color="green darken-1" text :loading="btnLoading"> Confirm </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 <script>
@@ -118,11 +146,13 @@
       data: {
         search: '',
       },
+      removeItemDialog: false,
       isLoading: false,
       page: 1,
       productId: null,
       isCartLoading: false,
       isAddedSuccess: false,
+      btnLoading: false,
     }),
     async mounted() {
       this.isLoading = true;
@@ -134,7 +164,6 @@
       async getProducts() {
         this.isLoading = true;
         const page = this.page + 1;
-        console.log(page);
         await this.$store.dispatch('market/getProducts', page);
         this.page += 1;
         this.isLoading = false;
@@ -158,6 +187,23 @@
           this.$toast('Please login your account first!');
           this.$router.push('/login');
         }
+      },
+      async deleteItem() {
+        this.btnLoading = true;
+        const { status, data } = await this.$store.dispatch('market/removeItem', this.itemId);
+        this.toastData(status, data);
+        await this.$store.dispatch('market/cartCount');
+        await this.$store.dispatch('market/getCartItems');
+        this.btnLoading = false;
+        this.removeItemDialog = false;
+      },
+      async checkout() {
+        this.btnLoading = true;
+        const { status, data } = await this.$store.dispatch('market/checkout', this.cart);
+        this.toastData(status, data);
+        await this.$store.dispatch('market/cartCount');
+        await this.$store.dispatch('market/getCartItems');
+        this.btnLoading = false;
       },
     },
     computed: {

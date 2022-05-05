@@ -125,6 +125,15 @@ export default {
    })
 
    return res;
-  }
+  },
+  async checkout({ commit }, payload) {
+   const res = await API.post(`checkout`, payload).then(res => {
+    return res;
+   }).catch(error => {
+    return error.response;
+   })
+
+   return res;
+  },
  },
 }

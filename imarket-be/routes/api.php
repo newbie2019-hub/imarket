@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MarketController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,12 +32,20 @@ Route::middleware('api')->group(function () {
             Route::post('update-password', 'updatePassword');
             Route::post('me', 'me');
         });
+
+        Route::post('update-profile', 'updateProfileImg');
     });
 
     Route::apiResource('categories', CategoryController::class);
+    
     Route::get('market/latest-products', [MarketController::class, 'latestProducts']);
     Route::apiResource('market', MarketController::class);
+
     Route::get('cart/count-items', [CartController::class, 'cartCount']);
     Route::delete('cart/removeItem/{id}', [CartController::class, 'destroyCartItem']);
     Route::apiResource('cart', CartController::class);
+
+    Route::apiResource('checkout', OrderController::class);
+
+    Route::apiResource('orders', OrderController::class);
 });

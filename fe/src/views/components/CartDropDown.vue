@@ -2,7 +2,7 @@
   <div id="cart-dropdown">
     <v-menu tile content-class="cart" transition="slide-y-transition" :close-on-content-click="false" offset-y max-height="450" max-width="420" left>
       <template v-slot:activator="{ on, attrs }">
-        <v-badge overlap color="primary" :content="cart_count && cart_count.cart_info_count">
+        <v-badge overlap color="primary" :content="cart_count && cart_count.cart_info_count ? cart_count.cart_info_count : '0'">
           <v-btn :loading="initialLoading" v-on="on" v-bind="attrs" text color="orange darken-2">
             <v-icon> mdi-cart </v-icon>
             Cart
@@ -12,7 +12,7 @@
       <v-card tile class="position-relative">
         <div class="cart-title">
           <div>
-            <p class="text-h6 font-weight-bold ml-4 mb-0">My Orders</p>
+            <p class="text-h6 font-weight-bold ml-4 mt-1 mb-0">My Orders</p>
             <p class="ml-4 mb-3"><small>You may checkout your orders anytime</small></p>
           </div>
           <div class="mr-4">
@@ -23,10 +23,10 @@
           </div>
         </div>
         <div class="pl-5 pr-5" v-if="Object.keys(cart).length == 0 || cart.cart_info.length == 0">
-          <p class="text-center mt-5">There are no items in your cart. Add items to your cart now</p>
+          <p class="text-center mt-5">There are no items in your cart. Continue shopping and start adding items to your cart now.</p>
         </div>
         <v-list>
-          <v-list-item v-for="(product, i) in cart.cart_info" :key="i">
+          <v-list-item link v-for="(product, i) in cart.cart_info" :key="i">
             <v-list-item-avatar size="50" tile>
               <v-img class="rounded-lg" :src="'http://127.0.0.1:8000/images/products/' + product.product.product_info.image"></v-img>
             </v-list-item-avatar>

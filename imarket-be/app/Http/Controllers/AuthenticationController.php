@@ -6,6 +6,7 @@ use App\Http\Requests\UserAccountRequest;
 use App\Models\User;
 use App\Models\UserInfo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 
 class AuthenticationController extends Controller
@@ -50,7 +51,7 @@ class AuthenticationController extends Controller
 
     public function me()
     {
-        $user = User::with(['info'])->where('id', auth()->guard('api')->user()->id)->first();
+        $user = User::with(['info', 'roles'])->where('id', auth()->guard('api')->user()->id)->first();
         return response()->json($user);
     }
 
@@ -72,6 +73,26 @@ class AuthenticationController extends Controller
     }
 
     
+    public function updateProfileImg(Request $request){
+        if($request->img){
+            $fileName = time().'.'.$request->img->extension();
+            $request->img->move(public_path('images/profiles'), $fileName);
+
+            $userinfo = UserInfo::where('id', auth()->user()->id)->first();
+
+            if($userinfo->profile_img) {
+                $this->deleteImage($userinfo->profile_img);
+            }
+
+            $userinfo->update([
+                'profile_img' => $fileName
+            ]);
+
+            return $this->success('Profile image updated successfully!');
+        }
+    }
+
+    
     public function updatePassword(Request $request){
         if (! Hash::check($request->current_password, $request->user()->password)) {
             return $this->error('Password entered is incorrect');
@@ -84,5 +105,12 @@ class AuthenticationController extends Controller
         
         return $this->success('Password updated successfully!');
     }
+
+    
+    public function deleteImage($img){
+        $file = File::delete(public_path("images/profiles/".$img));
+        return $file;
+    }
+
 
 }
