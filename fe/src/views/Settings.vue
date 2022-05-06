@@ -29,7 +29,7 @@
                 <p class="">Please make sure your informations are correct</p>
                 <v-form ref="form" v-model="valid" @submit.prevent="update" lazy-validation>
                   <v-row dense class="mt-3">
-                    <v-col cols="11" sm="10" md="6" lg="6">
+                    <v-col cols="12" sm="12" md="6" lg="6">
                       <v-text-field
                         prepend-inner-icon="mdi-card-text-outline"
                         class=""
@@ -42,7 +42,7 @@
                         outlined
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="11" sm="10" md="6" lg="6">
+                    <v-col cols="11" sm="12" md="6" lg="6">
                       <v-text-field
                         prepend-inner-icon="mdi-card-text-outline"
                         class=""
@@ -54,7 +54,7 @@
                         outlined
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="11" sm="10" md="6" lg="6">
+                    <v-col cols="11" sm="12" md="6" lg="6">
                       <v-text-field
                         prepend-inner-icon="mdi-card-text-outline"
                         class=""
@@ -67,7 +67,7 @@
                         outlined
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="11" sm="10" md="6" lg="6">
+                    <v-col cols="11" sm="12" md="6" lg="6">
                       <v-text-field
                         prepend-inner-icon="mdi-map-marker"
                         class=""
@@ -80,10 +80,10 @@
                         outlined
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="11" sm="10" md="6" lg="6">
+                    <v-col cols="11" sm="12" md="6" lg="6">
                       <v-select prepend-inner-icon="mdi-gender-male-female" v-model="data.gender" :rules="required" :items="gender" label="Gender" hide-details="auto" outlined></v-select>
                     </v-col>
-                    <v-col cols="11" sm="10" md="6" lg="6">
+                    <v-col cols="11" sm="12" md="6" lg="6">
                       <v-text-field
                         prepend-inner-icon="mdi-phone"
                         class=""
@@ -95,7 +95,7 @@
                         outlined
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="11" sm="10" md="6" lg="6">
+                    <v-col cols="11" sm="12" md="6" lg="6">
                       <v-menu ref="menu" v-model="menu" :close-on-content-click="false" transition="scale-transition" offset-y min-width="auto">
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field
@@ -162,7 +162,7 @@
                   <h2 class="mt-10">Email Address</h2>
                   <p class="">Please ensure that your email is correct</p>
                   <v-row class="mt-3">
-                    <v-col cols="11" sm="10" md="6" lg="6">
+                    <v-col cols="12" sm="12" md="6" lg="6">
                       <v-text-field
                         prepend-inner-icon="mdi-email"
                         class=""

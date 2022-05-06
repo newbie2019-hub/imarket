@@ -28,7 +28,7 @@
               <p class="mb-8 grey--text">Here are the latest added products from our sellers</p>
             </div>
             <v-btn icon @click="sortDesc = !sortDesc">
-              <v-icon>{{ sortDesc ? 'mdi-sort-numeric-ascending' : 'mdi-sort-numeric-descending' }}</v-icon>
+              <v-icon>{{ sortDesc ? 'mdi-sort-numeric-descending' : 'mdi-sort-numeric-ascending' }}</v-icon>
             </v-btn>
           </v-layout>
           <v-layout v-if="isLoading" wrap>
@@ -67,7 +67,24 @@
                       </v-btn>
                       <v-card-title class="pt-1 pl-1 black--text lh-small text-capitalize">{{ product.product_info.name }}</v-card-title>
                       <v-card-subtitle class="pt-0 pl-1"> {{ product.user.info.last_name }}'s Store </v-card-subtitle>
-                      <v-rating class="mt-n4" empty-icon="mdi-star-outline" full-icon="mdi-star" half-icon="mdi-star-half-full" half-increments hover length="5" :value="starValue"></v-rating>
+                      <v-layout d-flex align-center>
+                        <v-rating
+                          class="mt-n4"
+                          empty-icon="mdi-star-outline"
+                          full-icon="mdi-star"
+                          half-icon="mdi-star-half-full"
+                          half-increments
+                          hover
+                          length="5"
+                          :value="product.rating_avg_rating"
+                          size="18"
+                          readonly
+                        ></v-rating>
+                        <p class="mb-0 mt-n3 ml-2 black--text">
+                          {{ product.rating_avg_rating && product.rating_avg_rating.toFixed(1) }}
+                        </p>
+                      </v-layout>
+                      <p class="mb-0 ml-1">{{ product.rating_count }} Rating {{ product.rating_count > 1 ? 's' : '' }}</p>
                       <h2 class="mt-4 pl-1 orange--text darken-2 font-weight-regular">₱ {{ formatCurrency(product.product_info.price) }}</h2>
                     </v-card-text>
                   </v-card>
@@ -119,7 +136,7 @@
             </v-layout>
             <v-layout class="mt-4 pr-2 mb-5" column>
               <h2 class="font-weight-regular mb-6">Categories</h2>
-              <v-slide-group show-arrows="">
+              <v-slide-group v-model="selectedCategory" multiple show-arrows="">
                 <v-slide-item v-for="(category, i) in categories" :key="i" v-slot="{ active, toggle }">
                   <v-btn class="mx-2" :input-value="active" active-class="orange darken-2 white--text" depressed rounded @click="toggle"> {{ category.category }} </v-btn>
                 </v-slide-item>
@@ -129,7 +146,7 @@
               <v-skeleton-loader v-for="n in 9" :key="n" class="mx-2" min-width="260" max-width="260" type="card"></v-skeleton-loader>
             </v-layout>
             <v-row no-gutters dense v-else class="">
-              <v-col sm="4" md="3" lg="3" v-for="(product, i) in products.data" :key="i">
+              <v-col sm="4" md="3" lg="3" v-for="(product, i) in sortedProducts" :key="i">
                 <v-hover :key="i" v-slot="{ hover }" class="cursor-hover">
                   <v-card max-width="272" class="mx-2 mb-3" :elevation="hover ? 2 : 0" :outlined="hover ? true : false">
                     <v-img :src="`http://127.0.0.1:8000/images/products/${product.product_info.image}`" max-width="272" contain></v-img>
@@ -150,7 +167,24 @@
                       </v-btn>
                       <v-card-title class="pt-1 pl-1 black--text lh-small text-capitalize">{{ product.product_info.name }}</v-card-title>
                       <v-card-subtitle class="pt-0 pl-1"> {{ product.user.info.last_name }}'s Store </v-card-subtitle>
-                      <v-rating class="mt-n4" empty-icon="mdi-star-outline" full-icon="mdi-star" half-icon="mdi-star-half-full" half-increments hover length="5" :value="starValue"></v-rating>
+                      <v-layout d-flex align-center>
+                        <v-rating
+                          class="mt-n4"
+                          empty-icon="mdi-star-outline"
+                          full-icon="mdi-star"
+                          half-icon="mdi-star-half-full"
+                          half-increments
+                          hover
+                          length="5"
+                          :value="product.rating_avg_rating"
+                          size="18"
+                          readonly
+                        ></v-rating>
+                        <p class="mb-0 mt-n3 ml-2 black--text">
+                          {{ product.rating_avg_rating && product.rating_avg_rating.toFixed(1) }}
+                        </p>
+                      </v-layout>
+                      <p class="mb-0 ml-1">{{ product.rating_count }} Rating {{ product.rating_count > 1 ? 's' : '' }}</p>
                       <h2 class="mt-4 pl-1 orange--text darken-2 font-weight-regular">₱ {{ formatCurrency(product.product_info.price) }}</h2>
                     </v-card-text>
                   </v-card>
@@ -223,6 +257,7 @@
       isAddedSuccess: false,
       sortDesc: false,
       sortAllDesc: false,
+      selectedCategory: [],
       starValue: 3.5,
     }),
     async mounted() {
@@ -265,6 +300,12 @@
     computed: {
       ...mapState('market', ['categories', 'products', 'latest_products']),
       ...mapState('auth', ['user']),
+      //Category Sorting
+      sortedProducts() {
+        return this.sortAllDesc
+          ? this.products.data.slice().sort((a, b) => a.product_info.price - b.product_info.price)
+          : this.products.data.slice().sort((a, b) => b.product_info.price - a.product_info.price);
+      },
     },
     watch: {},
   };

@@ -4,7 +4,7 @@ export default {
  namespaced: true,
  state: {
   categories: [],
-  products: [],
+  products: { data: [] },
   latest_products: [],
   cart_count: 0,
   cart: [],
@@ -109,7 +109,7 @@ export default {
    return res;
   },
   async deleteCart({ commit }, payload) {
-   const res = await API.delete(`cart/${payload}`).then(res => {
+   const res = await API.delete(`cart/${ payload }`).then(res => {
     return res;
    }).catch(error => {
     return error.response;
@@ -118,7 +118,7 @@ export default {
    return res;
   },
   async removeItem({ commit }, payload) {
-   const res = await API.delete(`cart/removeItem/${payload}`).then(res => {
+   const res = await API.delete(`cart/removeItem/${ payload }`).then(res => {
     return res;
    }).catch(error => {
     return error.response;

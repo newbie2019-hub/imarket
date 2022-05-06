@@ -40,6 +40,7 @@ Route::middleware('api')->group(function () {
 
     Route::apiResource('categories', CategoryController::class);
     
+    Route::post('market/search', [MarketController::class, 'searchProduct']);
     Route::get('market/latest-products', [MarketController::class, 'latestProducts']);
     Route::apiResource('market', MarketController::class);
 

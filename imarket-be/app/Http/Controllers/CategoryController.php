@@ -13,7 +13,7 @@ class CategoryController extends Controller
     }
 
     public function index(){
-        $categories = Category::get(['category', 'created_at', 'deleted_at']);
+        $categories = Category::get(['id', 'category', 'created_at', 'deleted_at']);
         return response()->json($categories);
     }
 }

@@ -20,7 +20,7 @@
           <cart-drop-down />
         </v-layout>
         <v-btn v-if="!user.info && $route.path != '/login'" link to="/login" class="white--text rounded-pill" color="orange darken-2" depressed large> Login </v-btn>
-        <v-btn v-if="!user.info && $route.path != '/'" link to="/" class="white--text rounded-pill" color="orange darken-2" depressed large> Home </v-btn>
+        <!-- <v-btn v-if="!user.info && $route.path != '/'" link to="/" class="white--text rounded-pill" color="orange darken-2" depressed large> Home </v-btn> -->
         <v-menu v-if="user.info" transition="slide-y-transition" :close-on-content-click="false" content-class="elevation-3" v-model="showMenu" absolute bottom left style="max-width: 420px">
           <template v-slot:activator="{ on, attrs }">
             <v-avatar color="" v-on="on" v-bind="attrs">

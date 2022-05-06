@@ -13,16 +13,18 @@ class MarketController extends Controller
     }
 
     public function latestProducts(){
-        $latest = Product::with(['product_info', 'user:id,user_info_id', 'user.info:id,last_name'])->latest()->take(8)->get();
-     
+        $latest = Product::withCount('rating')->with(['product_info', 'user:id,user_info_id', 'user.info:id,last_name'])->withAvg('rating', 'rating')->latest()->take(8)->get();
         return response()->json($latest);
     }
 
     public function index(Request $request){
-        $products = Product::whereHas('product_info', function($query){
-            $query->orderBy('price', 'DESC');
-        })->with(['product_info', 'user:id,user_info_id', 'user.info:id,last_name'])->latest()->paginate(10);
+        $products = Product::withCount('rating')->with(['product_info', 'user:id,user_info_id', 'user.info:id,last_name'])->withAvg('rating', 'rating')->latest()->paginate(8);
         
+        return response()->json($products);
+    }
+
+    public function searchProduct(Request $request){
+        $products = Product::whereRelation('product_info', 'name', '%'.$request->search.'%')->withCount('rating')->with(['product_info', 'user:id,user_info_id', 'user.info:id,last_name'])->withAvg('rating', 'rating')->latest()->paginate(8);
         return response()->json($products);
     }
 }

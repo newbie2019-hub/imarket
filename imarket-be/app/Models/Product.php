@@ -21,4 +21,8 @@ class Product extends Model
     public function user(){
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+
+    public function rating(){
+        return $this->hasMany(ProductRating::class, 'product_id', 'id');
+    }
 }
