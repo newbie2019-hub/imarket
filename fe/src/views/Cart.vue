@@ -6,7 +6,7 @@
         <v-col cols="12" md="7" lg="7">
           <v-card elevation="0" class="pa-6">
             <p class="mb-0 ml-4 text-h5 font-weight-bold">My Orders</p>
-            <div class=" pr-5" v-if="Object.keys(cart).length == 0 || cart.cart_info.length == 0">
+            <div class="pr-5" v-if="Object.keys(cart).length == 0 || cart.cart_info.length == 0">
               <p class="ml-4 mt-5 w-75">There are no items in your cart. Continue shopping and start adding items to your cart now.</p>
             </div>
             <v-list>
@@ -81,7 +81,9 @@
               <p class="font-weight-bold">Total Payment</p>
               <p class="">PHP 1580.00</p>
             </v-layout>
-            <v-btn :disabled="Object.keys(cart).length == 0 || cart.cart_info.length == 0" @click.prevent="checkout" class="" color="orange darken-2 white--text" block depressed :loading="btnLoading">CHECKOUT</v-btn>
+            <v-btn :disabled="Object.keys(cart).length == 0 || cart.cart_info.length == 0" @click.prevent="checkout" class="" color="orange darken-2 white--text" block depressed :loading="btnLoading"
+              >CHECKOUT</v-btn
+            >
           </v-card>
         </v-col>
       </v-row>
@@ -118,6 +120,9 @@
             </v-card>
           </v-hover>
         </v-col>
+        <v-layout justify-center class="mt-5 mb-5">
+          <v-btn link to="/imarket" large depressed color="blue darken-2" dark :loading="isLoading">MORE PRODUCTS</v-btn>
+        </v-layout>
       </v-row>
     </v-container>
 

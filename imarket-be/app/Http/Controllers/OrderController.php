@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::with(['content'])->where('user_id', auth()->user()->id)->get();
+        $orders = Order::with(['content'])->where('user_id', auth()->user()->id)->latest()->paginate(10);
         return response()->json($orders);
     }
 

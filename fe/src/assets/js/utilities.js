@@ -16,11 +16,21 @@ export const toast = {
     this.$toast.success(data.msg)
    }
    else {
-    if(status == 401){
-     this.$toast.error(data.error)
-    }
-    else {
-     this.$toast.error('Something went wrong!')
+    if (status == 422) {
+     if (data.msg) {
+      this.$toast.error(data.msg)
+     }
+     else {
+      this.$toast.error('Something went wrong!')
+
+     }
+    } else {
+     if (status == 401) {
+      this.$toast.error(data.error)
+     }
+     else {
+      this.$toast.error('Something went wrong!')
+     }
     }
    }
   }

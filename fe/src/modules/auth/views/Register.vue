@@ -128,16 +128,7 @@
         gender: '',
         birthday: '',
       },
-      gender: [
-        {
-          text: 'Male',
-          value: 'Male',
-        },
-        {
-          text: 'Female',
-          value: 'Female',
-        },
-      ],
+     
     }),
     mounted() {
       this.maxDate();

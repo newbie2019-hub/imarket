@@ -40,8 +40,8 @@ export default {
       state.user = {
 
       },
-      
-      API.defaults.headers.common['Authorization'] = ''
+
+        API.defaults.headers.common['Authorization'] = ''
     }
   },
   actions: {
@@ -62,6 +62,33 @@ export default {
         return res;
       }).catch(err => {
         return err.response;
+      })
+
+      return res;
+    },
+    async update({ commit }, data) {
+      const res = await API.post(`auth/update`, data).then(res => {
+        return res;
+      }).catch(err => {
+        return err.response;
+      })
+
+      return res;
+    },
+    async removeImage({ commit }) {
+      const res = await API.post('remove-profile').then(res => {
+        return res;
+      }).catch(error => {
+        return error.response;
+      })
+
+      return res;
+    },
+    async changePassword({ commit }, data) {
+      const res = await API.post('auth/update-password', data).then(res => {
+        return res;
+      }).catch(error => {
+        return error.response;
       })
 
       return res;

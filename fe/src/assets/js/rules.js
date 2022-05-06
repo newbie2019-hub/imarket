@@ -6,7 +6,17 @@ export const rules = {
   ],
   required: [(v) => !!v || 'Field is required'],
   minChar: [(v) => v.length >= 11 || 'Input should be atleast 11 characters'],
-  isLoading: false
+  isLoading: false,
+  gender: [
+   {
+    text: 'Male',
+    value: 'Male',
+   },
+   {
+    text: 'Female',
+    value: 'Female',
+   },
+  ],
  })
 }
 

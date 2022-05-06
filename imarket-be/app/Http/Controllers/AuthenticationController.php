@@ -73,6 +73,39 @@ class AuthenticationController extends Controller
     }
 
     
+    public function update(UserAccountRequest $request){
+        if (! Hash::check($request->current_password, $request->user()->password)) {
+            return $this->error('Password entered is incorrect');
+        }
+
+        $userinfo = UserInfo::where('id', auth()->user()->id)->first();
+        $userinfo->update([
+            'first_name' => $request->first_name,
+            'middle_name' => $request->middle_name,
+            'last_name' => $request->last_name,
+            'birthday' => $request->birthday,
+            'contact_number' => $request->contact_number,
+            'gender' => $request->gender,
+            'address' => $request->address,
+        ]);
+
+        return $this->success('Account updated successfully!');
+    }
+
+    public function deleteProfileImg(){
+        $userinfo = UserInfo::where('id', auth()->user()->id)->first();
+
+        if($userinfo->profile_img) {
+            $this->deleteImage($userinfo->profile_img);
+
+            $userinfo->update([
+                'profile_img' => null
+            ]);
+        }
+
+        return $this->success('Profile image has been removed!');
+    }
+    
     public function updateProfileImg(Request $request){
         if($request->img){
             $fileName = time().'.'.$request->img->extension();

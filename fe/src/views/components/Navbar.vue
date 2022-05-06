@@ -98,10 +98,10 @@
       <v-card>
         <v-card-title class="text-h5"> Confirm Log-out </v-card-title>
         <h4 class="font-weight-light ml-6 mr-5 mb-5">Are you sure you want to logout your account?</h4>
-        <v-card-actions>
+        <v-card-actions class="pb-2">
           <v-spacer></v-spacer>
-          <v-btn color="grey darken-2" text @click="logoutDialog = false"> Cancel </v-btn>
-          <v-btn color="red darken-1" text @click="logout" :loading="btnLoading"> Logout </v-btn>
+          <v-btn color="grey darken-2" large text @click="logoutDialog = false"> Cancel </v-btn>
+          <v-btn color="red darken-1" large text @click="logout" :loading="btnLoading"> Logout </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -223,5 +223,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .v-list-item__icon {
+    margin-right: 18px !important;
   }
 </style>

@@ -66,8 +66,9 @@
                         <v-icon small>{{ isAddedSuccess && productId == product.id ? 'mdi-check' : 'mdi-cart-plus' }}</v-icon>
                       </v-btn>
                       <v-card-title class="pt-1 pl-1 black--text lh-small text-capitalize">{{ product.product_info.name }}</v-card-title>
-                      <v-card-subtitle class="pt-0 mt-n5 pl-1"> {{ product.user.info.last_name }}'s Store </v-card-subtitle>
-                      <h3 class="mt-n3 pl-1 orange--text darken-2 font-weight-regular">₱ {{ formatCurrency(product.product_info.price) }}</h3>
+                      <v-card-subtitle class="pt-0 pl-1"> {{ product.user.info.last_name }}'s Store </v-card-subtitle>
+                      <v-rating class="mt-n4" empty-icon="mdi-star-outline" full-icon="mdi-star" half-icon="mdi-star-half-full" half-increments hover length="5" :value="starValue"></v-rating>
+                      <h2 class="mt-4 pl-1 orange--text darken-2 font-weight-regular">₱ {{ formatCurrency(product.product_info.price) }}</h2>
                     </v-card-text>
                   </v-card>
                 </v-hover>
@@ -148,8 +149,9 @@
                         <v-icon small>{{ isAddedSuccess && productId == product.id ? 'mdi-check' : 'mdi-cart-plus' }}</v-icon>
                       </v-btn>
                       <v-card-title class="pt-1 pl-1 black--text lh-small text-capitalize">{{ product.product_info.name }}</v-card-title>
-                      <v-card-subtitle class="pt-0 mt-n5 pl-1"> {{ product.user.info.last_name }}'s Store </v-card-subtitle>
-                      <h3 class="mt-n3 pl-1 orange--text darken-2 font-weight-regular">₱ {{ formatCurrency(product.product_info.price) }}</h3>
+                      <v-card-subtitle class="pt-0 pl-1"> {{ product.user.info.last_name }}'s Store </v-card-subtitle>
+                      <v-rating class="mt-n4" empty-icon="mdi-star-outline" full-icon="mdi-star" half-icon="mdi-star-half-full" half-increments hover length="5" :value="starValue"></v-rating>
+                      <h2 class="mt-4 pl-1 orange--text darken-2 font-weight-regular">₱ {{ formatCurrency(product.product_info.price) }}</h2>
                     </v-card-text>
                   </v-card>
                 </v-hover>
@@ -221,6 +223,7 @@
       isAddedSuccess: false,
       sortDesc: false,
       sortAllDesc: false,
+      starValue: 3.5,
     }),
     async mounted() {
       this.isLoading = true;
@@ -266,3 +269,8 @@
     watch: {},
   };
 </script>
+<style>
+  .v-rating .v-icon {
+    padding: 0rem !important;
+  }
+</style>

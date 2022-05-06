@@ -29,11 +29,13 @@ Route::middleware('api')->group(function () {
             Route::post('/register', 'store');
             Route::post('/login', 'login');
             Route::post('/logout', 'logout');
+            Route::post('update', 'update');
             Route::post('update-password', 'updatePassword');
             Route::post('me', 'me');
         });
 
         Route::post('update-profile', 'updateProfileImg');
+        Route::post('remove-profile', 'deleteProfileImg');
     });
 
     Route::apiResource('categories', CategoryController::class);
