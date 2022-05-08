@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserAccountRequest;
 use App\Models\User;
 use App\Models\UserInfo;
+use App\Models\UserLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
@@ -16,6 +17,9 @@ class AuthenticationController extends Controller
         $this->middleware('auth:api', ['except' => ['login', 'store']]);
     }
 
+    public function userLogs(){
+        return response()->json(UserLog::where('user_id', auth()->user()->id)->latest()->get());
+    }
     public function store(UserAccountRequest $request){
 
         $userinfo = UserInfo::create([
@@ -46,17 +50,31 @@ class AuthenticationController extends Controller
             return response()->json(['error' => 'Email or Password is incorrect!'], 401);
         }
 
+        UserLog::create([
+            'name' => 'Account Login',
+            'event' => 'login',
+            'user_id' => auth('api')->user()->id,
+            'description' => 'You\'ve logged in your account'
+        ]);
+
         return $this->respondWithToken($token);
     }
 
     public function me()
     {
-        $user = User::with(['info', 'roles'])->where('id', auth()->guard('api')->user()->id)->first();
+        $user = User::with(['info', 'roles', 'store'])->where('id', auth()->guard('api')->user()->id)->first();
         return response()->json($user);
     }
 
     public function logout()
     {
+        UserLog::create([
+            'name' => 'Account Logout',
+            'event' => 'logout',
+            'user_id' => auth('api')->user()->id,
+            'description' => 'You\'ve logged out your account'
+        ]);
+        
         auth()->logout();
         return $this->success('Account logged out successfully!');
     }
@@ -89,6 +107,13 @@ class AuthenticationController extends Controller
             'address' => $request->address,
         ]);
 
+        UserLog::create([
+            'name' => 'Account Information Updated',
+            'event' => 'update',
+            'user_id' => auth('api')->user()->id,
+            'description' => 'You\'ve updated your account information.'
+        ]);
+
         return $this->success('Account updated successfully!');
     }
 
@@ -102,6 +127,13 @@ class AuthenticationController extends Controller
                 'profile_img' => null
             ]);
         }
+
+        UserLog::create([
+            'name' => 'Account Image Deleted',
+            'event' => 'delete',
+            'user_id' => auth('api')->user()->id,
+            'description' => 'You\'ve deleted your account profile image.'
+        ]);
 
         return $this->success('Profile image has been removed!');
     }
@@ -119,6 +151,13 @@ class AuthenticationController extends Controller
 
             $userinfo->update([
                 'profile_img' => $fileName
+            ]);
+
+            UserLog::create([
+                'name' => 'Account Image Updated',
+                'event' => 'update',
+                'user_id' => auth('api')->user()->id,
+                'description' => 'You\'ve updated your account profile image.'
             ]);
 
             return $this->success('Profile image updated successfully!');

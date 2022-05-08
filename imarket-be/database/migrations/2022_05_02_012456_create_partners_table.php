@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->dateTime('request_date');
-            $table->dateTime('approval_date');
+            $table->dateTime('approval_date')->nullable();
             $table->string('status');
             $table->softDeletes();
             $table->timestamps();

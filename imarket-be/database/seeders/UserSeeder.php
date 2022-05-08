@@ -18,8 +18,8 @@ class UserSeeder extends Seeder
         $x = 1;
 
         while($x <= 25){
-            $userSeller = User::factory()->create();
-            $userSeller->assignRole('User');
+            $user = User::factory()->create();
+            $user->assignRole('User');
             $x++;
         }
     }

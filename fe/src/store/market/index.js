@@ -8,11 +8,15 @@ export default {
   latest_products: [],
   cart_count: 0,
   cart: [],
+  storeInfo: []
  },
  getters: {
 
  },
  mutations: {
+  SET_STORE(state, payload) {
+    state.storeInfo = payload
+  },
   SET_CATEGORIES(state, data) {
    state.categories = data
   },
@@ -128,6 +132,26 @@ export default {
   },
   async checkout({ commit }, payload) {
    const res = await API.post(`checkout`, payload).then(res => {
+    return res;
+   }).catch(error => {
+    return error.response;
+   })
+
+   return res;
+  },
+
+  async getStoreInfo({ commit }) {
+   const res = await API.get('store').then(res => {
+    commit('SET_STORE', res.data)
+    return res;
+   }).catch(error => {
+    return error.response;
+   })
+
+   return res;
+  },
+  async updateStore({ commit }, payload) {
+   const res = await API.put(`store/${payload.id}`, payload).then(res => {
     return res;
    }).catch(error => {
     return error.response;

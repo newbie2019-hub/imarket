@@ -1,10 +1,11 @@
 <template>
   <div>
     <Navbar />
-    <v-container>
+    <v-layout class="mt-15"></v-layout>
+    <v-container class="mt-15">
       <v-row justify="center">
         <!-- <v-col cols="" md="4" lg="4"> </v-col> -->
-        <v-col cols="11" md="10" lg="10">
+        <v-col cols="11" md="12" lg="12">
           <v-layout column>
             <h1>Settings</h1>
             <p>Here you can manage your account information</p>
@@ -198,7 +199,16 @@
                       </v-card-text>
                       <v-card-actions class="pb-4">
                         <v-spacer></v-spacer>
-                        <v-btn color="grey darken-1" text @click="$refs.form.reset(); dialog = false"> Cancel </v-btn>
+                        <v-btn
+                          color="grey darken-1"
+                          text
+                          @click="
+                            $refs.form.reset();
+                            dialog = false;
+                          "
+                        >
+                          Cancel
+                        </v-btn>
                         <v-btn @click.prevent="update" color="green darken-1" text> Save Changes </v-btn>
                       </v-card-actions>
                     </v-card>
@@ -207,8 +217,8 @@
               </v-card>
             </v-tab-item>
             <v-tab-item>
-              <v-card flat>
-                <v-form ref="formPass" @submit.prevent="savePassword" lazy-validation>
+              <v-card flat class="">
+                <v-form class="" ref="formPass" @submit.prevent="savePassword" lazy-validation>
                   <h2 class="mt-8">Change Password</h2>
                   <p class="">Password is a confidential data. Please dont share it with anyone else.</p>
                   <v-text-field
@@ -222,28 +232,34 @@
                     required
                     outlined
                   ></v-text-field>
-                  <v-text-field
-                    type="password"
-                    prepend-inner-icon="mdi-key-variant"
-                    class="mt-3"
-                    hide-details="auto"
-                    v-model="passData.new_password"
-                    :rules="[matchingPasswords]"
-                    label="New Password"
-                    required
-                    outlined
-                  ></v-text-field>
-                  <v-text-field
-                    type="password"
-                    prepend-inner-icon="mdi-key-variant"
-                    class="mt-3"
-                    hide-details="auto"
-                    v-model="passData.confirm_password"
-                    :rules="[matchingPasswords]"
-                    label="Confirm Password"
-                    required
-                    outlined
-                  ></v-text-field>
+                  <v-row dense>
+                    <v-col lg="6" md="6" sm="6" cols="12">
+                      <v-text-field
+                        type="password"
+                        prepend-inner-icon="mdi-key-variant"
+                        class="mt-3"
+                        hide-details="auto"
+                        v-model="passData.new_password"
+                        :rules="[matchingPasswords]"
+                        label="New Password"
+                        required
+                        outlined
+                      ></v-text-field>
+                    </v-col>
+                    <v-col lg="6" md="6" sm="6" cols="12">
+                      <v-text-field
+                        type="password"
+                        prepend-inner-icon="mdi-key-variant"
+                        class="mt-3"
+                        hide-details="auto"
+                        v-model="passData.confirm_password"
+                        :rules="[matchingPasswords]"
+                        label="Confirm Password"
+                        required
+                        outlined
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
 
                   <v-card-actions class="mt-3">
                     <v-spacer></v-spacer>
@@ -254,18 +270,16 @@
               </v-card>
             </v-tab-item>
             <v-tab-item>
-              <v-card flat>
-                <v-card-text>
-                  <p>
-                    Fusce a quam. Phasellus nec sem in justo pellentesque facilisis. Nam eget dui. Proin viverra, ligula sit amet ultrices semper, ligula arcu tristique sapien, a accumsan nisi mauris
-                    ac eros. In dui magna, posuere eget, vestibulum et, tempor auctor, justo.
-                  </p>
-
-                  <p class="mb-0">
-                    Cras sagittis. Phasellus nec sem in justo pellentesque facilisis. Proin sapien ipsum, porta a, auctor quis, euismod ut, mi. Donec quam felis, ultricies nec, pellentesque eu,
-                    pretium quis, sem. Nam at tortor in tellus interdum sagittis.
-                  </p>
-                </v-card-text>
+              <v-card class="mb-15" flat>
+                <h2 class="mt-8">Account Logs</h2>
+                <p class="mb-8">To ensure account security, your actions are being logged by the system</p>
+                <v-data-table :loading="isLoading" :loading-text="'Retrieving your account logs. Please wait...'" :headers="headers" :items="userLogs" :search="search">
+                  <template v-slot:item.event="{ item }">
+                    <v-chip :color="getColor(item.event)" dark small>
+                      {{ item.event }}
+                    </v-chip>
+                  </template>
+                </v-data-table>
               </v-card>
             </v-tab-item>
           </v-tabs>
@@ -307,11 +321,24 @@
         confirm_password: '',
       },
       isLoading: false,
+      search: '',
+      headers: [
+        {
+          text: 'Activity',
+          align: 'start',
+          sortable: false,
+          value: 'name',
+        },
+        { text: 'Event', value: 'event' },
+        { text: 'Description', value: 'description' },
+        { text: 'Timestamp', value: 'created_at' },
+      ],
     }),
     async mounted() {
       this.isLoading = true;
       this.maxDate();
       this.setInfo();
+      await this.$store.dispatch('auth/getLogs');
       this.isLoading = false;
     },
     methods: {
@@ -322,7 +349,18 @@
           return 'Passwords does not match.';
         }
       },
-
+      getColor(event) {
+        switch (event) {
+          case 'delete':
+            return 'error';
+          case 'login':
+            return 'success';
+          case 'update':
+            return 'green';
+          case 'logout':
+            return 'error';
+        }
+      },
       maxDate() {
         const date = new Date();
         const newDate = (date.getFullYear() - 17).toString() + '-01-01';
@@ -336,6 +374,7 @@
         const { status, data } = await this.$store.dispatch('auth/removeImage');
         this.toastData(status, data);
         await this.$store.dispatch('auth/checkUser');
+        await this.$store.dispatch('auth/getLogs');
 
         this.dialogRemove = false;
         this.isLoading = false;
@@ -356,6 +395,7 @@
           const { status, data } = await this.$store.dispatch('auth/update', this.data);
           this.toastData(status, data);
           await this.$store.dispatch('auth/checkUser');
+          await this.$store.dispatch('auth/getLogs');
 
           this.dialog = false;
           this.data.current_password = null;
@@ -391,7 +431,7 @@
       },
     },
     computed: {
-      ...mapState('auth', ['user']),
+      ...mapState('auth', ['user', 'userLogs']),
     },
     watch: {},
   };

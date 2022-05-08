@@ -10,4 +10,7 @@ class Partner extends Model
     use HasFactory;
     protected $guarded = [];
 
+    public function store(){
+        return $this->hasOne(Store::class, 'partner_id', 'id');
+    }
 }

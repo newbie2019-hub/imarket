@@ -5,6 +5,9 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MarketController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PartnershipController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\StoreInfoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,11 +30,13 @@ Route::middleware('api')->group(function () {
     Route::controller(AuthenticationController::class)->group(function () {
         Route::prefix('auth')->group(function () {
             Route::post('/register', 'store');
+            Route::get('/logs', 'userLogs');
             Route::post('/login', 'login');
             Route::post('/logout', 'logout');
             Route::post('update', 'update');
             Route::post('update-password', 'updatePassword');
             Route::post('me', 'me');
+            Route::apiResource('partnership', PartnershipController::class);
         });
 
         Route::post('update-profile', 'updateProfileImg');
@@ -50,5 +55,9 @@ Route::middleware('api')->group(function () {
 
     Route::apiResource('checkout', OrderController::class);
 
+    Route::post('products/uploadImage', [ProductController::class, 'uploadImage']);
+    Route::apiResource('products', ProductController::class);
+
     Route::apiResource('orders', OrderController::class);
+    Route::apiResource('store', StoreInfoController::class);
 });

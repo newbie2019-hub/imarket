@@ -73,4 +73,8 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsTo(UserInfo::class, 'user_info_id', 'id');
     }
 
+    public function store(){
+        return $this->hasOne(Store::class, 'user_id', 'id');
+    }
+
 }

@@ -17,8 +17,14 @@ return new class extends Migration
             $table->id();
             $table->string('name', 120);
             $table->foreignId('partner_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('description');
-            $table->string('banner_image');
+            $table->string('banner_image')->nullable();
+            $table->text('address');
+            $table->string('week_days_opening');
+            $table->string('week_days_closing');
+            $table->string('week_end_opening');
+            $table->string('week_end_closing');
             $table->string('status');
             $table->softDeletes();
             $table->timestamps();

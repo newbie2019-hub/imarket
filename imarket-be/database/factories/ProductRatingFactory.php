@@ -18,7 +18,7 @@ class ProductRatingFactory extends Factory
     {
         return [
            'product_id' => $this->faker->numberBetween(1, 40),
-           'user_id' => $this->faker->numberBetween(10, 20),
+           'user_id' => $this->faker->numberBetween(10, 22),
            'rating' => $this->faker->randomFloat(1, 1, 5),
            'comment' => $this->faker->paragraph(2)
         ];

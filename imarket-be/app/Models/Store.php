@@ -10,4 +10,8 @@ class Store extends Model
     use HasFactory;
     protected $guarded = [];
 
+    public function partner(){
+        return $this->belongsTo(Partner::class, 'partner_id', 'id');
+    }
+
 }

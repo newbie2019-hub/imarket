@@ -7,6 +7,7 @@ export default {
 
     },
     token: localStorage.getItem('auth') || '',
+    userLogs: [],
   },
   getters: {
 
@@ -42,9 +43,22 @@ export default {
       },
 
         API.defaults.headers.common['Authorization'] = ''
+    },
+    SET_LOGS(state, payload){
+      state.userLogs = payload
     }
   },
   actions: {
+    async getLogs({commit}){
+      const res = await API.get('auth/logs').then(res => {
+        commit('SET_LOGS', res.data)
+        return res;
+      }).catch(error => {
+        return error.response;
+      })
+  
+      return res;
+     },
     async login({ commit }, payload) {
       const res = await API.post('/auth/login', payload).then(res => {
         commit('SET_USER_ACC', res.data.user)

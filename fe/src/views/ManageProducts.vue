@@ -31,7 +31,9 @@
             <v-tab-item>
               <Products />
             </v-tab-item>
-            <v-tab-item> </v-tab-item>
+            <v-tab-item>
+              <StoreInfo />
+            </v-tab-item>
             <v-tab-item>
               <v-card flat>
                 <v-card-text>
@@ -57,9 +59,10 @@
 </template>
 <script>
   import Navbar from './components/Navbar.vue';
-  import Products from './store/Products.vue'
+  import Products from './userstore/Products.vue'
+  import StoreInfo from './userstore/StoreInfo.vue'
   export default {
-    components: { Navbar, Products },
+    components: { Navbar, Products, StoreInfo },
     data: () => ({
       
     }),

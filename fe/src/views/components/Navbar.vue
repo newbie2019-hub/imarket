@@ -21,7 +21,7 @@
         </v-layout>
         <v-btn v-if="!user.info && $route.path != '/login'" link to="/login" class="white--text rounded-pill" color="orange darken-2" depressed large> Login </v-btn>
         <!-- <v-btn v-if="!user.info && $route.path != '/'" link to="/" class="white--text rounded-pill" color="orange darken-2" depressed large> Home </v-btn> -->
-        <v-menu v-if="user.info" transition="slide-y-transition" :close-on-content-click="false" content-class="elevation-3" v-model="showMenu" absolute bottom left style="max-width: 420px">
+        <v-menu v-if="user.info" transition="slide-y-transition" :close-on-content-click="false" content-class="elevation-3" v-model="showMenu" absolute bottom left style="max-width: 450px">
           <template v-slot:activator="{ on, attrs }">
             <v-avatar color="" v-on="on" v-bind="attrs">
               <img v-if="user.info.profile_img != '' && user.info.profile_img != null" :src="'http://127.0.0.1:8000/images/profiles/' + user.info.profile_img" alt="Profile" />
@@ -32,7 +32,7 @@
           <v-card elevation="0" class="pl-5 pr-5 pt-2 pb-1">
             <v-layout column align-center justify-center class="mt-3">
               <v-layout align-center justify-center class="position-relative">
-                <v-avatar color="grey" size="80">
+                <v-avatar color="grey" size="85">
                   <img v-if="user.info.profile_img" :src="'http://127.0.0.1:8000/images/profiles/' + user.info.profile_img" alt="John" />
                   <v-icon x-large color="white" v-else> mdi-account-circle </v-icon>
                 </v-avatar>
@@ -81,7 +81,7 @@
                   <v-icon small>mdi-package-variant</v-icon>
                 </v-list-item-icon>
                 <v-list-item-content>
-                  <v-list-item-title>Store Config</v-list-item-title>
+                  <v-list-item-title>My Store</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
 

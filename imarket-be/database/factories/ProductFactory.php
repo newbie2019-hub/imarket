@@ -18,7 +18,7 @@ class ProductFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => 1,
+            'store_id' => $this->faker->numberBetween(1, 12),
             'product_info_id' => ProductInfo::factory()->create(),
         ];
     }
