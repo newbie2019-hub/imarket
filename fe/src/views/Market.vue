@@ -1,7 +1,8 @@
 <template>
   <div>
     <Navbar />
-    <v-container class="">
+    <v-layout class="mt-15"></v-layout>
+    <v-container class="mt-15">
       <v-layout column class="mb-8 lh-small">
         <h1 v-if="user.info" class="mb-2">Hi, {{ user.info && user.info.first_name }} {{ user.info && user.info.last_name }}!</h1>
         <h1 v-else class="mb-2">Hi, User!</h1>
@@ -46,10 +47,10 @@
             hide-default-footer
           >
             <template v-slot:default="props">
-              <v-col sm="4" md="3" lg="3" v-for="(product, i) in props.items" :key="i">
+              <v-col cols="12" sm="6" md="4" lg="3" v-for="(product, i) in props.items" :key="i">
                 <v-hover :key="i" v-slot="{ hover }" class="cursor-hover">
-                  <v-card max-width="272" class="mx-2 mb-3" :elevation="hover ? 2 : 0" :outlined="hover ? true : false">
-                    <v-img :src="`http://127.0.0.1:8000/images/products/${product.product_info.image}`" max-width="272" contain></v-img>
+                  <v-card class="mx-2 mb-3" :elevation="hover ? 2 : 0" :outlined="hover ? true : false">
+                    <v-img :src="`http://127.0.0.1:8000/images/products/${product.product_info.image}`" contain></v-img>
                     <v-card-text class="position-relative pt-2">
                       <v-btn
                         @click.prevent="addToCart(product)"
@@ -66,7 +67,7 @@
                         <v-icon small>{{ isAddedSuccess && productId == product.id ? 'mdi-check' : 'mdi-cart-plus' }}</v-icon>
                       </v-btn>
                       <v-card-title class="pt-1 pl-1 black--text lh-small text-capitalize">{{ product.product_info.name }}</v-card-title>
-                      <v-card-subtitle class="pt-0 pl-1"> {{ product.user.info.last_name }}'s Store </v-card-subtitle>
+                      <v-card-subtitle class="pt-0 pl-1"> {{ product.store.name }} </v-card-subtitle>
                       <v-layout d-flex align-center>
                         <v-rating
                           class="mt-n4"
@@ -84,7 +85,7 @@
                           {{ product.rating_avg_rating && product.rating_avg_rating.toFixed(1) }}
                         </p>
                       </v-layout>
-                      <p class="mb-0 ml-1">{{ product.rating_count }} Rating {{ product.rating_count > 1 ? 's' : '' }}</p>
+                      <p class="mb-0 ml-1">{{ product.rating_count }} Rating{{ product.rating_count > 1 ? 's' : '' }}</p>
                       <h2 class="mt-4 pl-1 orange--text darken-2 font-weight-regular">₱ {{ formatCurrency(product.product_info.price) }}</h2>
                     </v-card-text>
                   </v-card>
@@ -98,7 +99,7 @@
     </v-container>
 
     <div class="position-relative">
-      <v-container class="pb-5 pt-15">
+      <v-container class="pb-10 pt-15">
         <v-row justify="center" align="center" class="h-100">
           <v-col cols="12" sm="11" md="5" lg="4">
             <v-layout justify-center align-center>
@@ -123,12 +124,12 @@
           </v-col>
         </v-row>
 
-        <v-row>
+        <v-row class="mt-15">
           <v-col cols="12" sm="12" md="12" lg="12">
             <v-layout class="mt-10" justify-space-between align-center>
               <div>
                 <h2 class="font-weight-bold mb-0">Market Products</h2>
-                <p class="mb-8 grey--text">All products from our beloved partner sellers</p>
+                <p class="mb-7 grey--text">All products from our beloved partner sellers</p>
               </div>
               <v-btn icon @click="sortAllDesc = !sortAllDesc">
                 <v-icon>{{ sortAllDesc ? 'mdi-sort-numeric-ascending' : 'mdi-sort-numeric-descending' }}</v-icon>
@@ -143,13 +144,13 @@
               </v-slide-group>
             </v-layout>
             <v-layout v-if="isLoading" wrap>
-              <v-skeleton-loader v-for="n in 9" :key="n" class="mx-2" min-width="260" max-width="260" type="card"></v-skeleton-loader>
+              <v-skeleton-loader v-for="n in 9" :key="n" class="mx-2" min-width="400"  type="card"></v-skeleton-loader>
             </v-layout>
             <v-row no-gutters dense v-else class="">
-              <v-col sm="4" md="3" lg="3" v-for="(product, i) in sortedProducts" :key="i">
+              <v-col cols="12" sm="6" md="4" lg="3" v-for="(product, i) in sortedProducts" :key="i">
                 <v-hover :key="i" v-slot="{ hover }" class="cursor-hover">
-                  <v-card max-width="272" class="mx-2 mb-3" :elevation="hover ? 2 : 0" :outlined="hover ? true : false">
-                    <v-img :src="`http://127.0.0.1:8000/images/products/${product.product_info.image}`" max-width="272" contain></v-img>
+                  <v-card class="mx-2 mb-3" :elevation="hover ? 2 : 0" :outlined="hover ? true : false">
+                    <v-img :src="`http://127.0.0.1:8000/images/products/${product.product_info.image}`" contain></v-img>
                     <v-card-text class="position-relative pt-2">
                       <v-btn
                         @click.prevent="addToCart(product)"
@@ -166,7 +167,7 @@
                         <v-icon small>{{ isAddedSuccess && productId == product.id ? 'mdi-check' : 'mdi-cart-plus' }}</v-icon>
                       </v-btn>
                       <v-card-title class="pt-1 pl-1 black--text lh-small text-capitalize">{{ product.product_info.name }}</v-card-title>
-                      <v-card-subtitle class="pt-0 pl-1"> {{ product.user.info.last_name }}'s Store </v-card-subtitle>
+                      <v-card-subtitle class="pt-0 pl-1"> {{ product.store.name }} </v-card-subtitle>
                       <v-layout d-flex align-center>
                         <v-rating
                           class="mt-n4"
@@ -184,7 +185,7 @@
                           {{ product.rating_avg_rating && product.rating_avg_rating.toFixed(1) }}
                         </p>
                       </v-layout>
-                      <p class="mb-0 ml-1">{{ product.rating_count }} Rating {{ product.rating_count > 1 ? 's' : '' }}</p>
+                      <p class="mb-0 ml-1">{{ product.rating_count }} Rating{{ product.rating_count > 1 ? 's' : '' }}</p>
                       <h2 class="mt-4 pl-1 orange--text darken-2 font-weight-regular">₱ {{ formatCurrency(product.product_info.price) }}</h2>
                     </v-card-text>
                   </v-card>
@@ -212,7 +213,7 @@
                     Would you like to have new customers enjoying your fresh products? So would we. Interested? <br /><br />
                     Let’s start our parternship today!
                   </h3>
-                  <v-btn color="blue darken-1" depressed class="rounded-pill btn-glow-blue mt-3" large> Get Started </v-btn>
+                  <v-btn color="blue darken-1" depressed class="rounded-pill btn-glow-blue mt-3" large link to="/login" > Get Started </v-btn>
                 </v-col>
                 <div class="img-right">
                   <v-img src="@/assets/images/agreement.svg" class="img-width" contain></v-img>

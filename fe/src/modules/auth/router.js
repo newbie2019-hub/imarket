@@ -29,6 +29,15 @@ const moduleRoute = [
       title: 'Forgot Password'
     }
   },
+  {
+    path: '/partnership',
+    name: 'Partnership',
+    component: () => import(/* webpackChunkName: "partership" */ './views/Partnership.vue'),
+    meta: {
+      title: 'Market - Partnership program',
+      requiresAuth: false
+    }
+  },
 ];
 
 export default router => {

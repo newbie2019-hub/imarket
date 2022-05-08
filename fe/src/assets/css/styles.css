@@ -6,6 +6,19 @@
  font-family: 'Rubik', sans-serif;
 }
 
+.navbar-fixed {
+ position: fixed;
+ top: 0;
+ left: 0;
+ z-index: 5;
+ background: rgba(233, 233, 233, 0.3);
+ box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+ backdrop-filter: blur(5px);
+ -webkit-backdrop-filter: blur(5px);
+ border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+ padding: 1rem 4rem;
+}
+
 .cursor-pointer {
  cursor: pointer;
 }
@@ -97,6 +110,14 @@ p.text-h5.font-rubik {
 }
 
 /** Utilities */
+.v-tab {
+ justify-content: flex-start !important;
+}
+
+.font-2x {
+ font-size: 1.4rem;
+}
+
 .mt-20 {
  margin-top: 140px;
 }
@@ -148,6 +169,10 @@ p.text-h5.font-rubik {
 
 .Vue-Toastification__toast {
  box-shadow: none !important;
+}
+
+.v-rating .v-icon {
+ padding: 0rem !important;
 }
 
 

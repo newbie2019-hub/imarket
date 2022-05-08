@@ -9,17 +9,13 @@ Vue.config.productionTip = false
 
 import { registerModules } from "./register-modules";
 import adminModule from "./modules/admin";
-import cartModule from "./modules/cart";
 import authModule from "./modules/auth";
-import userModule from "./modules/user";
 import VAnimateCss from 'v-animate-css';
 
 Vue.use(VAnimateCss);
 
 registerModules({
   admin: adminModule,
-  cart: cartModule,
-  user: userModule,
   auth: authModule,
 });
 

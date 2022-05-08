@@ -66,6 +66,15 @@ export default {
 
       return res;
     },
+    async registerSeller({ commit }, payload) {
+      const res = await API.post('/auth/partnership', payload).then(res => {
+        return res;
+      }).catch(err => {
+        return err.response;
+      })
+
+      return res;
+    },
     async update({ commit }, data) {
       const res = await API.post(`auth/update`, data).then(res => {
         return res;

@@ -1,7 +1,8 @@
 <template>
   <div>
     <Navbar />
-    <v-container>
+    <v-layout class="mt-15"></v-layout>
+    <v-container class="mt-15">
       <v-row>
         <v-col cols="12" md="7" lg="7">
           <v-card elevation="0" class="pa-6">
@@ -114,8 +115,25 @@
                   <v-icon small>{{ isAddedSuccess && productId == product.id ? 'mdi-check' : 'mdi-cart-plus' }}</v-icon>
                 </v-btn>
                 <v-card-title class="pt-1 pl-1 black--text lh-small text-capitalize">{{ product.product_info.name }}</v-card-title>
-                <v-card-subtitle class="pt-0 mt-n5 pl-1"> {{ product.user.info.last_name }}'s Store </v-card-subtitle>
-                <h3 class="mt-n3 pl-1 orange--text darken-2 font-weight-regular">₱ {{ formatCurrency(product.product_info.price) }}</h3>
+                <v-card-subtitle class="pt-0 mt-n5 pl-1"> {{ product.store.name }} </v-card-subtitle>
+                <v-layout d-flex align-center>
+                  <v-rating
+                    class="mt-n4"
+                    empty-icon="mdi-star-outline"
+                    full-icon="mdi-star"
+                    half-icon="mdi-star-half-full"
+                    half-increments
+                    hover
+                    length="5"
+                    :value="product.rating_avg_rating"
+                    size="18"
+                    readonly
+                  ></v-rating>
+                  <p class="mb-0 mt-n3 ml-2 black--text">
+                    {{ product.rating_avg_rating && product.rating_avg_rating.toFixed(1) }}
+                  </p>
+                </v-layout>
+                <h3 class=" pl-1 orange--text darken-2 font-weight-regular">₱ {{ formatCurrency(product.product_info.price) }}</h3>
               </v-card-text>
             </v-card>
           </v-hover>

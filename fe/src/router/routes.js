@@ -34,8 +34,16 @@ const routes = [
     }
   },
   {
+    path: '/manage-products',
+    name: 'Settings',
+    component: () => import(/* webpackChunkName: "imarket" */ '../views/ManageProducts.vue'),
+    meta: {
+      title: 'IMarket Account Settings'
+    }
+  },
+  {
     path: '/cart-checkout',
-    name: 'Market',
+    name: 'Checkout',
     component: () => import(/* webpackChunkName: "cart-checkout" */ '../views/Cart.vue'),
     meta: {
       title: 'Market - Checkout your items so we can deliver it to you'

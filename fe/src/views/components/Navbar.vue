@@ -1,15 +1,15 @@
 <template>
   <div>
-    <nav>
+    <nav :class="{ 'navbar-fixed': isFixed }">
       <div class="logo">
-        <router-link to="/" class="text-decoration-none font-weight-bold text-h5 black--text">IMarket</router-link>
+        <router-link to="/" class="text-decoration-none font-weight-bold font-2x black--text">IMarket</router-link>
       </div>
       <ul>
         <li>
           <router-link to="/imarket">Market</router-link>
         </li>
         <li>
-          <a href="">Seller</a>
+          <router-link to="/partnership">Seller</router-link>
         </li>
         <li>
           <a href="">Contact</a>
@@ -48,6 +48,11 @@
                 <p class="text-center grey--text">
                   <small>{{ user.email }}</small>
                 </p>
+                <p class="mb-0 text-center grey--text">
+                  <small
+                    >User Type: <span class="primary--text">{{ user.roles[0].name }}</span></small
+                  >
+                </p>
               </v-list>
             </v-layout>
             <v-divider></v-divider>
@@ -68,6 +73,15 @@
                 </v-list-item-icon>
                 <v-list-item-content>
                   <v-list-item-title>My Orders</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+
+              <v-list-item link to="/manage-products">
+                <v-list-item-icon>
+                  <v-icon small>mdi-package-variant</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>Store Config</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
 
@@ -118,12 +132,19 @@
       showMenu: false,
       logoutDialog: false,
       btnLoading: false,
+      isFixed: false
     }),
     components: { CartDropDown },
     async mounted() {
       if (this.$route.path == '/imarket') {
         await this.$store.dispatch('market/cartCount');
       }
+    },
+    created() {
+      window.addEventListener('scroll', this.handleScroll);
+    },
+    destroyed() {
+      window.removeEventListener('scroll', this.handleScroll);
     },
     methods: {
       async logout() {
@@ -133,6 +154,14 @@
         this.btnLoading = false;
         this.$router.push('/');
         this.logoutDialog = false;
+      },
+      handleScroll(event) {
+        this.scrollPosition = window.scrollY;
+        if (this.scrollPosition >= 10) {
+          this.isFixed = true;
+        } else {
+          this.isFixed = false;
+        }
       },
       async uploadProfileImage(event) {
         let formData = new FormData();
@@ -161,18 +190,21 @@
 
 <style lang="scss">
   .logo p {
-    font-size: 1.4rem;
+    // font-size: 1.4rem;
     font-weight: 600;
   }
 
   nav {
-    position: relative;
+    position: fixed;
     width: 100%;
     padding: 2rem 2.8rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 5;
+    top: 0;
+    left: 0;
+    transition: all 250ms ease-in-out;
 
     & ul {
       display: flex;

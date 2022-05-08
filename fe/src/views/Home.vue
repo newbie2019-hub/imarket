@@ -1,7 +1,8 @@
 <template>
   <div>
     <Navbar />
-    <v-container class="mb-15">
+    <v-layout class="mt-15"></v-layout>
+    <v-container class="mb-15 mt-15">
       <v-row justify="center" class="h-100 flex-column-reverse flex-sm-column-reverse flex-md-row flex-lg-row">
         <v-col cols="12" sm="12" md="7" lg="6">
           <h1 v-animate-css="'fadeInUp'" class="heading lh-normal circular text-sm-center text-md-left text-lg-left">Fastest <span class="blue--text">Order</span> & <span class="blue--text text-sm-center ">Delivery</span> At Your Doorstep</h1>
@@ -149,7 +150,7 @@
       </v-row>
     </v-container>
 
-    <div class="orange-light position-relative mt-20">
+    <div id="parternship" class="orange-light position-relative mt-20">
       <v-container class="pt-10">
         <v-row justify="center" align="center" class="flex-md-row-reverse flex-lg-row h-100">
           <v-col cols="12" sm="11" md="12" lg="12" class="mt-n20">
@@ -161,7 +162,7 @@
                     Would you like to have new customers enjoying your fresh products? So would we. Interested? <br /><br />
                     Let’s start our parternship today!
                   </h3>
-                  <v-btn color="blue darken-1" depressed class="rounded-pill btn-glow-blue mt-3" large> Get Started </v-btn>
+                  <v-btn link to="/partnership" color="blue darken-1" depressed class="rounded-pill btn-glow-blue mt-3" large> Get Started </v-btn>
                 </v-col>
                 <div class="img-right">
                   <v-img src="@/assets/images/agreement.svg" class="img-width" contain></v-img>
@@ -170,14 +171,14 @@
             </v-card>
           </v-col>
         </v-row>
-        <v-row align="center" justify="center" class="mt-15">
+        <v-row align="center" justify="center" class="mt-10">
           <v-col cols="12" sm="11" lg="6">
             <h1 class="ml-5">Got some questions and suggestions?</h1>
             <h3 class="ml-5 mt-5 font-weight-light">Visit our social media accounts or send us an email at imarket@gmail.com</h3>
           </v-col>
           <v-col></v-col>
         </v-row>
-        <v-layout justify-space-between class="ml-5 mr-5 mt-15">
+        <v-layout justify-space-between class="ml-5 mr-5 mt-15 mb-10">
           <h3 class="font-weight-bold">IMarket</h3>
           <h3 class="font-weight-light">© 2022 | All Rights Reserved</h3>
         </v-layout>
