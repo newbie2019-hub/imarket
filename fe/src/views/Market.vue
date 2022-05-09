@@ -149,7 +149,7 @@
             <v-row no-gutters dense v-else class="">
               <v-col cols="12" sm="6" md="4" lg="3" v-for="(product, i) in sortedProducts" :key="i">
                 <v-hover :key="i" v-slot="{ hover }" class="cursor-hover">
-                  <v-card class="mx-2 mb-3" :elevation="hover ? 2 : 0" :outlined="hover ? true : false">
+                  <v-card link :to="`/imarket/product/${product.id}`" class="mx-2 mb-3" :elevation="hover ? 2 : 0" :outlined="hover ? true : false">
                     <v-img :src="`http://127.0.0.1:8000/images/products/${product.product_info.image}`" contain></v-img>
                     <v-card-text class="position-relative pt-2">
                       <v-btn
@@ -272,7 +272,6 @@
       async getProducts() {
         this.isLoading = true;
         const page = this.page + 1;
-        console.log(page);
         await this.$store.dispatch('market/getProducts', page);
         this.page += 1;
         this.isLoading = false;

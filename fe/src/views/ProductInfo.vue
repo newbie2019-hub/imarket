@@ -27,11 +27,12 @@
       </v-row>
       <v-row v-if="productSelected.product_info" class="mb-15">
         <v-col cols="12" sm="12" md="7" lg="6">
-          <v-img max-height="420" :src="`http://127.0.0.1:8000/images/products/${productSelected.product_info.image}`"></v-img>
+          <v-img max-height="46 0" :src="`http://127.0.0.1:8000/images/products/${productSelected.product_info.image}`"></v-img>
         </v-col>
         <v-col cols="12" sm="12" md="5" lg="5">
-          <h1 class="ml-4 mt-3">{{ productSelected.product_info.name }}</h1>
-          <h4 class="ml-4 mt-3 font-weight-light text-justify">{{ productSelected.product_info.description }}</h4>
+          <h1 class="ml-4 mt-1">{{ productSelected.product_info.name }}</h1>
+          <p class="ml-4 mb-0 grey--text">{{ productSelected.store.name }}</p>
+          <h4 class="ml-4 mt-3 font-weight-regular text-justify">{{ productSelected.product_info.description }}</h4>
           <v-layout class="ml-3 mt-4" d-flex align-center>
             <v-rating
               class=""
@@ -58,11 +59,145 @@
             </v-col>
           </v-layout>
           <v-btn depressed x-large class="ml-4 btn-glow-blue" color="blue darken-2" dark>
-           <v-icon small class="mr-2">
-            mdi-cart
-           </v-icon>
-           Add to Cart
+            <v-icon small class="mr-2"> mdi-cart </v-icon>
+            Add to Cart
           </v-btn>
+        </v-col>
+      </v-row>
+
+      <v-row class="mb-15">
+        <v-col class="" cols="12" sm="12" md="7" lg="8">
+          <h2 class="font-rubik text-uppercase" :class="{ 'mb-10': productSelected.rating > 0 }">Reviews</h2>
+          <h4 class="font-rubik font-weight-regular mt-2" v-if="productSelected.rating == 0">No reviews for this product yet. Buy now so you can make a review for this product</h4>
+          <v-layout d-flex class="mt-5" v-for="(rating, i) in productSelected.rating" :key="i">
+            <v-avatar size="60" color="primary"> </v-avatar>
+            <v-layout column>
+              <v-layout d-flex align-center class="mb-0">
+                <v-rating
+                  class="ml-8"
+                  empty-icon="mdi-star-outline"
+                  full-icon="mdi-star"
+                  half-icon="mdi-star-half-full"
+                  half-increments
+                  hover
+                  length="5"
+                  :value="parseFloat(rating.rating)"
+                  size="20"
+                  readonly
+                ></v-rating>
+                <p class="mb-0 ml-2 mt-1 black--text">
+                  {{ parseFloat(rating.rating).toFixed(1) }}
+                </p>
+              </v-layout>
+              <p class="ml-8 mb-0 font-2x">{{ rating.user_info.first_name }} {{ rating.user_info.last_name }}</p>
+              <p class="ml-8 mb-5">
+                <small>{{ rating.created_at }}</small>
+              </p>
+              <p class="ml-8">{{ rating.comment }}</p>
+            </v-layout>
+          </v-layout>
+        </v-col>
+        <v-col cols="12" sm="12" md="5" lg="4">
+          <h2 class="font-rubik text-uppercase mb-10">Related Product</h2>
+          <v-row>
+            <v-col cols="12" sm="6" md="10" lg="10" v-for="(product, i) in relatedCategoryProduct" :key="i">
+              <v-hover :key="i" v-slot="{ hover }" class="cursor-hover">
+                <v-card class="mx-2 mb-3" :elevation="hover ? 2 : 0" :outlined="hover ? true : false">
+                  <v-img :src="`http://127.0.0.1:8000/images/products/${product.product_info.image}`" contain></v-img>
+                  <v-card-text class="position-relative pt-2">
+                    <v-btn
+                      @click.prevent="addToCart(product)"
+                      :loading="isCartLoading && productId == product.id"
+                      absolute
+                      :color="isAddedSuccess && productId == product.id ? 'green' : 'orange darken-2'"
+                      class="white--text"
+                      fab
+                      small
+                      right
+                      top
+                      depressed
+                    >
+                      <v-icon small>{{ isAddedSuccess && productId == product.id ? 'mdi-check' : 'mdi-cart-plus' }}</v-icon>
+                    </v-btn>
+                    <v-card-title class="pt-1 pl-1 black--text lh-small text-capitalize">{{ product.product_info.name }}</v-card-title>
+                    <v-card-subtitle class="pt-0 pl-1"> {{ product.store.name }} </v-card-subtitle>
+                    <v-layout d-flex align-center>
+                      <v-rating
+                        class="mt-n4"
+                        empty-icon="mdi-star-outline"
+                        full-icon="mdi-star"
+                        half-icon="mdi-star-half-full"
+                        half-increments
+                        hover
+                        length="5"
+                        :value="product.rating_avg_rating"
+                        size="18"
+                        readonly
+                      ></v-rating>
+                      <p class="mb-0 mt-n3 ml-2 black--text">
+                        {{ product.rating_avg_rating && product.rating_avg_rating.toFixed(1) }}
+                      </p>
+                    </v-layout>
+                    <p class="mb-0 ml-1">{{ product.rating_count }} Rating{{ product.rating_count > 1 ? 's' : '' }}</p>
+                    <h2 class="mt-4 pl-1 orange--text darken-2 font-weight-regular">₱ {{ formatCurrency(product.product_info.price) }}</h2>
+                  </v-card-text>
+                </v-card>
+              </v-hover>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+      <div>
+        <h2 class="font-weight-bold mb-0">From The Same Store</h2>
+        <p class="mb-8 grey--text">Here are the latest products added by this store</p>
+      </div>
+      <v-row no-gutters dense class="">
+        <v-layout v-if="isLoading" wrap>
+          <v-skeleton-loader v-for="n in 6" :key="n" class="mx-2" min-width="270" max-width="270" type="card"></v-skeleton-loader>
+        </v-layout>
+        <v-col cols="12" sm="6" md="4" lg="3" v-for="(product, i) in moreProducts" :key="i">
+          <v-hover :key="i" v-slot="{ hover }" class="cursor-hover">
+            <v-card link :to="`/imarket/product/${product.id}`" class="mx-2 mb-3" :elevation="hover ? 2 : 0" :outlined="hover ? true : false">
+              <v-img :src="`http://127.0.0.1:8000/images/products/${product.product_info.image}`" contain></v-img>
+              <v-card-text class="position-relative pt-2">
+                <v-btn
+                  @click.prevent="addToCart(product)"
+                  :loading="isCartLoading && productId == product.id"
+                  absolute
+                  :color="isAddedSuccess && productId == product.id ? 'green' : 'orange darken-2'"
+                  class="white--text"
+                  fab
+                  small
+                  right
+                  top
+                  depressed
+                >
+                  <v-icon small>{{ isAddedSuccess && productId == product.id ? 'mdi-check' : 'mdi-cart-plus' }}</v-icon>
+                </v-btn>
+                <v-card-title class="pt-1 pl-1 black--text lh-small text-capitalize">{{ product.product_info.name }}</v-card-title>
+                <v-card-subtitle class="pt-0 pl-1"> {{ product.store.name }} </v-card-subtitle>
+                <v-layout d-flex align-center>
+                  <v-rating
+                    class="mt-n4"
+                    empty-icon="mdi-star-outline"
+                    full-icon="mdi-star"
+                    half-icon="mdi-star-half-full"
+                    half-increments
+                    hover
+                    length="5"
+                    :value="product.rating_avg_rating"
+                    size="18"
+                    readonly
+                  ></v-rating>
+                  <p class="mb-0 mt-n3 ml-2 black--text">
+                    {{ product.rating_avg_rating && product.rating_avg_rating.toFixed(1) }}
+                  </p>
+                </v-layout>
+                <p class="mb-0 ml-1">{{ product.rating_count }} Rating{{ product.rating_count > 1 ? 's' : '' }}</p>
+                <h2 class="mt-4 pl-1 orange--text darken-2 font-weight-regular">₱ {{ formatCurrency(product.product_info.price) }}</h2>
+              </v-card-text>
+            </v-card>
+          </v-hover>
         </v-col>
       </v-row>
     </v-container>
@@ -78,8 +213,11 @@
       productId: null,
       search: '',
       data: {
-       qty: 1,
-      }
+        qty: 1,
+      },
+      isCartLoading: false,
+      isAddedSuccess: false,
+      isLoading: false,
     }),
     components: { Navbar },
     created() {},
@@ -93,16 +231,42 @@
     },
     methods: {
       async getProduct() {
+        this.isLoading = true;
         const { status, data } = await this.$store.dispatch('products/getProduct', this.$route.params.id);
         if (status != 200) {
           this.$toast.error('Something went wrong!');
           this.$router.push('/imarket');
         }
+        this.isLoading = false;
+      },
+      async addToCart(product) {
+        if (this.user.info) {
+          this.isCartLoading = true;
+          this.productId = product.id;
+          await this.$store.dispatch('market/addToCart', product);
+          await this.$store.dispatch('market/cartCount');
+          await this.$store.dispatch('market/getCartItems');
+          this.isCartLoading = false;
+          this.isAddedSuccess = true;
+
+          setTimeout(() => {
+            this.productId = null;
+            this.isAddedSuccess = false;
+          }, 350);
+        } else {
+          this.$toast('Please login your account first!');
+          this.$router.push('/login');
+        }
       },
     },
     computed: {
-      ...mapState('products', ['productSelected']),
+      ...mapState('products', ['productSelected', 'relatedCategoryProduct', 'moreProducts']),
       ...mapState('auth', ['user']),
+    },
+    watch: {
+      async $route() {
+        await this.getProduct();
+      },
     },
   };
 </script>

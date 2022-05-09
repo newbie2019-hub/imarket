@@ -11,8 +11,10 @@ import { registerModules } from "./register-modules";
 import adminModule from "./modules/admin";
 import authModule from "./modules/auth";
 import VAnimateCss from 'v-animate-css';
+import VuePageTransition from 'vue-page-transition'
 
 Vue.use(VAnimateCss);
+Vue.use(VuePageTransition)
 
 registerModules({
   admin: adminModule,

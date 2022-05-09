@@ -19,8 +19,10 @@ class ProductController extends Controller
     }
 
     public function show($id){
-        $product = Product::with(['store','product_info:id,description,name,category_id,price,image', 'product_info.category:id,category', 'rating'])->where('id', $id)->withCount('rating')->withAvg('rating', 'rating')->first(['id', 'store_id', 'product_info_id']);
-        return response()->json($product);
+        $product = Product::with(['store','product_info:id,description,name,category_id,price,image', 'product_info.category:id,category', 'rating.user_info'])->where('id', $id)->withCount('rating')->withAvg('rating', 'rating')->first(['id', 'store_id', 'product_info_id']);
+        $relatedCategory = Product::where('id', '<>', $product->id)->with(['store','product_info:id,description,name,category_id,price,image', 'product_info.category:id,category'])->whereRelation('store', 'status', 'Approved')->whereRelation('product_info.category', 'id', $product->product_info->category_id)->latest()->take(8)->get();
+        $moreProducts = Product::where('id', '<>', $product->id)->with(['store','product_info:id,description,name,category_id,price,image', 'product_info.category:id,category'])->whereRelation('store', 'status', 'Approved')->whereRelation('store', 'id', $product->store->id)->latest()->take(8)->get();
+        return response()->json(['product' => $product, 'relatedProduct' => $relatedCategory, 'moreProducts' => $moreProducts]);
     }
 
     public function store(Request $request){

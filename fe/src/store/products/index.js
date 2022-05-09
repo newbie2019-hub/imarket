@@ -5,13 +5,17 @@ export default {
  state: {
   products: [],
   productSelected: [],
+  relatedCategoryProduct: [],
+  moreProducts: [],
  },
  getters: {
 
  },
  mutations: {
   SET_SELETED_PRODUCT(state, payload) {
-   state.productSelected = payload
+   state.productSelected = payload.product
+   state.relatedCategoryProduct = payload.relatedProduct
+   state.moreProducts = payload.moreProducts
   },
   SET_PRODUCTS(state, payload) {
    state.products = payload
