@@ -10,11 +10,16 @@ class ProductController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        $this->middleware('auth:api', ['except' => ['show']]);
     }
 
     public function index(){
-        $product = Product::whereRelation('store.partner', 'user_id', auth()->user()->id)->with(['product_info', 'product_info.category:id,category'])->latest()->get();
+        $product = Product::whereRelation('store.partner', 'user_id', auth()->user()->id)->with(['product_info:id,name,category_id,price,image', 'product_info.category:id,category'])->latest()->get();
+        return response()->json($product);
+    }
+
+    public function show($id){
+        $product = Product::with(['store','product_info:id,description,name,category_id,price,image', 'product_info.category:id,category', 'rating'])->where('id', $id)->withCount('rating')->withAvg('rating', 'rating')->first(['id', 'store_id', 'product_info_id']);
         return response()->json($product);
     }
 

@@ -13,12 +13,12 @@ class MarketController extends Controller
     }
 
     public function latestProducts(){
-        $latest = Product::whereRelation('store', 'status', 'Approved')->withCount('rating')->with(['product_info', 'store'])->withAvg('rating', 'rating')->latest()->take(8)->get();
+        $latest = Product::whereRelation('store', 'status', 'Approved')->withCount('rating')->with(['product_info:id,name,category_id,price,image', 'store'])->withAvg('rating', 'rating')->latest()->take(8)->get();
         return response()->json($latest);
     }
 
     public function index(Request $request){
-        $products = Product::whereRelation('store', 'status', 'Approved')->withCount('rating')->with(['product_info', 'store'])->withAvg('rating', 'rating')->latest()->paginate(8);
+        $products = Product::whereRelation('store', 'status', 'Approved')->withCount('rating')->with(['product_info:id,name,category_id,price,image', 'store'])->withAvg('rating', 'rating')->latest()->paginate(8);
         return response()->json($products);
     }
 

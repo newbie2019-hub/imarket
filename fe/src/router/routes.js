@@ -18,6 +18,14 @@ const routes = [
     }
   },
   {
+    path: '/imarket/product/:id',
+    name: 'ProductInfo',
+    component: () => import(/* webpackChunkName: "productInfo" */ '../views/ProductInfo.vue'),
+    meta: {
+      title: ''
+    }
+  },
+  {
     path: '/orders',
     name: 'Orders',
     component: () => import(/* webpackChunkName: "orders" */ '../views/Orders.vue'),
