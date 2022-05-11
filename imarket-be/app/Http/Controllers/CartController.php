@@ -42,8 +42,8 @@ class CartController extends Controller
                 CartContent::create([
                     'cart_id' => $cart->id,
                     'product_id' => $request->id,
-                    'subtotal' => $request->product_info['price'] * 1,
-                    'quantity' => 1
+                    'subtotal' => $request->product_info['price'] * ($request->qty ? $request->qty : 1),
+                    'quantity' => $request->qty ? $request->qty : 1
                 ]);
             }
             else {

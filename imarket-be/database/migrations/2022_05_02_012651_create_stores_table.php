@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('partner_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('description');
+            $table->string('logo')->nullable();
             $table->string('banner_image')->nullable();
             $table->text('address');
             $table->string('week_days_opening');

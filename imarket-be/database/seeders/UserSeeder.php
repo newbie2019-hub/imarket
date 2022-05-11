@@ -15,6 +15,10 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+
+        $user = User::factory()->create();
+        $user->assignRole('Super Admin');
+        
         $x = 1;
 
         while($x <= 25){

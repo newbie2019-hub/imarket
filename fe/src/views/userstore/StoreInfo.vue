@@ -1,25 +1,69 @@
 <template>
   <div>
     <div class="mt-2">
-      <v-form ref="form" lazy-validation v-model="valid" @submit.prevent="update">
-        <v-layout column>
-          <p class="font-2x font-weight-bold ml-1 mt-5 mb-0">Store Information</p>
-          <p class="grey--text ml-1">Update your store information below</p>
+      <v-layout column>
+        <div class="store-preview">
+          <v-img :src="`http://127.0.0.1:8000/images/banners/${storeInfo.banner_image}`" class="store-preview--image"></v-img>
+          <div class="upload-image-banner cursor-pointer v-btn">
+            <label for="uploadimg" class="cursor-pointer">
+              <v-icon color="white">mdi-camera</v-icon>
+            </label>
+            <input type="file" id="uploadimg" @change="uploadBannerImage" />
+          </div>
+          <div class="image-overlay"></div>
+        </div>
+        <v-layout class="store-preview--content">
+          <v-avatar color="grey" size="140"></v-avatar>
+          <v-layout column class="ml-5">
+            <h1 class="font-rubik white--text">{{ storeInfo.name }}</h1>
+            <p class="white--text">
+              <v-icon color="white"> mdi-map-marker</v-icon>
+              {{ storeInfo.address }}
+            </p>
+            <v-row dense>
+              <v-col sm="5" md="4" lg="3">
+                <p class="mb-0">Week Days</p>
+                <p>
+                  <small>
+                    <v-icon small> mdi-clock </v-icon>
+                    {{ storeInfo.week_days_opening | formatTime }}
+                  </small>
+                  -
+                  <small>
+                    <v-icon small> mdi-clock </v-icon>
+                    {{ storeInfo.week_days_closing | formatTime }}
+                  </small>
+                </p>
+              </v-col>
+              <v-col sm="5" md="4" lg="3">
+                <p class="mb-0">Week Ends</p>
+                <p>
+                  <small>
+                    <v-icon small> mdi-clock </v-icon>
+                    {{ storeInfo.week_end_opening | formatTime }}
+                  </small>
+                  -
+                  <small>
+                    <v-icon small> mdi-clock </v-icon>
+                    {{ storeInfo.week_end_closing | formatTime }}
+                  </small>
+                </p>
+              </v-col>
+            </v-row>
+          </v-layout>
         </v-layout>
+      </v-layout>
+      <v-layout column>
+        <p class="font-2x font-weight-bold ml-1 mt-5 mb-0">Store Information</p>
+        <p class="grey--text ml-1">Update your store information below</p>
+      </v-layout>
+      <v-form ref="form" lazy-validation v-model="valid" @submit.prevent="update">
         <v-row dense>
           <v-col lg="6" md="6" sm="6" cols="12">
             <v-text-field prepend-inner-icon="mdi-card-bulleted-outline" v-model="data.name" :rules="required" hide-details="auto" label="Store Name" required outlined></v-text-field>
           </v-col>
           <v-col lg="6" md="6" sm="6" cols="12">
-            <v-file-input
-              @change="uploadImage"
-              accept="image/png, image/jpeg, image/bmp"
-              outlined
-              prepend-icon=""
-              hide-details="auto"
-              prepend-inner-icon="mdi-file-image"
-              label="Store Banner"
-            ></v-file-input>
+            <v-textarea class="" rows="2" prepend-inner-icon="mdi-map-marker" v-model="data.address" :rules="required" auto-grow hide-details="auto" label="Address" required outlined></v-textarea>
           </v-col>
           <v-col lg="6" md="6" sm="6" cols="12">
             <v-textarea
@@ -35,9 +79,6 @@
               required
               outlined
             ></v-textarea>
-          </v-col>
-          <v-col lg="6" md="6" sm="6" cols="12">
-            <v-textarea class="" rows="2" prepend-inner-icon="mdi-map-marker" v-model="data.address" :rules="required" auto-grow hide-details="auto" label="Address" required outlined></v-textarea>
           </v-col>
 
           <v-col lg="12">
@@ -139,7 +180,7 @@
           <p class="grey--text ml-1 mt-3 font-weight-light">Note: This will be displayed on your store but you can still set the status of your store manually</p>
         </v-row>
         <v-layout justify-end class="mt-5 mb-10">
-          <v-btn type="submit" color="green darken-2" dark depressed :loading="btnLoading">Save Update</v-btn>
+          <v-btn type="submit" color="green darken-2" dark depressed :loading="btnLoading">Save Changes</v-btn>
         </v-layout>
       </v-form>
     </div>
@@ -150,7 +191,15 @@
   import { formatCurrency } from '@/assets/js/utilities';
   import { rules } from '@/assets/js/rules';
   import { mapState } from 'vuex';
+  import moment from 'moment';
   export default {
+    filters: {
+      formatTime(val) {
+        if (val) {
+          return moment(val, ['hh:mm']).format('hh:mm A');
+        }
+      },
+    },
     mixins: [formatCurrency, rules],
     data: () => ({
       data: {
@@ -176,10 +225,26 @@
       await this.$store.dispatch('market/getStoreInfo');
     },
     methods: {
+      async uploadBannerImage(event) {
+        let formData = new FormData();
+        formData.append('banner', event.target.files[0]);
+        await API.post(`store/update-banner`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+          .then((response) => {
+            this.toastData(200, { msg: 'Banner image updated successfully!' });
+          })
+          .catch((error) => {
+            console.log({ error });
+          });
+        await this.$store.dispatch('market/getStoreInfo');
+      },
       async uploadImage(event) {
         if (event) {
           let formData = new FormData();
-          formData.append('image', event);
+          formData.append('banner', event);
           await API.post(`products/uploadImage`, formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
@@ -199,7 +264,7 @@
           this.btnLoading = true;
           const { status, data } = await this.$store.dispatch('market/updateStore', this.data);
           this.toastData(status, data);
-          await this.$store.dispatch('products/getStoreInfo');
+          await this.$store.dispatch('market/getStoreInfo');
           this.btnLoading = false;
         }
       },
@@ -214,3 +279,66 @@
     },
   };
 </script>
+<style>
+  .store-preview {
+    background: rgb(223, 223, 223);
+    width: 100%;
+    height: 240px;
+    position: relative;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding-left: 1.8rem;
+  }
+
+  .store-preview--image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    filter: grayscale(20%) blur(1px);
+    -webkit-filter: grayscale(20%) blur(1px);
+    border-radius: 8px;
+  }
+
+  .store-preview--content {
+    z-index: 2;
+    padding-left: 2rem;
+    margin-top: -5.2rem;
+    /* position: absolute; */
+  }
+
+  .upload-image-banner {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    background: rgba(163, 163, 163, 0.603);
+    border: 1px solid rgba(255, 255, 255, 0.39);
+    border-radius: 50%;
+    padding: 0.5rem 0.47rem 0.42rem 0.375rem;
+    display: flex;
+    align-items: center;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    justify-content: center;
+    transition: all 250ms ease-in-out;
+  }
+
+  .upload-image-banner:hover {
+    background: rgba(179, 179, 179, 0.884);
+  }
+
+  .image-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(61, 61, 61, 0.4);
+    height: 95px;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    z-index: 2;
+  }
+</style>

@@ -3,26 +3,9 @@
     <Navbar />
     <v-layout class="mt-15"></v-layout>
     <v-container class="mt-15">
-      <v-layout column class="mb-8 lh-small">
-        <h1 v-if="user.info" class="mb-2">Hi, {{ user.info && user.info.first_name }} {{ user.info && user.info.last_name }}!</h1>
-        <h1 v-else class="mb-2">Hi, User!</h1>
-        <h2 class="grey--text font-weight-light">I-Market is here to serve you.</h2>
-      </v-layout>
+      <search-product />
       <v-row justify="center" align="center">
         <v-col cols="12" sm="12" md="12" lg="12">
-          <v-layout>
-            <v-text-field
-              prepend-inner-icon="mdi-magnify"
-              v-model="search"
-              class="rounded-lg"
-              label="What would you like to eat?"
-              required
-              filled
-              rounded
-              clearable
-              color="orange darken-2"
-            ></v-text-field>
-          </v-layout>
           <v-layout class="mt-10" justify-space-between align-center>
             <div>
               <h2 class="font-weight-bold mb-0">Latest Added</h2>
@@ -144,7 +127,7 @@
               </v-slide-group>
             </v-layout>
             <v-layout v-if="isLoading" wrap>
-              <v-skeleton-loader v-for="n in 9" :key="n" class="mx-2" min-width="400"  type="card"></v-skeleton-loader>
+              <v-skeleton-loader v-for="n in 9" :key="n" class="mx-2" min-width="400" type="card"></v-skeleton-loader>
             </v-layout>
             <v-row no-gutters dense v-else class="">
               <v-col cols="12" sm="6" md="4" lg="3" v-for="(product, i) in sortedProducts" :key="i">
@@ -213,7 +196,7 @@
                     Would you like to have new customers enjoying your fresh products? So would we. Interested? <br /><br />
                     Let’s start our parternship today!
                   </h3>
-                  <v-btn color="blue darken-1" depressed class="rounded-pill btn-glow-blue mt-3" large link to="/login" > Get Started </v-btn>
+                  <v-btn color="blue darken-1" depressed class="rounded-pill btn-glow-blue mt-3" large link to="/login"> Get Started </v-btn>
                 </v-col>
                 <div class="img-right">
                   <v-img src="@/assets/images/agreement.svg" class="img-width" contain></v-img>
@@ -241,8 +224,9 @@
   import Navbar from './components/Navbar.vue';
   import { mapState } from 'vuex';
   import { formatCurrency } from '@/assets/js/utilities';
+  import SearchProduct from './components/SearchProduct.vue'
   export default {
-    components: { Navbar },
+    components: { Navbar, SearchProduct },
     mixins: [formatCurrency],
     data: () => ({
       search: '',

@@ -8,7 +8,7 @@
         <v-text-field dense hide-details="auto" outlined prepend-inner-icon="mdi-magnify" color="orange darken-2" label="Search Product" v-model="search"></v-text-field>
       </v-col>
     </v-layout>
-    <v-data-table :headers="headers" :items="products" :items-per-page="5" class="elevation-0">
+    <v-data-table :search="search" :headers="headers" :items="products" :items-per-page="5" class="elevation-0">
       <template v-slot:item.product_info.image="{ item }">
         <v-img class="mt-2 mb-2" max-width="80" :src="`http://127.0.0.1:8000/images/products/${item.product_info.image}`"></v-img>
       </template>

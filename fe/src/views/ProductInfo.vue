@@ -3,29 +3,8 @@
     <Navbar />
     <v-layout class="mt-15"></v-layout>
     <v-container class="mt-15">
-      <v-layout column class="mb-8 lh-small">
-        <h1 v-if="user.info" class="mb-2">Hi, {{ user.info && user.info.first_name }} {{ user.info && user.info.last_name }}!</h1>
-        <h1 v-else class="mb-2">Hi, User!</h1>
-        <h2 class="grey--text font-weight-light">I-Market is here to serve you.</h2>
-      </v-layout>
-      <v-row justify="center" align="center">
-        <v-col cols="12" sm="12" md="12" lg="12">
-          <v-layout>
-            <v-text-field
-              prepend-inner-icon="mdi-magnify"
-              v-model="search"
-              class="rounded-lg"
-              label="What would you like to eat?"
-              required
-              filled
-              rounded
-              clearable
-              color="orange darken-2"
-            ></v-text-field>
-          </v-layout>
-        </v-col>
-      </v-row>
-      <v-row v-if="productSelected.product_info" class="mb-15">
+      <search-product />
+      <v-row v-if="productSelected.product_info" class="mb-15 mt-8">
         <v-col cols="12" sm="12" md="7" lg="6">
           <v-img max-height="46 0" :src="`http://127.0.0.1:8000/images/products/${productSelected.product_info.image}`"></v-img>
         </v-col>
@@ -55,10 +34,10 @@
           <v-layout class="ml-4 mt-6" align-center>
             <p class="font-weight-bold mb-0 mr-2">QTY:</p>
             <v-col lg="3" md="3" sm="4" cols="5">
-              <v-text-field v-model="data.qty" type="number" outlined dense hide-details="auto"></v-text-field>
+              <v-text-field v-model="data.qty" type="number" min="1" :max="productSelected.product_info.quantity" outlined dense hide-details="auto"></v-text-field>
             </v-col>
           </v-layout>
-          <v-btn depressed x-large class="ml-4 btn-glow-blue" color="blue darken-2" dark>
+          <v-btn @click="addToCart(productSelected)" depressed large class="ml-4 btn-glow-blue" color="blue darken-2" dark>
             <v-icon small class="mr-2"> mdi-cart </v-icon>
             Add to Cart
           </v-btn>
@@ -207,19 +186,26 @@
   import Navbar from './components/Navbar.vue';
   import { mapState } from 'vuex';
   import { formatCurrency } from '@/assets/js/utilities';
+  import SearchProduct from './components/SearchProduct.vue'
+
   export default {
     mixins: [formatCurrency],
     data: () => ({
       productId: null,
       search: '',
       data: {
+        id: null,
         qty: 1,
+        product_info: {
+          price: '',
+          quantity: ''
+        }
       },
       isCartLoading: false,
       isAddedSuccess: false,
       isLoading: false,
     }),
-    components: { Navbar },
+    components: { Navbar, SearchProduct },
     created() {},
     async mounted() {
       this.productId = this.$route.params.id;
@@ -240,10 +226,12 @@
         this.isLoading = false;
       },
       async addToCart(product) {
+        this.data.id = product.id
+        this.data.product_info = product.product_info
         if (this.user.info) {
           this.isCartLoading = true;
           this.productId = product.id;
-          await this.$store.dispatch('market/addToCart', product);
+          await this.$store.dispatch('market/addToCart', this.data);
           await this.$store.dispatch('market/cartCount');
           await this.$store.dispatch('market/getCartItems');
           this.isCartLoading = false;

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Laravel\Sanctum\HasApiTokens;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements JWTSubject
@@ -70,7 +71,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
     public function info(){
-        return $this->belongsTo(UserInfo::class, 'user_info_id', 'id');
+        return $this->belongsTo(UserInfo::class, 'user_info_id', 'id')->withTrashed();
     }
 
     public function store(){

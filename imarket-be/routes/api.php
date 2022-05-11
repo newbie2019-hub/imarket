@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\AdminArchivedUserController;
+use App\Http\Controllers\AdminCategoryController;
+use App\Http\Controllers\AdminProductController;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
@@ -41,6 +45,13 @@ Route::middleware('api')->group(function () {
 
         Route::post('update-profile', 'updateProfileImg');
         Route::post('remove-profile', 'deleteProfileImg');
+
+        Route::prefix('admin')->group(function () {
+            Route::apiResource('category', AdminCategoryController::class);
+            Route::apiResource('archived-users', AdminArchivedUserController::class);
+            Route::apiResource('users', AdminUserController::class);
+            Route::apiResource('products', AdminProductController::class);
+        });
     });
 
     Route::apiResource('categories', CategoryController::class);
@@ -59,5 +70,7 @@ Route::middleware('api')->group(function () {
     Route::apiResource('products', ProductController::class);
 
     Route::apiResource('orders', OrderController::class);
+
+    Route::post('store/update-banner',[StoreInfoController::class, 'updateBannerImg']);
     Route::apiResource('store', StoreInfoController::class);
 });

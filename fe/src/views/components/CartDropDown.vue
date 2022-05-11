@@ -55,7 +55,7 @@
         <v-divider></v-divider>
         <div class="cart-bottom" v-if="Object.keys(cart).length != 0 && cart.cart_info.length != 0">
           <p class="mb-0"><span class="font-weight-bold">Sub Total:</span> PHP {{ formatCurrency(cart.cart_info_sum_subtotal) }}</p>
-          <v-btn link to="/cart-checkout" class="" depressed color="orange darken-2" dark>Checkout</v-btn>
+          <v-btn link to="/cart-checkout" class="" text depressed color="white darken-2" dark>Checkout</v-btn>
         </div>
       </v-card>
     </v-menu>
