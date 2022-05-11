@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar elevation="0" color="white" class="pt-2 pr-2">
+    <v-app-bar elevation="0" color="white" class="pt-2 pr-2" fixed height="68">
       <v-app-bar-nav-icon class="ml-2" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-spacer></v-spacer>
       <v-btn icon>
@@ -168,5 +168,9 @@
 
   .v-navigation-drawer__content {
     width: 100%;
+  }
+
+  .v-toolbar__content {
+    padding-bottom: 1rem !important;
   }
 </style>

@@ -11,10 +11,6 @@ class AdminUserController extends Controller
         return response()->json(User::where('id', '<>', auth()->user()->id)->with(['info', 'roles'])->get());
     }
 
-    public function archivedUsers(){
-        return response()->json(User::onlyTrashed()->with(['info', 'roles'])->get());
-    }
-
     public function destroy($id){
         User::destroy($id);
         $user = User::onlyTrashed()->where('id', $id)->first();

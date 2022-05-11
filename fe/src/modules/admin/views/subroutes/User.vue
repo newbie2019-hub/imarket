@@ -1,7 +1,7 @@
 <template>
   <v-container :class="{ 'pa-0': $vuetify.breakpoint.md }" :fluid="isFluid">
     <div>
-      <p class="text-h5 font-weight-bold mt-4 custom-primary-color mb-0">Accounts Management</p>
+      <p class="text-h5 font-weight-bold custom-primary-color mt-8 mb-0">Accounts Management</p>
       <p>You can manage the accounts of the users on the table.</p>
     </div>
     <v-row class="mt-5 mb-5">
@@ -56,13 +56,13 @@
         <v-layout justify-space-between>
           <p>Active Users</p>
           <v-col sm="5" md="4" lg="4">
-            <v-text-field v-model="search" outlined dense append-icon="mdi-magnify" class="mb-5" label="Search" single-line hide-details></v-text-field>
+            <v-text-field v-model="search" outlined dense append-icon="mdi-magnify" class="mb-5" label="Search" hide-details></v-text-field>
           </v-col>
         </v-layout>
         <v-data-table :headers="headers" :items="users" :search="search" :loading="isLoading" :loading-text="'Retrieving users data. Please wait ...'">
           <template v-slot:item.profile="{ item }">
             <v-avatar class="ma-0" size="45" color="primary">
-              <img class="cursor-pointer" v-if="item.info.profile_img" @click.prevent="showProfile(item.info.profile_img)" :src="`http://127.0.0.1:8000/images/profiles/${item.info.profile_img}`" />
+              <img class="cursor-pointer" v-if="item.info.profile_img" :src="`http://127.0.0.1:8000/images/profiles/${item.info.profile_img}`" />
               <p v-else class="white--text font-weight-bold mb-0">{{ item.info.first_name[0] }}{{ item.info.last_name[0] }}</p>
             </v-avatar>
           </template>
@@ -108,7 +108,7 @@
         <v-layout justify-space-between>
           <p>Archived Users</p>
           <v-col sm="5" md="4" lg="4">
-            <v-text-field v-model="searchArchived" outlined dense append-icon="mdi-magnify" class="mb-5" label="Search" single-line hide-details></v-text-field>
+            <v-text-field v-model="searchArchived" outlined dense append-icon="mdi-magnify" class="mb-5" label="Search" hide-details></v-text-field>
           </v-col>
         </v-layout>
         <v-data-table :headers="archivedHeaders" :items="archivedUsers" :search="searchArchived" :loading="isLoading" :loading-text="'Retrieving users data. Please wait ...'">
