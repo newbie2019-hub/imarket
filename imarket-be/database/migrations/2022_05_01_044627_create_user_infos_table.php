@@ -21,7 +21,6 @@ return new class extends Migration
             $table->date('birthday');
             $table->string('gender', 10);
             $table->string('contact_number', 18);
-            $table->text('address');
             $table->text('profile_img')->nullable();
             $table->text('valid_id')->nullable();
             $table->softDeletes();

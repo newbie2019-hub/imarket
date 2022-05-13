@@ -26,7 +26,6 @@ class UserInfoFactory extends Factory
         return [
             'first_name' => $first_name,
             'last_name' => $this->faker->lastName,
-            'address' => $faker->address,
             'gender' => $gender,
             'contact_number' => $faker->mobileNumber(),
             'birthday' => $this->faker->dateTimeBetween('Y-m-d', '1999-03-20'),

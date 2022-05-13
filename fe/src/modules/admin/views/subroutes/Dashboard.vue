@@ -1,8 +1,8 @@
 <template>
-  <div class="">
-    <div>
-      <p class="text-h5 font-weight-bold mt-4 custom-primary-color mb-0">Overall Summary</p>
-      <p>Good Day! Here is your summary for Renta Car</p>
+  <div class="mt-15">
+    <div class="mt-15 pt-5">
+      <p class="text-h5 font-weight-bold custom-primary-color mb-0">Overall Summary</p>
+      <p>Good Day! Here is your summary for IMarket</p>
     </div>
     <v-row>
       <v-col cols="12" sm="6" md="4" lg="4" xl="4">
@@ -96,6 +96,24 @@
         </v-card>
       </v-col>
     </v-row>
+    <div class="mt-14">
+      <div>
+        <p class="text-h5 font-weight-bold custom-primary-color mt-8 mb-0">Products Summary</p>
+        <p>Here is your product summary as of today</p>
+      </div>
+      <v-row align="strech">
+        <v-col cols="12" sm="12" md="7" lg="7" xl="8">
+          <v-card elevation="1" class="pa-5">
+            <v-data-table :footer-props="{ disableItemsPerPage: true }" :headers="headers" :items="latestProducts" :items-per-page="5" class="elevation-0"></v-data-table>
+          </v-card>
+        </v-col>
+        <v-col cols="12" sm="12" md="5" lg="5" xl="4">
+          <v-card class="h-100 pa-5" elevation="1">
+            <v-row justify="center" align="center" class="h-100"> Chart Goes Here </v-row>
+          </v-card>
+        </v-col>
+      </v-row>
+    </div>
     <div class="mt-10">
       <p class="text-h5 font-weight-bold mt-4 custom-primary-color mb-0">Latest Transaction</p>
       <p>Here are your latest transactions for this day</p>
@@ -105,11 +123,25 @@
 <script>
   import { mapState } from 'vuex';
   export default {
-    data: () => ({}),
-    async mounted() {},
+    data: () => ({
+      headers: [
+        {
+          text: 'ID',
+          align: 'start',
+          value: 'id',
+        },
+        { text: 'Product', value: 'product_info.name' },
+        { text: 'Qty', value: 'product_info.quantity' },
+        { text: 'Sold', value: 'sold' },
+      ],
+    }),
+    async mounted() {
+      await this.$store.dispatch('adminDashboard/getDashboardSummary');
+    },
     methods: {},
     computed: {
       ...mapState('auth', ['user']),
+      ...mapState('adminDashboard', ['latestProducts']),
     },
   };
 </script>

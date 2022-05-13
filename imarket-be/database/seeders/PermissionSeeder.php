@@ -105,13 +105,5 @@ class PermissionSeeder extends Seeder
         foreach ($riderPermission as $permission)   {
             $rider->givePermissionTo($permission);
         }
-
-        $x = 1;
-
-        while($x <= 10){
-            $userSeller = User::factory()->create();
-            $userSeller->assignRole('Seller');
-            $x++;
-        }
     }
 }

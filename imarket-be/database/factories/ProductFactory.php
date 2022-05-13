@@ -19,7 +19,7 @@ class ProductFactory extends Factory
     {
         return [
             'store_id' => $this->faker->numberBetween(1, 12),
-            'product_info_id' => ProductInfo::factory()->create(),
+            'product_info_id' => ProductInfo::factory(),
         ];
     }
 }

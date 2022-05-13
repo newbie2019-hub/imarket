@@ -1,18 +1,16 @@
 <template>
   <div>
-    <v-app-bar elevation="0" color="white" class="pt-2 pr-2" fixed height="68">
+    <v-app-bar elevation="0" :color="$vuetify.theme.isDark ? '' : 'white'" class="pt-2 pr-2" fixed height="68">
       <v-app-bar-nav-icon class="ml-2" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-spacer></v-spacer>
-      <v-btn icon>
-       <v-icon color="blue darken-2">
-        mdi-weather-night
-       </v-icon>
+      <v-btn icon @click.prevent="setDarkMode">
+        <v-icon color="blue darken-2"> {{ setToggleIcon() }} </v-icon>
       </v-btn>
       <v-menu v-if="user.info" transition="slide-y-transition" :close-on-content-click="false" content-class="elevation-3" v-model="showMenu" absolute bottom left style="max-width: 450px">
         <template v-slot:activator="{ on, attrs }">
-         <v-btn icon text v-on="on" v-bind="attrs" color="blue darken-2">
-          <v-icon>mdi-bell-outline</v-icon>
-         </v-btn>
+          <v-btn icon text v-on="on" v-bind="attrs" color="blue darken-2">
+            <v-icon>mdi-bell-outline</v-icon>
+          </v-btn>
         </template>
 
         <v-card elevation="0" class="pl-5 pr-5 pt-2 pb-1">
@@ -38,7 +36,7 @@
         </v-list-item>
       </v-list>
       <p class="ml-5 mb-4 mt-6">Logs</p>
-       <v-list dense v-for="(item, i) in logItems" :key="i + 7" class="pa-0 mb-1">
+      <v-list dense v-for="(item, i) in logItems" :key="i + 7" class="pa-0 mb-1">
         <v-list-item link :to="item.link" active-class="v-list-active--item">
           <v-list-item-content class="ml-4 pa-0">
             <v-list-item-title class="font-weight-regular">
@@ -52,10 +50,18 @@
       </v-list>
       <template v-slot:append>
         <v-list-item two-line class="mb-2">
-          <v-list-item-avatar size="50" class="ma-0" color="primary">
-            <img class="cursor-pointer" v-if="user.info.profile_img" :src="`http://127.0.0.1:8000/images/profiles/${user.info.profile_img}`" />
-            <p v-else class="white--text font-weight-bold mb-0">{{ user.info.first_name[0] }}{{ user.info.last_name[0] }}</p>
-          </v-list-item-avatar>
+          <div class="position-relative">
+            <v-avatar color="grey" size="50">
+              <img v-if="user.info.profile_img" :src="'http://127.0.0.1:8000/images/profiles/' + user.info.profile_img" alt="Profile Image" />
+              <v-icon x-large color="white" v-else> mdi-account-circle </v-icon>
+            </v-avatar>
+            <div class="upload-image cursor-pointer v-btn">
+              <label for="uploadimg" class="cursor-pointer">
+                <v-icon small color="white">mdi-camera</v-icon>
+              </label>
+              <input type="file" id="uploadimg" @change="uploadProfileImage" />
+            </div>
+          </div>
 
           <v-list-item-content class="ml-2">
             <v-list-item-title>
@@ -105,13 +111,15 @@
         { title: 'Riders', icon: 'mdi-bike-fast', link: '/admin/riders' },
       ],
       logItems: [
-       { title: 'Orders', icon: 'mdi-truck-delivery-outline', link: '/admin/orders' },
+        { title: 'Orders', icon: 'mdi-truck-delivery-outline', link: '/admin/orders' },
         { title: 'Purchase History', icon: 'mdi-clipboard-text-clock-outline', link: '/admin/purchase-history' },
         { title: 'Logs', icon: 'mdi-history', link: '/admin/logs' },
       ],
       overwriteBreakpoint: false,
     }),
-    async mounted() {},
+    async mounted() {
+      console.log(this.$vuetify.theme.isDark)
+    },
     methods: {
       async logout() {
         this.btnLoading = true;
@@ -120,6 +128,14 @@
         this.btnLoading = false;
         this.$router.push('/');
         this.logoutDialog = false;
+      },
+      async setDarkMode(){
+        const darkMode = !JSON.parse(localStorage.getItem('darkMode'))
+        this.$vuetify.theme.dark = darkMode
+        localStorage.setItem('darkMode', darkMode)
+      },
+      setToggleIcon(){
+        return JSON.parse(localStorage.getItem('darkMode')) ? 'mdi-weather-sunny' : 'mdi-weather-night'
       },
       async uploadProfileImage(event) {
         let formData = new FormData();

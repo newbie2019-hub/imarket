@@ -8,6 +8,7 @@ import products from './products'
 import adminUser from '../modules/admin/store/user/index'
 import adminStore from '../modules/admin/store/stores/'
 import adminProduct from '../modules/admin/store/products/'
+import adminDashboard from '../modules/admin/store/dashboard/'
 
 Vue.use(Vuex);
 
@@ -16,7 +17,7 @@ export default new Vuex.Store({
   mutations: {},
   actions: {},
   modules: {
-    market, orders, products, adminUser, adminStore, adminProduct
+    market, orders, products, adminUser, adminStore, adminProduct, adminDashboard
   }
 });
 

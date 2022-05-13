@@ -66,6 +66,9 @@
               <p v-else class="white--text font-weight-bold mb-0">{{ item.product_info.image }}</p>
             </v-avatar>
           </template>
+          <template v-slot:item.product_info.name="{ item }">
+            <p class="text-no-wrap">{{ item.product_info.name }}</p>
+          </template>
           <template v-slot:item.product_info.description="{ item }">
             <p style="min-width: 220px" class="">{{ item.product_info.description }}</p>
           </template>
@@ -115,7 +118,10 @@
               <p v-else class="white--text font-weight-bold mb-0">{{ item.name[0] }}</p>
             </v-avatar>
           </template>
-             <template v-slot:item.product_info.description="{ item }">
+          <template v-slot:item.product_info.name="{ item }">
+            <p class="text-no-wrap">{{ item.product_info.name }}</p>
+          </template>
+          <template v-slot:item.product_info.description="{ item }">
             <p style="min-width: 220px" class="">{{ item.product_info.description }}</p>
           </template>
           <template v-slot:item.product_info.price="{ item }">
@@ -208,7 +214,7 @@
 <script>
   import moment from 'moment';
   import { mapState } from 'vuex';
-  import { formatCurrency } from '@/assets/js/utilities'
+  import { formatCurrency } from '@/assets/js/utilities';
   export default {
     components: {},
     mixins: [formatCurrency],
@@ -239,6 +245,7 @@
           sortable: false,
           value: 'logo',
         },
+        { text: 'Store', value: 'store.name' },
         { text: 'Name', value: 'product_info.name' },
         { text: 'Description', value: 'product_info.description' },
         { text: 'Price', value: 'product_info.price' },
@@ -248,12 +255,13 @@
         { text: 'Actions', value: 'actions' },
       ],
       archivedHeaders: [
-         {
+        {
           text: 'Image',
           align: 'start',
           sortable: false,
           value: 'logo',
         },
+        { text: 'Store', value: 'store.name' },
         { text: 'Name', value: 'product_info.name' },
         { text: 'Description', value: 'product_info.description' },
         { text: 'Price', value: 'product_info.price' },

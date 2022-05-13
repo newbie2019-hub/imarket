@@ -27,6 +27,7 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $fillable = [
         'user_info_id',
+        'user_address_id',
         'email',
         'password',
     ];
@@ -76,6 +77,10 @@ class User extends Authenticatable implements JWTSubject
 
     public function store(){
         return $this->hasOne(Store::class, 'user_id', 'id');
+    }
+
+    public function address(){
+        return $this->belongsTo(UserAddress::class, 'user_id', 'id');
     }
 
 }

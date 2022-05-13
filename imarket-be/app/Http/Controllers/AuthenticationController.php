@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserAccountRequest;
 use App\Models\User;
+use App\Models\UserAddress;
 use App\Models\UserInfo;
 use App\Models\UserLog;
 use Illuminate\Http\Request;
@@ -25,17 +26,30 @@ class AuthenticationController extends Controller
         $userinfo = UserInfo::create([
             'first_name' => $request->validated(['first_name']),
             'last_name' => $request->validated(['last_name']),
-            'address' => $request->validated(['address']),
             'gender' => $request->validated(['gender']),
             'contact_number' => $request->validated(['contact_number']),
             'birthday' => $request->validated(['birthday']),
         ]);
 
+        $userAddress = UserAddress::create([
+            'lat' => $request->lat,
+            'lng' => $request->lng,
+            'street_number' => $request->street_number,
+            'route' => $request->route,
+            'adminstrative_area_level_2' => $request->adminstrative_area_level_2,
+            'adminstrative_area_level_1' => $request->adminstrative_area_level_1,
+            'locality' => $request->locality,
+            'country' => $request->country,
+            'formatted_address' => $request->address,
+        ]);
+
         $user = User::create([
             'user_info_id' => $userinfo->id,
+            'user_address_id' => $userAddress->id,
             'email' => $request->validated('email'),
             'password' => Hash::make($request->validated('password')),
         ]);
+
 
         $user->assignRole('User');
         
@@ -62,7 +76,7 @@ class AuthenticationController extends Controller
 
     public function me()
     {
-        $user = User::with(['info', 'roles', 'store'])->where('id', auth()->guard('api')->user()->id)->first();
+        $user = User::with(['info', 'roles', 'store', 'address'])->where('id', auth()->guard('api')->user()->id)->first();
         return response()->json($user);
     }
 

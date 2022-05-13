@@ -5,6 +5,7 @@ import vuetify from './plugins/vuetify'
 import './assets/css/styles.css'
 import store from "./store";
 import { toast } from './assets/js/utilities'
+import * as VueGoogleMaps from 'vue2-google-maps'
 Vue.config.productionTip = false
 
 import { registerModules } from "./register-modules";
@@ -33,6 +34,15 @@ Vue.use(Toast, {
 });
 
 Vue.mixin(toast)
+
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: 'AIzaSyCchv0AxfcsTctlyOBnx0EniydEdGUYsYg',
+    libraries: 'places, geocoding',
+    region: 'PH'
+  },
+})
+
 new Vue({
   router,
   vuetify,

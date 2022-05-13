@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminArchivedProductController;
 use App\Http\Controllers\AdminArchivedStoreController;
 use App\Http\Controllers\AdminArchivedUserController;
 use App\Http\Controllers\AdminCategoryController;
+use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\AdminStoreController;
 use App\Http\Controllers\AdminUserController;
@@ -53,6 +54,7 @@ Route::middleware('api')->group(function () {
             Route::apiResource('archived-users', AdminArchivedUserController::class);
             Route::apiResource('users', AdminUserController::class);
             
+            Route::apiResource('dashboard', AdminDashboardController::class);
             Route::apiResource('category', AdminCategoryController::class);
             
             Route::apiResource('archived-stores', AdminArchivedStoreController::class);

@@ -1,6 +1,6 @@
 <template>
   <v-container :class="{ 'pa-0': $vuetify.breakpoint.md }" :fluid="isFluid">
-    <div>
+    <div class="mt-15">
       <p class="text-h5 font-weight-bold custom-primary-color mt-8 mb-0">Stores Management</p>
       <p>Manage all of the stores from this section</p>
     </div>
@@ -59,7 +59,7 @@
             <v-text-field v-model="search" outlined dense append-icon="mdi-magnify" class="mb-5" label="Search" hide-details></v-text-field>
           </v-col>
         </v-layout>
-        <v-data-table :headers="headers" :items="stores" :search="search" :loading="isLoading" :loading-text="'Retrieving stores data. Please wait ...'">
+        <v-data-table class="" :headers="headers" :items="stores" :search="search" :loading="isLoading" :loading-text="'Retrieving stores data. Please wait ...'">
           <template v-slot:item.logo="{ item }">
             <v-avatar class="ma-0" size="45" color="primary">
               <img class="cursor-pointer" v-if="item.logo" :src="`http://127.0.0.1:8000/images/logos/${item.logo}`" />

@@ -1,8 +1,8 @@
 <template>
   <v-container :class="{ 'pa-0': $vuetify.breakpoint.md }" :fluid="isFluid">
-    <div>
+    <div class="mt-15">
       <p class="text-h5 font-weight-bold custom-primary-color mt-8 mb-0">Accounts Management</p>
-      <p>You can manage the accounts of the users on the table.</p>
+      <p>You can manage the accounts of the users on the table</p>
     </div>
     <v-row class="mt-5 mb-5">
       <v-col cols="12" sm="6" md="4" lg="4" xl="4">
