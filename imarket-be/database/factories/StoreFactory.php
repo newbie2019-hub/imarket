@@ -18,7 +18,8 @@ class StoreFactory extends Factory
     public function definition()
     {
         $partner = Partner::factory()->create();
-        
+        $this->faker->addProvider(new \Smknstd\FakerPicsumImages\FakerPicsumImagesProvider($this->faker));
+
         return [
             'partner_id' => $partner->id,
             'user_id' => $partner->user_id,
@@ -29,8 +30,8 @@ class StoreFactory extends Factory
             'week_days_closing' => "18:30",
             'week_end_opening' => "8:30",
             'week_end_closing' => "18:00",
-            'logo' => $this->faker->image('public\images\logos', 480, 480, null, false, true, 'Store Logo', true),
-            'banner_image' => $this->faker->image('public\images\banners', 640, 480, null, false, true, 'Banner Image', true),
+            'logo' => $this->faker->image('public\images\logos', 480, 480, false),
+            'banner_image' => $this->faker->image('public\images\banners', 640, 480, false),
             'status' => $partner->status == 'For Approval' ? 'For Approval' : 'Approved',
             'opening_status' => $this->faker->randomElement(['Automatic', 'Open', 'Closed'])
         ];

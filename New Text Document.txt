@@ -1,15 +1,26 @@
 To-Do
+Fix seeder not working
+- Send email upon creating of account
+Store Address
+Seller Address
+
+Market:
+Show Address and Edit Address
+using Gmaps
+
+Admin:
+Category
+Store
+Orders
 - Add a section for hot products (based on rating) below the download mobile app on imarket section
 - Add a section for all products [x]
 - Create Cart Component on Right Side [x]
   - Checks first if user is signed in or not upon clicking the product [x]
   - Items must be clickable and can be added on cart upon clicking [x]
 
-- Create Partnership Section 
+- Create Partnership Section [x]
    - signup for account (separate seller account)
    - add store name (input) - set pending state
-
-- Send email upon creating of account
 
 - Create Admin Functionality - Dashboard
    - can manage inquiries

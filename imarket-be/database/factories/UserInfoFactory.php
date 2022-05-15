@@ -19,6 +19,7 @@ class UserInfoFactory extends Factory
     public function definition()
     {
         $faker = Faker::create('en_PH');
+        $this->faker->addProvider(new \Smknstd\FakerPicsumImages\FakerPicsumImagesProvider($this->faker));
 
         $gender = $this->faker->randomElement(['Male', 'Female']);
         $first_name = $this->faker->firstName($gender);
@@ -29,7 +30,7 @@ class UserInfoFactory extends Factory
             'gender' => $gender,
             'contact_number' => $faker->mobileNumber(),
             'birthday' => $this->faker->dateTimeBetween('Y-m-d', '1999-03-20'),
-            'profile_img' => $this->faker->image('public\images\profiles', 640, 480, null, false, true, $first_name),
+            'profile_img' => $this->faker->image('public\images\profiles', 480, 480, false),
         ];
     }
 }
