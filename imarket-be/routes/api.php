@@ -38,6 +38,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware('api')->group(function () {
     Route::controller(AuthenticationController::class)->group(function () {
         Route::prefix('auth')->group(function () {
+            Route::post('/update-address', 'updateAddress');
             Route::post('/register', 'store');
             Route::get('/logs', 'userLogs');
             Route::post('/login', 'login');

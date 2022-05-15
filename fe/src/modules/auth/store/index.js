@@ -6,6 +6,7 @@ export default {
     user: {
 
     },
+    distanceMatrix: null,
     token: localStorage.getItem('auth') || '',
     userLogs: [],
   },
@@ -13,6 +14,9 @@ export default {
 
   },
   mutations: {
+    SET_MATRIX(state, payload){
+      state.distanceMatrix = payload
+    },
     SET_AUTH_ACC(state, data) {
       state.userinfo = data.user_info
       state.useraccount = data.user_account
@@ -129,6 +133,18 @@ export default {
     async checkUser({ commit }) {
       const res = await API.post('auth/me?token=' + localStorage.getItem('auth')).then(res => {
         commit('SET_ACC', res.data)
+        return res;
+      }).catch(error => {
+        commit('UNSET_USER')
+
+        return error.response;
+      })
+
+      return res;
+    },
+    async updateAddress({ commit }, payload) {
+      const res = await API.post('auth/update-address?token=' + localStorage.getItem('auth'), payload).then(res => {
+        // commit('SET_ACC', res.data)
         return res;
       }).catch(error => {
         commit('UNSET_USER')

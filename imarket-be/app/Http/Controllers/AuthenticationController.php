@@ -191,6 +191,23 @@ class AuthenticationController extends Controller
         }
     }
 
+    public function updateAddress(Request $request){
+        $userAddress = UserAddress::where('id', auth()->user()->id)->first();
+
+        $userAddress->update([
+            'lat' => $request->lat,
+            'lng' => $request->lng,
+            'street_number' => $request->street_number,
+            'route' => $request->route,
+            'adminstrative_area_level_2' => $request->adminstrative_area_level_2,
+            'adminstrative_area_level_1' => $request->adminstrative_area_level_1,
+            'locality' => $request->locality,
+            'country' => $request->country,
+            'formatted_address' => $request->address,
+        ]);
+
+        return $this->success('User Address has been updated!');
+    }
     
     public function updatePassword(Request $request){
         if (! Hash::check($request->current_password, $request->user()->password)) {

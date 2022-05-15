@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div v-show="addressLoading" class="overlay-loading"></div>
     <Navbar />
     <v-layout class="mt-15"></v-layout>
     <v-container class="mt-15">
@@ -49,19 +50,19 @@
             <v-layout class="mt-5" column>
               <p class="mb-1">Delivery Address</p>
               <v-layout justify-space-between>
-                <p class="text-h6 font-weight-bold lh-small">{{ user.address.formatted_address }}</p>
-                <v-btn icon class="ml-5 blue--text">
+                <p class="text-h6 font-weight-bold lh-small">{{ user.address.formatted_address ? user.address.formatted_address : 'Please set the delivery address' }}</p>
+                <v-btn @click.prevent="showAddressEdit = true" icon class="ml-5 blue--text">
                   <v-icon> mdi-pencil </v-icon>
                 </v-btn>
               </v-layout>
               <v-layout d-flex>
                 <small class="mb-0 mr-4">
                   <v-icon small> mdi-clock </v-icon>
-                  45mins
+                  {{ distanceMatrix && distanceMatrix && distanceMatrix.rows[0].elements[1].duration.text }}
                 </small>
                 <small class="mb-0">
                   <v-icon small> mdi-map-marker </v-icon>
-                  8km
+                  {{ distanceMatrix && distanceMatrix && distanceMatrix.rows[0].elements[1].distance.text }}
                 </small>
               </v-layout>
             </v-layout>
@@ -82,7 +83,14 @@
               <p class="font-weight-bold">Total Payment</p>
               <p class="">PHP 1580.00</p>
             </v-layout>
-            <v-btn :disabled="Object.keys(cart).length == 0 || cart.cart_info.length == 0" @click.prevent="checkout" class="" color="orange darken-2 white--text" block depressed :loading="btnLoading"
+            <v-btn
+              :disabled="Object.keys(cart).length == 0 || cart.cart_info.length == 0 || user.address.formatted_address == null"
+              @click.prevent="checkout"
+              class=""
+              color="orange darken-2 white--text"
+              block
+              depressed
+              :loading="btnLoading"
               >CHECKOUT</v-btn
             >
           </v-card>
@@ -157,20 +165,25 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <address-update v-show="showAddressEdit" @close="showAddressEdit = false" :showModal="showAddressEdit" />
   </div>
 </template>
 <script>
   import Navbar from './components/Navbar.vue';
   import { mapState } from 'vuex';
   import { formatCurrency } from '@/assets/js/utilities';
+  import AddressUpdate from './components/AddressUpdate.vue';
+  import { gmapApi } from 'vue2-google-maps';
   export default {
-    components: { Navbar },
+    components: { Navbar, AddressUpdate },
     mixins: [formatCurrency],
     data: () => ({
       search: '',
       data: {
         search: '',
       },
+      showAddressEdit: true,
       removeItemDialog: false,
       isLoading: false,
       page: 1,
@@ -178,11 +191,17 @@
       isCartLoading: false,
       isAddedSuccess: false,
       btnLoading: false,
+      addressLoading: true,
+      hasLoaded: false
     }),
     async mounted() {
       this.isLoading = true;
       await this.$store.dispatch('market/getLatestProducts');
       await this.$store.dispatch('market/getCartItems');
+      this.showAddressEdit = false
+      setTimeout(() => {
+        this.addressLoading = false;
+      }, 250);
       this.isLoading = false;
     },
     methods: {
@@ -233,7 +252,8 @@
     },
     computed: {
       ...mapState('market', ['cart_count', 'cart', 'categories', 'products', 'latest_products']),
-      ...mapState('auth', ['user']),
+      ...mapState('auth', ['user', 'distanceMatrix']),
+      google: gmapApi,
     },
     watch: {},
   };
