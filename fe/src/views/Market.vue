@@ -62,6 +62,8 @@
                           length="5"
                           :value="product.rating_avg_rating"
                           size="18"
+                          background-color="primary lighten-2"
+                          color="primary"
                           readonly
                         ></v-rating>
                         <p class="mb-0 mt-n3 ml-2 black--text">
@@ -161,6 +163,8 @@
                           hover
                           length="5"
                           :value="product.rating_avg_rating"
+                          background-color="primary lighten-2"
+                          color="primary"
                           size="18"
                           readonly
                         ></v-rating>
@@ -224,7 +228,7 @@
   import Navbar from './components/Navbar.vue';
   import { mapState } from 'vuex';
   import { formatCurrency } from '@/assets/js/utilities';
-  import SearchProduct from './components/SearchProduct.vue'
+  import SearchProduct from './components/SearchProduct.vue';
   export default {
     components: { Navbar, SearchProduct },
     mixins: [formatCurrency],

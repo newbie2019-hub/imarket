@@ -47,9 +47,9 @@
           <v-card elevation="0" class="pr-8 pl-8 pb-8 pt-8">
             <p class="mb-0 text-h5 font-weight-bold">Payment Summary</p>
             <v-layout class="mt-5" column>
-              <p class="mb-1">Deliver Address</p>
+              <p class="mb-1">Delivery Address</p>
               <v-layout justify-space-between>
-                <p class="text-h6 font-weight-bold lh-small">{{ user.info.address }}</p>
+                <p class="text-h6 font-weight-bold lh-small">{{ user.address.formatted_address }}</p>
                 <v-btn icon class="ml-5 blue--text">
                   <v-icon> mdi-pencil </v-icon>
                 </v-btn>
@@ -126,6 +126,8 @@
                     hover
                     length="5"
                     :value="product.rating_avg_rating"
+                    background-color="primary lighten-2"
+                    color="primary"
                     size="18"
                     readonly
                   ></v-rating>
@@ -133,7 +135,7 @@
                     {{ product.rating_avg_rating && product.rating_avg_rating.toFixed(1) }}
                   </p>
                 </v-layout>
-                <h3 class=" pl-1 orange--text darken-2 font-weight-regular">₱ {{ formatCurrency(product.product_info.price) }}</h3>
+                <h3 class="pl-1 orange--text darken-2 font-weight-regular">₱ {{ formatCurrency(product.product_info.price) }}</h3>
               </v-card-text>
             </v-card>
           </v-hover>

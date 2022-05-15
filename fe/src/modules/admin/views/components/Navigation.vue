@@ -48,6 +48,19 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
+      <p class="ml-5 mb-4 mt-7">Config</p>
+      <v-list dense v-for="(item, i) in accItems" :key="i + 11" class="pa-0 mb-1">
+        <v-list-item link :to="item.link" active-class="v-list-active--item">
+          <v-list-item-content class="ml-4 pa-0">
+            <v-list-item-title class="font-weight-regular">
+              <v-icon size="22" class="mr-2">
+                {{ item.icon }}
+              </v-icon>
+              {{ item.title }}
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
       <template v-slot:append>
         <v-list-item two-line class="mb-2">
           <div class="position-relative">
@@ -114,6 +127,11 @@
         { title: 'Orders', icon: 'mdi-truck-delivery-outline', link: '/admin/orders' },
         { title: 'Purchase History', icon: 'mdi-clipboard-text-clock-outline', link: '/admin/purchase-history' },
         { title: 'Logs', icon: 'mdi-history', link: '/admin/logs' },
+      ],
+      accItems: [
+        { title: 'Account Settings', icon: 'mdi-cog', link: '/admin/account-settings' },
+        // { title: 'Purchase History', icon: 'mdi-clipboard-text-clock-outline', link: '/admin/purchase-history' },
+        { title: 'Account Logs', icon: 'mdi-history', link: '/admin/logs' },
       ],
       overwriteBreakpoint: false,
     }),

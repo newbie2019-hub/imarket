@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderInfo;
+use App\Models\ProductInfo;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -31,9 +32,15 @@ class OrderController extends Controller
         foreach($cart->cart_info as $cartItems){
             $orderInfo = OrderInfo::create([
                 'order_id' => $order->id,
-                'product_id' => $cartItems->id,
+                'product_id' => $cartItems->product_id,
                 'subtotal' => $cartItems->subtotal,
                 'quantity' => $cartItems->quantity
+            ]);
+
+            $product = ProductInfo::find($cartItems->product_id);
+
+            $product->update([
+                'quantity' => $product->quantity - $cartItems->quantity
             ]);
         }
 

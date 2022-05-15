@@ -1,5 +1,5 @@
 To-Do
-Fix seeder not working
+Fix seeder not working [x]
 - Send email upon creating of account
 Store Address
 Seller Address

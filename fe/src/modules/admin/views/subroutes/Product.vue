@@ -12,10 +12,10 @@
               <div class="fit-content">
                 <v-icon large class=""> mdi-car-brake-retarder </v-icon>
               </div>
-              <v-card-title class="text-h5 font-grotesk font-weight-bold mb-0 pa-0 pl-4 pb-2 pt-4">Active <br />Stores</v-card-title>
+              <v-card-title class="text-h5 font-grotesk font-weight-bold mb-0 pa-0 pl-4 pb-2 pt-4">Active <br />Products</v-card-title>
             </div>
             <div>
-              <p class="text-h1 font-grotesk pr-5 font-weight-bold mb-0">{}</p>
+              <p class="text-h1 font-grotesk pr-5 font-weight-bold mb-0">{{ products.length }}</p>
             </div>
           </div>
         </v-card>
@@ -27,25 +27,25 @@
               <div class="fit-content">
                 <v-icon large class=""> mdi-archive-clock-outline </v-icon>
               </div>
-              <v-card-title class="text-h5 font-grotesk font-weight-bold mb-0 pa-0 pl-4 pb-2 pt-4">Archived <br />Stores</v-card-title>
+              <v-card-title class="text-h5 font-grotesk font-weight-bold mb-0 pa-0 pl-4 pb-2 pt-4">Archived <br />Products</v-card-title>
             </div>
             <div>
-              <p class="text-h1 font-grotesk pr-5 font-weight-bold mb-0"></p>
+              <p class="text-h1 font-grotesk pr-5 font-weight-bold mb-0">{{ archivedProducts.length }}</p>
             </div>
           </div>
         </v-card>
       </v-col>
       <v-col cols="12" sm="6" md="4" lg="4" xl="4">
-        <v-card elevation="2" color="green " class="pa-3" rounded="lg" dark>
+        <v-card elevation="2" color="deep-orange lighten-1 " class="pa-3" rounded="lg" dark>
           <div class="d-flex flex-no-wrap justify-space-between align-end mb-2">
             <div>
               <div class="fit-content">
                 <v-icon large class=""> mdi-account </v-icon>
               </div>
-              <v-card-title class="text-h5 font-grotesk font-weight-bold mb-0 pa-0 pl-4 pb-2 pt-4">New <br />Stores</v-card-title>
+              <v-card-title class="text-h5 font-grotesk font-weight-bold mb-0 pa-0 pl-4 pb-2 pt-4">Out of <br />Stock</v-card-title>
             </div>
             <div>
-              <p class="text-h1 font-grotesk pr-5 font-weight-bold mb-0"></p>
+              <p class="text-h1 font-grotesk pr-5 font-weight-bold mb-0">{{ noStock }}</p>
             </div>
           </div>
         </v-card>
@@ -61,7 +61,7 @@
         </v-layout>
         <v-data-table :headers="headers" :items="products" :search="search" :loading="isLoading" :loading-text="'Retrieving stores data. Please wait ...'">
           <template v-slot:item.logo="{ item }">
-            <v-avatar class="ma-0" size="45" color="primary">
+            <v-avatar class="ma-0" size="50" color="primary" tile>
               <img class="cursor-pointer" v-if="item.product_info.image" :src="`http://127.0.0.1:8000/images/products/${item.product_info.image}`" />
               <p v-else class="white--text font-weight-bold mb-0">{{ item.product_info.image }}</p>
             </v-avatar>
@@ -87,7 +87,7 @@
                 color="green darken-1"
                 >View</v-btn
               >
-              <v-btn small text color="primary darken-1">Update</v-btn>
+              <!-- <v-btn small text color="primary darken-1">Update</v-btn> -->
               <v-btn
                 @click="
                   deleteData = item;
@@ -106,14 +106,14 @@
     <v-row class="mb-5">
       <v-col>
         <v-layout justify-space-between>
-          <p>Archived Users</p>
+          <p>Archived Products</p>
           <v-col sm="5" md="4" lg="4">
             <v-text-field v-model="searchArchived" outlined dense append-icon="mdi-magnify" class="mb-5" label="Search" hide-details></v-text-field>
           </v-col>
         </v-layout>
-        <v-data-table :headers="archivedHeaders" :items="archivedProducts" :search="searchArchived" :loading="isLoading" :loading-text="'Retrieving users data. Please wait ...'">
+        <v-data-table :headers="archivedHeaders" :items="archivedProducts" :search="searchArchived" :loading="isLoading" :loading-text="'Retrieving products data. Please wait ...'">
           <template v-slot:item.logo="{ item }">
-            <v-avatar class="ma-0" size="45" color="primary">
+            <v-avatar class="ma-0" size="50" color="primary" tile>
               <img class="cursor-pointer" v-if="item.product_info.image" :src="`http://127.0.0.1:8000/images/products/${item.product_info.image}`" />
               <p v-else class="white--text font-weight-bold mb-0">{{ item.name[0] }}</p>
             </v-avatar>
@@ -240,8 +240,8 @@
       isLoading: false,
       headers: [
         {
-          text: 'Image',
-          align: 'start',
+          text: 'Product Image',
+          align: 'center',
           sortable: false,
           value: 'logo',
         },
@@ -256,8 +256,8 @@
       ],
       archivedHeaders: [
         {
-          text: 'Image',
-          align: 'start',
+          text: 'Product Image',
+          align: 'center',
           sortable: false,
           value: 'logo',
         },
@@ -319,6 +319,10 @@
       ...mapState('adminProduct', ['products', 'archivedProducts']),
       isFluid() {
         return this.$vuetify.breakpoint.md ? true : false | this.$vuetify.breakpoint.sm ? true : false;
+      },
+      noStock() {
+        let products = this.products.slice().filter((prod) => prod.product_info.quantity == 0);
+        return products.length;
       },
     },
   };

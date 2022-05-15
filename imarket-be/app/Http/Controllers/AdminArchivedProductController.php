@@ -13,7 +13,7 @@ class AdminArchivedProductController extends Controller
     }
 
     public function index(){
-        $products = Product::onlyTrashed()->with(['product_info','product_info.category'])->latest()->get();
+        $products = Product::onlyTrashed()->with(['product_info', 'store:id,name', 'product_info.category'])->latest()->get();
         return $this->success('Product has been retrieved successfully!', $products);
     }
 

@@ -73,13 +73,13 @@ class User extends Authenticatable implements JWTSubject
     public function info(){
         return $this->belongsTo(UserInfo::class, 'user_info_id', 'id')->withTrashed();
     }
-    
+
     public function store(){
         return $this->hasOne(Store::class, 'user_id', 'id');
     }
 
     public function address(){
-        return $this->belongsTo(UserAddress::class, 'user_id', 'id');
+        return $this->belongsTo(UserAddress::class, 'user_address_id', 'id');
     }
 
 

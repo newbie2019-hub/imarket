@@ -146,6 +146,14 @@ p.text-h5.font-rubik {
 }
 
 /** GMAP */
+.btn-setAddress {
+ position: absolute;
+ bottom: -22px;
+ left: 50%;
+ transform: translateX(-50%);
+ z-index: 4;
+}
+
 .gmap-auto-complete {
  outline: none !important;
  padding: .6rem .8rem;

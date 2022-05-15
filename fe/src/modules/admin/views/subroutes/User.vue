@@ -127,9 +127,6 @@
           <template v-slot:item.birthday="{ item }">
             <p class="text-no-wrap">{{ item.info.birthday }}</p>
           </template>
-          <!-- <template v-slot:item.name="{ item }">
-            <p class="text-no-wrap">{{ item.info.first_name }} {{ item.info.middle_name ? item.info.middle_name[0] : '' }} {{ item.info.last_name }}</p>
-          </template> -->
           <template v-slot:item.actions="{ item }">
             <v-layout>
               <v-btn

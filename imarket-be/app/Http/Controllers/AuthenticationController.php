@@ -111,6 +111,7 @@ class AuthenticationController extends Controller
         }
 
         $userinfo = UserInfo::where('id', auth()->user()->id)->first();
+        $userAddress = UserAddress::where('id', auth()->user()->id)->first();
         $userinfo->update([
             'first_name' => $request->first_name,
             'middle_name' => $request->middle_name,
@@ -118,8 +119,20 @@ class AuthenticationController extends Controller
             'birthday' => $request->birthday,
             'contact_number' => $request->contact_number,
             'gender' => $request->gender,
-            'address' => $request->address,
         ]);
+
+        $userAddress->update([
+            'lat' => $request->lat,
+            'lng' => $request->lng,
+            'street_number' => $request->street_number,
+            'route' => $request->route,
+            'adminstrative_area_level_2' => $request->adminstrative_area_level_2,
+            'adminstrative_area_level_1' => $request->adminstrative_area_level_1,
+            'locality' => $request->locality,
+            'country' => $request->country,
+            'formatted_address' => $request->address,
+        ]);
+
 
         UserLog::create([
             'name' => 'Account Information Updated',

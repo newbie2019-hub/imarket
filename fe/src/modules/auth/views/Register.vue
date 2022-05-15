@@ -271,11 +271,5 @@
   };
 </script>
 <style>
-  .btn-setAddress {
-    position: absolute;
-    bottom: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 4;
-  }
+ 
 </style>

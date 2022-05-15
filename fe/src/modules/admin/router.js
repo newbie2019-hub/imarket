@@ -7,6 +7,8 @@ import Partner from './views/subroutes/Partner'
 import Orders from './views/subroutes/Orders'
 import Purchase from './views/subroutes/Purchase'
 import Riders from './views/subroutes/Riders'
+import Settings from './views/subroutes/Settings'
+import Categories from './views/subroutes/Categories'
 
 const moduleRoute = {
   path: "/admin",
@@ -28,6 +30,13 @@ const moduleRoute = {
       component: User,
       meta: {
         title: 'IMarket - Users Management'
+      }
+    },
+    {
+      path: "categories",
+      component: Categories,
+      meta: {
+        title: 'IMarket - Categories Management'
       }
     },
     {
@@ -65,6 +74,10 @@ const moduleRoute = {
     {
       path: "purchase-history",
       component: Purchase
+    },
+    {
+      path: "account-settings",
+      component: Settings
     },
     {
       path: '/',

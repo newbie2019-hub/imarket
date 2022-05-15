@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminArchivedCategoryController;
 use App\Http\Controllers\AdminArchivedProductController;
 use App\Http\Controllers\AdminArchivedStoreController;
 use App\Http\Controllers\AdminArchivedUserController;
@@ -55,6 +56,7 @@ Route::middleware('api')->group(function () {
             Route::apiResource('users', AdminUserController::class);
             
             Route::apiResource('dashboard', AdminDashboardController::class);
+            Route::apiResource('archived-category', AdminArchivedCategoryController::class);
             Route::apiResource('category', AdminCategoryController::class);
             
             Route::apiResource('archived-stores', AdminArchivedStoreController::class);

@@ -92,7 +92,7 @@
                 </v-list-item-content>
               </v-list-item>
 
-              <v-list-item link to="/account-settings">
+              <v-list-item v-if="user.roles[0].name != 'Super Admin'" link to="/account-settings">
                 <v-list-item-icon>
                   <v-icon small>mdi-cog</v-icon>
                 </v-list-item-icon>

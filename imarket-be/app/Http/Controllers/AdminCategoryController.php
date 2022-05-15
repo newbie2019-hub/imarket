@@ -13,6 +13,22 @@ class AdminCategoryController extends Controller
     }
 
     public function index(){
-        return response()->json(Category::get());
+        return response()->json(Category::withCount('product')->get());
+    }
+
+    public function update(Request $request, $id){
+        $category = Category::where('id', $id)->first();
+        
+        $category->update([
+            'category' => $request->category
+        ]);
+
+        return $this->success('Category updated successfully!');
+    }
+
+    public function destroy($id){
+        Category::destroy($id);
+        $category = Category::onlyTrashed()->where('id', $id)->first();
+        return $this->success('Category and its product has been archived', $category);
     }
 }

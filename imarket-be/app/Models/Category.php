@@ -6,10 +6,14 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Dyrynda\Database\Support\CascadeSoftDeletes;
 
 class Category extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, CascadeSoftDeletes;
+
+
+    protected $cascadeDeletes = ['product'];
     protected $guarded = [];
 
     protected $casts = [
@@ -20,5 +24,9 @@ class Category extends Model
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d h:i A');
+    }
+
+    public function product(){
+        return $this->hasMany(ProductInfo::class, 'category_id', 'id')->withTrashed();
     }
 }

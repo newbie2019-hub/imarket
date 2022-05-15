@@ -15,11 +15,11 @@ class Product extends Model
     protected $cascadeDeletes = ['product_info', 'rating'];
 
     public function product_info(){
-        return $this->belongsTo(ProductInfo::class, 'product_info_id', 'id');
+        return $this->belongsTo(ProductInfo::class, 'product_info_id', 'id')->withTrashed();
     }
 
     public function store(){
-        return $this->belongsTo(Store::class, 'store_id', 'id');
+        return $this->belongsTo(Store::class, 'store_id', 'id')->withTrashed();
     }
 
     public function rating(){

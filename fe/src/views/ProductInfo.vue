@@ -21,6 +21,8 @@
               half-increments
               hover
               length="5"
+              background-color="primary lighten-2"
+              color="primary"
               :value="productSelected.rating_avg_rating"
               size="25"
               readonly
@@ -37,7 +39,7 @@
               <v-text-field v-model="data.qty" type="number" min="1" :max="productSelected.product_info.quantity" outlined dense hide-details="auto"></v-text-field>
             </v-col>
           </v-layout>
-          <v-btn @click="addToCart(productSelected)" depressed large class="ml-4 btn-glow-blue" color="blue darken-2" dark>
+          <v-btn @click="addToCart(productSelected)" :loading="btnLoading" depressed large class="ml-4 btn-glow-blue" color="blue darken-2" dark>
             <v-icon small class="mr-2"> mdi-cart </v-icon>
             Add to Cart
           </v-btn>
@@ -62,6 +64,8 @@
                   length="5"
                   :value="parseFloat(rating.rating)"
                   size="20"
+                  background-color="primary lighten-2"
+                  color="primary"
                   readonly
                 ></v-rating>
                 <p class="mb-0 ml-2 mt-1 black--text">
@@ -111,6 +115,8 @@
                         length="5"
                         :value="product.rating_avg_rating"
                         size="18"
+                        background-color="primary lighten-2"
+                        color="primary"
                         readonly
                       ></v-rating>
                       <p class="mb-0 mt-n3 ml-2 black--text">
@@ -162,6 +168,8 @@
                     full-icon="mdi-star"
                     half-icon="mdi-star-half-full"
                     half-increments
+                    background-color="primary lighten-2"
+                    color="primary"
                     hover
                     length="5"
                     :value="product.rating_avg_rating"
@@ -186,7 +194,7 @@
   import Navbar from './components/Navbar.vue';
   import { mapState } from 'vuex';
   import { formatCurrency } from '@/assets/js/utilities';
-  import SearchProduct from './components/SearchProduct.vue'
+  import SearchProduct from './components/SearchProduct.vue';
 
   export default {
     mixins: [formatCurrency],
@@ -198,12 +206,13 @@
         qty: 1,
         product_info: {
           price: '',
-          quantity: ''
-        }
+          quantity: '',
+        },
       },
       isCartLoading: false,
       isAddedSuccess: false,
       isLoading: false,
+      btnLoading: false,
     }),
     components: { Navbar, SearchProduct },
     created() {},
@@ -226,9 +235,10 @@
         this.isLoading = false;
       },
       async addToCart(product) {
-        this.data.id = product.id
-        this.data.product_info = product.product_info
+        this.data.id = product.id;
+        this.data.product_info = product.product_info;
         if (this.user.info) {
+          this.btnLoading = true;
           this.isCartLoading = true;
           this.productId = product.id;
           await this.$store.dispatch('market/addToCart', this.data);
@@ -241,6 +251,8 @@
             this.productId = null;
             this.isAddedSuccess = false;
           }, 350);
+
+          this.btnLoading = false;
         } else {
           this.$toast('Please login your account first!');
           this.$router.push('/login');
