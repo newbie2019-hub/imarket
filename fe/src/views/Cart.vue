@@ -1,12 +1,12 @@
 <template>
-  <div>
-    <div v-show="addressLoading" class="overlay-loading"></div>
+  <div :class="{'no-scrollbar' : addressLoading}">
+    <page-loading v-show="addressLoading" />
     <Navbar />
     <v-layout class="mt-15"></v-layout>
     <v-container class="mt-15">
       <v-row>
         <v-col cols="12" md="7" lg="7">
-          <v-card elevation="0" class="pa-6">
+          <v-card elevation="0" class="pa-6 overflow-scroll" max-height="490">
             <p class="mb-0 ml-4 text-h5 font-weight-bold">My Orders</p>
             <div class="pr-5" v-if="Object.keys(cart).length == 0 || cart.cart_info.length == 0">
               <p class="ml-4 mt-5 w-75">There are no items in your cart. Continue shopping and start adding items to your cart now.</p>
@@ -165,7 +165,6 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-
     <address-update v-show="showAddressEdit" @close="showAddressEdit = false" :showModal="showAddressEdit" />
   </div>
 </template>
@@ -175,8 +174,9 @@
   import { formatCurrency } from '@/assets/js/utilities';
   import AddressUpdate from './components/AddressUpdate.vue';
   import { gmapApi } from 'vue2-google-maps';
+  import PageLoading from './components/PageLoading.vue'
   export default {
-    components: { Navbar, AddressUpdate },
+    components: { Navbar, AddressUpdate, PageLoading },
     mixins: [formatCurrency],
     data: () => ({
       search: '',
@@ -199,6 +199,7 @@
       await this.$store.dispatch('market/getLatestProducts');
       await this.$store.dispatch('market/getCartItems');
       this.showAddressEdit = false
+      window.scrollTo(0, 40)
       setTimeout(() => {
         this.addressLoading = false;
       }, 250);

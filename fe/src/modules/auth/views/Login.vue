@@ -16,7 +16,7 @@
           </p>
         </v-col>
         <v-col cols="12" sm="11" md="6" lg="5">
-          <v-card v-animate-css="{ classes: 'fadeInUp', delay: 50 }" class="pl-8 pr-8 pt-5 pb-5" elevation="1">
+          <v-card v-animate-css="{ classes: 'fadeInUp', delay: 50 }" class="pl-8 pr-8 pt-5 pb-5" :elevation="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm ? 0 : 1">
             <h1>Login</h1>
             <p>Welcome! Please enter your credentials to proceed to your account</p>
             <v-form ref="form" lazy-validation v-model="valid" @submit.prevent="login" class="mt-6">

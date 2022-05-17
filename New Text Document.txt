@@ -5,12 +5,12 @@ Store Address
 Seller Address
 
 Market:
-Show Address and Edit Address
+Show Address and Edit Address [x]
 using Gmaps
 
 Admin:
-Category
-Store
+Category [x]
+Store [x]
 Orders
 - Add a section for hot products (based on rating) below the download mobile app on imarket section
 - Add a section for all products [x]
@@ -24,9 +24,9 @@ Orders
 
 - Create Admin Functionality - Dashboard
    - can manage inquiries
-   - can manage products of sellers
+   - can manage products of sellers [x]
    - can manage user accounts
-   - can manage categories
+   - can manage categories [x]
    - can manage stores x partners (Approval)
 
 

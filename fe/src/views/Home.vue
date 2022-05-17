@@ -8,7 +8,7 @@
           <h1 v-animate-css="'fadeInUp'" class="heading lh-normal circular text-sm-center text-md-left text-lg-left">Fastest <span class="blue--text">Order</span> & <span class="blue--text text-sm-center ">Delivery</span> At Your Doorstep</h1>
           <h2 v-animate-css="{ classes: 'fadeInUp', delay: 450 }" class="font-weight-light text-sm-center text-md-left text-lg-left">Incredibly fast and convenient delivery at the palm of your hand.</h2>
           <v-layout d-flex align-center class="justify-center justify-md-start">
-            <v-btn v-animate-css="{ classes: 'fadeInUp', delay: 650 }" class="mt-4 rounded-pill btn-glow mr-8" color="orange darken-2" depressed large dark>Order Now</v-btn>
+            <v-btn link to="/imarket" v-animate-css="{ classes: 'fadeInUp', delay: 650 }" class="mt-4 rounded-pill btn-glow mr-8" color="orange darken-2" depressed large dark>Order Now</v-btn>
             <a href="#" v-animate-css="{ classes: 'fadeInUp', delay: 850 }" class="mt-3 text-decoration-wavy">Learn More</a>
           </v-layout>
         </v-col>

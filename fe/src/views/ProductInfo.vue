@@ -222,6 +222,7 @@
         this.$router.push('/imarket');
       }
       // console.log(this.$route.params.id)
+      window.scrollTo(0, 100);
       await this.getProduct();
     },
     methods: {

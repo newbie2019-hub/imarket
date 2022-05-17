@@ -18,7 +18,7 @@
               ref="mapRef"
               @click="addLocationMarker"
               class="rounded-xl"
-              :zoom="9"
+              :zoom="zoom"
               :options="{ mapTypeControl: false, streetViewControl: false }"
               :center="center"
               style="width: 100%; height: 100%"
@@ -45,6 +45,7 @@
         lat: 12.8797,
         lng: 121.774,
       },
+      zoom: 9,
       settingAddress: false,
     }),
     props: {
@@ -91,6 +92,7 @@
         };
         // console.log(loc)
         // console.log(this.codeAddress());
+        this.zoom = 25
         if (loc.address_components.length > 5) {
           this.data.street_number = loc.address_components[0].long_name;
           this.data.route = loc.address_components[1].long_name;

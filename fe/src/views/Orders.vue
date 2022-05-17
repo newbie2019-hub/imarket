@@ -7,7 +7,7 @@
         <v-col cols="12" md="9" lg="8">
           <v-card rounded="lg" elevation="0" class="pl-7 pr-7 pt-6 pb-5">
             <p class="mb-0 ml-4 text-h5 font-weight-bold">My Orders</p>
-            <div class="pr-5" v-if="!orders || orders.data.length == 0">
+            <div class="pr-5" v-if="!orders || (orders.data && orders.data.length == 0)">
               <p class="ml-4 mt-5 w-75">You currently have no history of orders on your account. Continue shopping and make some orders.</p>
               <v-btn class="ml-4" color="primary" depressed link to="/imarket">Go Shopping</v-btn>
             </div>

@@ -51,7 +51,8 @@ class CartController extends Controller
                     'cart_id' => $createdCart->id,
                     'product_id' => $request->id,
                     'subtotal' => $request->product_info['price'] * 1,
-                    'quantity' => 1
+                    'quantity' => $request->qty ? $request->qty : 1
+                    
                 ]);
             }
         } 

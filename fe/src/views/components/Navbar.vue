@@ -56,7 +56,7 @@
             <v-divider></v-divider>
             <v-list dense>
               <v-subheader>MENU</v-subheader>
-              <v-list-item v-if="user.roles[0].name == 'Super Admin'" link to="/admin">
+              <v-list-item v-if="user.roles && user.roles[0].name == 'Super Admin'" link to="/admin">
                 <v-list-item-icon>
                   <v-icon small>mdi-shield-edit</v-icon>
                 </v-list-item-icon>
@@ -65,7 +65,7 @@
                 </v-list-item-content>
               </v-list-item>
 
-              <v-list-item v-if="user.roles[0].name != 'Super Admin'" link to="/cart-checkout">
+              <v-list-item v-if="user.roles && user.roles[0].name != 'Super Admin'" link to="/cart-checkout">
                 <v-list-item-icon>
                   <v-icon small>mdi-cart</v-icon>
                 </v-list-item-icon>
@@ -74,7 +74,7 @@
                 </v-list-item-content>
               </v-list-item>
 
-              <v-list-item v-if="user.roles[0].name != 'Super Admin'" link to="/orders">
+              <v-list-item v-if="user.roles && user.roles[0].name != 'Super Admin'" link to="/orders">
                 <v-list-item-icon>
                   <v-icon small>mdi-package</v-icon>
                 </v-list-item-icon>
@@ -83,7 +83,7 @@
                 </v-list-item-content>
               </v-list-item>
 
-              <v-list-item v-if="user.roles[0].name == 'Seller'" link to="/manage-products">
+              <v-list-item v-if="user.roles && user.roles[0].name == 'Seller'" link to="/manage-products">
                 <v-list-item-icon>
                   <v-icon small>mdi-package-variant</v-icon>
                 </v-list-item-icon>
@@ -92,7 +92,7 @@
                 </v-list-item-content>
               </v-list-item>
 
-              <v-list-item v-if="user.roles[0].name != 'Super Admin'" link to="/account-settings">
+              <v-list-item v-if="user.roles && user.roles[0].name != 'Super Admin'" link to="/account-settings">
                 <v-list-item-icon>
                   <v-icon small>mdi-cog</v-icon>
                 </v-list-item-icon>
