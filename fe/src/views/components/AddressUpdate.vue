@@ -40,7 +40,7 @@
   import { gmapApi } from 'vue2-google-maps';
   export default {
     data: () => ({
-      data: { lat: '', lng: '', street_number: '', route: '', locality: '', country: '', adminstrative_area_level_2: '', adminstrative_area_level_1: '', address: '' },
+      data: { eta: '', total_distance: '', lat: '', lng: '', street_number: '', route: '', locality: '', country: '', adminstrative_area_level_2: '', adminstrative_area_level_1: '', address: '' },
       center: {
         lat: 12.8797,
         lng: 121.774,
@@ -77,22 +77,24 @@
         geocoder.geocode({ 'location': address }, (results, status) => {
           // console.log(status)
           if (status == 'OK') {
-            console.log(results[0]);
+            // console.log(results[0]);
             this.data.address = results[0].formatted_address;
             this.$refs.gmapAutoComplete.$el.value = results[0].formatted_address;
+            this.calculateDistanceMatrix()
+
           } else {
             alert('Geocode was not successful for the following reason: ' + status);
           }
         });
       },
-      initMarker(loc) {
+      async initMarker(loc) {
         const marker = {
           lat: loc.geometry.location.lat(),
           lng: loc.geometry.location.lng(),
         };
         // console.log(loc)
         // console.log(this.codeAddress());
-        this.zoom = 25
+        this.zoom = 18
         if (loc.address_components.length > 5) {
           this.data.street_number = loc.address_components[0].long_name;
           this.data.route = loc.address_components[1].long_name;
@@ -114,6 +116,8 @@
           this.data.address = loc.formatted_address;
         }
         this.center = marker;
+
+        await this.calculateDistanceMatrix()
       },
       addLocationMarker(e) {
         const marker = {
@@ -165,8 +169,11 @@
         };
 
         service.getDistanceMatrix(request).then((response) => {
-          // console.log(response);
-          this.$store.commit('auth/SET_MATRIX', response);
+          console.log(response);
+          this.data.eta = response.rows[0].elements[1].duration.text
+          this.data.total_distance = response.rows[0].elements[1].distance.text
+          console.log("HIII")
+          // this.$store.commit('auth/SET_MATRIX', response);
         });
       },
     },

@@ -195,6 +195,8 @@ class AuthenticationController extends Controller
         $userAddress = UserAddress::where('id', auth()->user()->id)->first();
 
         $userAddress->update([
+            'eta' => $request->eta,
+            'total_distance' => $request->total_distance,
             'lat' => $request->lat,
             'lng' => $request->lng,
             'street_number' => $request->street_number,

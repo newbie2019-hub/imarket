@@ -24,6 +24,7 @@
  justify-content: center;
  align-items: center;
  background-color: white;
+ flex-direction: column;
 }
 
 .v-data-table>.v-data-table__wrapper>table>tbody>tr>th,

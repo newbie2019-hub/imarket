@@ -1,7 +1,8 @@
 export const formatCurrency = {
  methods: {
   formatCurrency(data) {
-   return (parseFloat(data)).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+   const formattedData = (parseFloat(data)).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+   return isNaN(formattedData) ?  '0.00' : formattedData
   },
  }
 }

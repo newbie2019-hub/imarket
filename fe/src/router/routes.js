@@ -28,7 +28,7 @@ const routes = [
   {
     path: '/imarket/search',
     name: 'ProductInfo',
-    component: () => import(/* webpackChunkName: "productInfo" */ '../views/ProductInfo.vue'),
+    component: () => import(/* webpackChunkName: "productInfo" */ '../views/SearchResult.vue'),
     meta: {
       title: 'IMarket - Product Search Results'
     }

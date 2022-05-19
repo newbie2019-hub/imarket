@@ -21,7 +21,6 @@ const port = process.env.PORT || 8082
 app.listen(port)
 console.log(`app is listening on port: ${ port }`)
 
-
 async function searchRecipes(query) {
  // console.log(query)
  if (query == null) return 'No query'
@@ -51,7 +50,12 @@ async function searchRecipes(query) {
    recipe
   )
 
-  searchResult.push({ title: recipeTitle, image: recipeImage, link: recipeLink })
+  const recipeDescription = await page.evaluate(el =>
+   el.querySelector('div > p:nth-child(2)').textContent,
+   recipe
+  )
+
+  searchResult.push({ title: recipeTitle, image: recipeImage, link: recipeLink, description: recipeDescription })
  }
 
  // console.log(searchResult)
@@ -61,6 +65,20 @@ async function searchRecipes(query) {
  else {
   return searchResult
  }
+}
+
+
+async function getRecipe(query) {
+ // console.log(query)
+ if (query == null) return 'No query'
+
+ const browser = await puppeteer.launch();
+ const page = await browser.newPage();
+
+ await page.goto(`${ query }`)
+
+ const cardRecipes = await page.$$(`article.post.tag-${ query }.category-recipes`);
+
 }
 
 

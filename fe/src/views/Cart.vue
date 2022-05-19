@@ -1,5 +1,5 @@
 <template>
-  <div :class="{'no-scrollbar' : addressLoading}">
+  <div>
     <page-loading v-show="addressLoading" />
     <Navbar />
     <v-layout class="mt-15"></v-layout>
@@ -58,11 +58,11 @@
               <v-layout d-flex>
                 <small class="mb-0 mr-4">
                   <v-icon small> mdi-clock </v-icon>
-                  {{ distanceMatrix && distanceMatrix && distanceMatrix.rows[0].elements[1].duration.text }}
+                  {{ user.address.eta }}
                 </small>
                 <small class="mb-0">
                   <v-icon small> mdi-map-marker </v-icon>
-                  {{ distanceMatrix && distanceMatrix && distanceMatrix.rows[0].elements[1].distance.text }}
+                  {{ user.address.total_distance }}
                 </small>
               </v-layout>
             </v-layout>
@@ -72,11 +72,11 @@
             </v-layout>
             <v-layout class="" justify-space-between>
               <p class="mb-2 font-weight-bold">Delivery Fee</p>
-              <p class="mb-2">PHP 80.00</p>
+              <p class="mb-2">PHP {{ delivery_fee }}</p>
             </v-layout>
             <v-layout class="" justify-space-between>
               <p class="font-weight-bold">Discount</p>
-              <p class="">PHP 80.00</p>
+              <p class="">PHP 0.00</p>
             </v-layout>
             <v-divider class="mt-2 mb-2" />
             <v-layout class="mt-3" justify-space-between>
@@ -183,7 +183,7 @@
       data: {
         search: '',
       },
-      showAddressEdit: true,
+      showAddressEdit: false,
       removeItemDialog: false,
       isLoading: false,
       page: 1,
@@ -191,8 +191,9 @@
       isCartLoading: false,
       isAddedSuccess: false,
       btnLoading: false,
-      addressLoading: true,
-      hasLoaded: false
+      addressLoading: false,
+      hasLoaded: false,
+      delivery_fee: 0
     }),
     async mounted() {
       this.isLoading = true;
@@ -200,12 +201,32 @@
       await this.$store.dispatch('market/getCartItems');
       this.showAddressEdit = false
       window.scrollTo(0, 40)
-      setTimeout(() => {
-        this.addressLoading = false;
-      }, 250);
+      this.calculateDeliveryFee()
       this.isLoading = false;
     },
     methods: {
+      async calculateDeliveryFee(){
+        const INTIAL_PRICE = 15
+        const SUCCEEDING_PRICE = 7
+        const INITIAL_KM = 5
+        let DELIVERY_PRICE = 0
+        const DISTANCE = parseFloat(this.user.address.total_distance.replace('km', ''))
+
+        console.log(DISTANCE)
+
+        if(DISTANCE > 5){
+          DELIVERY_PRICE = INTIAL_PRICE
+          const remainingDistance = DISTANCE - INITIAL_KM
+          if(remainingDistance > 1){
+            DELIVERY_PRICE += ( SUCCEEDING_PRICE * remainingDistance )
+          }
+        }
+        else {
+          DELIVERY_PRICE += ( SUCCEEDING_PRICE * DISTANCE )
+        }
+
+        this.delivery_fee = DELIVERY_PRICE.toFixed(2)
+      },
       async getProducts() {
         this.isLoading = true;
         const page = this.page + 1;

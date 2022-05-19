@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('user_addresses', function (Blueprint $table) {
             $table->id();
+            $table->string('total_distance')->nullable();
+            $table->string('eta')->nullable();
             $table->string('lat')->nullable();
             $table->string('lng')->nullable();
             $table->string('street_number')->nullable();
