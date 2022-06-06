@@ -1,4 +1,33 @@
 To-Do
+Dashboard Fix - Add Latest Transactions
+Remove setting address if no user is logged-in [x]
+Fix settings of address [x]
+Fix dashboard card summary [x]
+Users - Card Summary [x]
+Soft Delete for User Address [x]
+Account Logs - Retrieve [x]
+Store Management
+  - Add formatNumeric on Card Summary [x]
+  - Fix Archiving a store [x]
+  - Add card for viewing store info
+  - Add count of total products from store 
+  - Format Time and Date on store archive [x]
+  - Add a view store option for redirecting to the store (New Page of store with its products) 
+User Magement
+  - Removed update button as it is 
+    against the privacy of users [x]
+  - Removed Delete Forever on User [x]
+  - Viewing of User - Create card [x]
+Add Option for selecting as to what products should be checked out
+Edit of Qty on Checkout section
+Add changing of password on admin section
+Approval of Store
+Viewing of Product - Create card
+Partner Section
+Orders Section
+
+
+To-Do
 Fix seeder not working [x]
 - Send email upon creating of account
 Store Address

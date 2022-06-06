@@ -65,7 +65,7 @@
         <v-list-item two-line class="mb-2">
           <div class="position-relative">
             <v-avatar color="grey" size="50">
-              <img v-if="user.info.profile_img" :src="'http://127.0.0.1:8000/images/profiles/' + user.info.profile_img" alt="Profile Image" />
+              <img v-if="user.info && user.info.profile_img" :src="'http://127.0.0.1:8000/images/profiles/' + user.info.profile_img" alt="Profile Image" />
               <v-icon x-large color="white" v-else> mdi-account-circle </v-icon>
             </v-avatar>
             <div class="upload-image cursor-pointer v-btn">
@@ -126,12 +126,12 @@
       logItems: [
         { title: 'Orders', icon: 'mdi-truck-delivery-outline', link: '/admin/orders' },
         { title: 'Purchase History', icon: 'mdi-clipboard-text-clock-outline', link: '/admin/purchase-history' },
-        { title: 'Logs', icon: 'mdi-history', link: '/admin/logs' },
+        { title: 'Logs', icon: 'mdi-history', link: '/admin/store-logs' },
       ],
       accItems: [
         { title: 'Account Settings', icon: 'mdi-cog', link: '/admin/account-settings' },
         // { title: 'Purchase History', icon: 'mdi-clipboard-text-clock-outline', link: '/admin/purchase-history' },
-        { title: 'Account Logs', icon: 'mdi-history', link: '/admin/logs' },
+        { title: 'Account Logs', icon: 'mdi-history', link: '/admin/account-logs' },
       ],
       overwriteBreakpoint: false,
     }),

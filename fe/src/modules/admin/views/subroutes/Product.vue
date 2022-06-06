@@ -73,7 +73,7 @@
             <p style="min-width: 220px" class="">{{ item.product_info.description }}</p>
           </template>
           <template v-slot:item.product_info.price="{ item }">
-            <p class="text-no-wrap">PHP {{ formatCurrency(item.product_info.price) }}</p>
+            <p class="text-no-wrap">{{ formatCurrency(item.product_info.price) }}</p>
           </template>
           <template v-slot:item.actions="{ item }">
             <v-layout>
@@ -125,7 +125,7 @@
             <p style="min-width: 220px" class="">{{ item.product_info.description }}</p>
           </template>
           <template v-slot:item.product_info.price="{ item }">
-            <p class="text-no-wrap">PHP {{ formatCurrency(item.product_info.price) }}</p>
+            <p class="text-no-wrap">{{ formatCurrency(item.product_info.price) }}</p>
           </template>
           <template v-slot:item.actions="{ item }">
             <v-layout>

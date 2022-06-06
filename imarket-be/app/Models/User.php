@@ -18,7 +18,7 @@ class User extends Authenticatable implements JWTSubject
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes, CascadeSoftDeletes, HasRoles;
 
 
-    protected $cascadeDeletes = ['info'];
+    protected $cascadeDeletes = ['info', 'address'];
 
     /**
      * The attributes that are mass assignable.

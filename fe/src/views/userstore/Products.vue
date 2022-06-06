@@ -16,7 +16,7 @@
         <p class="text-no-wrap">{{ item.product_info.name }}</p>
       </template>
       <template v-slot:item.product_info.price="{ item }">
-        <p class="text-no-wrap">PHP {{ formatCurrency(item.product_info.price) }}</p>
+        <p class="text-no-wrap">{{ formatCurrency(item.product_info.price) }}</p>
       </template>
       <template v-slot:item.actions="{ item }">
         <v-layout d-flex>

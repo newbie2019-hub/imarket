@@ -71,7 +71,7 @@
                         </p>
                       </v-layout>
                       <p class="mb-0 ml-1">{{ product.rating_count }} Rating{{ product.rating_count > 1 ? 's' : '' }}</p>
-                      <h2 class="mt-4 pl-1 orange--text darken-2 font-weight-regular">₱ {{ formatCurrency(product.product_info.price) }}</h2>
+                      <h2 class="mt-4 pl-1 orange--text darken-2 font-weight-regular">{{ formatCurrency(product.product_info.price) }}</h2>
                     </v-card-text>
                   </v-card>
                 </v-hover>

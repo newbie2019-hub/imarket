@@ -21,7 +21,7 @@
                   <v-list-item-content>
                     <v-list-item-title class="font-weight-bold">{{ product.product.product_info.name }}</v-list-item-title>
                     <v-list-item-subtitle>Quantity: {{ product.quantity }}</v-list-item-subtitle>
-                    <v-list-item-subtitle>Subtotal: PHP {{ formatCurrency(product.subtotal) }}</v-list-item-subtitle>
+                    <v-list-item-subtitle>Subtotal: {{ formatCurrency(product.subtotal) }}</v-list-item-subtitle>
                   </v-list-item-content>
 
                   <v-list-item-action>
@@ -68,7 +68,7 @@
             </v-layout>
             <v-layout class="mt-8" justify-space-between>
               <p class="mb-2 font-weight-bold">Subtotal</p>
-              <p class="mb-2">PHP {{ formatCurrency(cart.cart_info_sum_subtotal) }}</p>
+              <p class="mb-2">{{ formatCurrency(cart.cart_info_sum_subtotal) }}</p>
             </v-layout>
             <v-layout class="" justify-space-between>
               <p class="mb-2 font-weight-bold">Delivery Fee</p>
@@ -208,13 +208,13 @@
       async calculateDeliveryFee(){
         const INTIAL_PRICE = 15
         const SUCCEEDING_PRICE = 7
-        const INITIAL_KM = 5
+        const INITIAL_KM = 1.5
         let DELIVERY_PRICE = 0
         const DISTANCE = parseFloat(this.user.address.total_distance.replace('km', ''))
 
         console.log(DISTANCE)
 
-        if(DISTANCE > 5){
+        if(DISTANCE > 1.5){
           DELIVERY_PRICE = INTIAL_PRICE
           const remainingDistance = DISTANCE - INITIAL_KM
           if(remainingDistance > 1){

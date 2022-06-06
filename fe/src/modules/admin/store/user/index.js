@@ -5,6 +5,7 @@ export default {
  state: {
   users: [],
   archivedUsers: [],
+  newUsersCount: 0,
  },
  getters: {
   GET_USERS(state) {
@@ -13,7 +14,8 @@ export default {
  },
  mutations: {
   SET_USERS(state, payload) {
-   state.users = payload
+   state.users = payload.users
+   state.newUsersCount = payload.new_users
   },
   SET_ARCHIVED_USERS(state, payload) {
    state.archivedUsers = payload

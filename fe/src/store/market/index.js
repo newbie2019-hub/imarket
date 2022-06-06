@@ -10,16 +10,20 @@ export default {
     cart: [],
     storeInfo: [],
     searchOptions: {
-      scrape: false,
+      scrape: true,
       products: true,
       categories: [],
     },
     scrapedRecipes: [],
+    searchedProducts: [],
   },
   getters: {
 
   },
   mutations: {
+    SET_SEARCHED_PRODUCTS(state, payload) {
+      state.searchedProducts = payload
+    },
     SET_SCRAPE(state, payload) {
       state.scrapedRecipes = payload
     },
@@ -164,6 +168,18 @@ export default {
     },
     async updateStore({ commit }, payload) {
       const res = await API.put(`store/${ payload.id }`, payload).then(res => {
+        return res;
+      }).catch(error => {
+        return error.response;
+      })
+
+      return res;
+    },
+
+    async searchProducts({ commit }, payload) {
+      // console.log(payload)
+      const res = await API.get(`market/search?product=${payload.product}&page=${payload.page}`).then(res => {
+        commit('SET_SEARCHED_PRODUCTS', res.data)
         return res;
       }).catch(error => {
         return error.response;

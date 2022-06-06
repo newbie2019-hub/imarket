@@ -1,4 +1,5 @@
 import Index from './views/Index'
+import AccountLogs from './views/subroutes/AccountLogs'
 import Dashboard from './views/subroutes/Dashboard'
 import Product from './views/subroutes/Product'
 import Store from './views/subroutes/Store'
@@ -23,6 +24,13 @@ const moduleRoute = {
       component: Dashboard,
       meta: {
         title: 'IMarket - Dashboard'
+      }
+    },
+    {
+      path: "account-logs",
+      component: AccountLogs,
+      meta: {
+        title: 'IMarket - Account Logs'
       }
     },
     {

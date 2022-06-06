@@ -155,10 +155,12 @@
           lat: 11.15972681865006,
           lng: 124.98905099855318,
         };
+
         const userAddress = {
           lat: parseFloat(this.user.address.lat),
           lng: parseFloat(this.user.address.lng),
         };
+        
         const request = {
           origins: [userAddress, marketLocation],
           destinations: [this.user.address.formatted_address, 'F. Montejo St., Palo, Leyte'],

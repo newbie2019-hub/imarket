@@ -32,7 +32,7 @@
             </p>
           </v-layout>
           <p class="mb-0 ml-4 mt-2">{{ productSelected.rating_count }} Rating{{ productSelected.rating_count > 1 ? 's' : '' }}</p>
-          <h1 class="mt-4 ml-4 orange--text darken-2 font-weight-regular">₱ {{ formatCurrency(productSelected.product_info.price) }}</h1>
+          <h1 class="mt-4 ml-4 orange--text darken-2 font-weight-regular">{{ formatCurrency(productSelected.product_info.price) }}</h1>
           <v-layout class="ml-4 mt-6" align-center>
             <p class="font-weight-bold mb-0 mr-2">QTY:</p>
             <v-col lg="3" md="3" sm="4" cols="5">

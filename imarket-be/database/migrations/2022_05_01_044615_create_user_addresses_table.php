@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('adminstrative_area_level_1')->nullable();
             $table->string('country')->nullable();
             $table->string('formatted_address')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

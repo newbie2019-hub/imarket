@@ -15,7 +15,7 @@
               <v-card-title class="text-h5 font-grotesk font-weight-bold mb-0 pa-0 pl-4 pb-2 pt-4">Active <br />Users</v-card-title>
             </div>
             <div>
-              <p class="text-h1 font-grotesk pr-5 font-weight-bold mb-0">{}</p>
+              <p class="text-h1 font-grotesk pr-5 font-weight-bold mb-0">{{ users.length }}</p>
             </div>
           </div>
         </v-card>
@@ -30,7 +30,7 @@
               <v-card-title class="text-h5 font-grotesk font-weight-bold mb-0 pa-0 pl-4 pb-2 pt-4">Archived <br />Users</v-card-title>
             </div>
             <div>
-              <p class="text-h1 font-grotesk pr-5 font-weight-bold mb-0"></p>
+              <p class="text-h1 font-grotesk pr-5 font-weight-bold mb-0">{{ formatNumeric(archivedUsers.length) }}</p>
             </div>
           </div>
         </v-card>
@@ -45,7 +45,7 @@
               <v-card-title class="text-h5 font-grotesk font-weight-bold mb-0 pa-0 pl-4 pb-2 pt-4">New <br />Users</v-card-title>
             </div>
             <div>
-              <p class="text-h1 font-grotesk pr-5 font-weight-bold mb-0"></p>
+              <p class="text-h1 font-grotesk pr-5 font-weight-bold mb-0">{{ formatNumeric(newUsersCount) }}</p>
             </div>
           </div>
         </v-card>
@@ -77,17 +77,8 @@
           </template>
           <template v-slot:item.actions="{ item }">
             <v-layout>
-              <v-btn
-                @click.prevent="
-                  userData = item;
-                  showModal();
-                "
-                small
-                text
-                color="green darken-1"
-                >View</v-btn
-              >
-              <v-btn small text color="primary darken-1">Update</v-btn>
+              <v-btn @click.prevent="showModal(item)" small text color="green darken-1">View</v-btn>
+              <!-- <v-btn small text color="primary darken-1">Update</v-btn> -->
               <v-btn
                 @click="
                   deleteData = item;
@@ -129,16 +120,7 @@
           </template>
           <template v-slot:item.actions="{ item }">
             <v-layout>
-              <v-btn
-                @click.prevent="
-                  userData = item;
-                  showModal();
-                "
-                small
-                text
-                color="green darken-1"
-                >View</v-btn
-              >
+              <v-btn @click.prevent="showModal(item)" small text color="green darken-1">View</v-btn>
               <v-btn
                 @click="
                   restoreDialog = true;
@@ -149,16 +131,14 @@
                 color="grey darken-1"
                 >Restore</v-btn
               >
-              <v-btn
+              <!-- <v-btn
                 @click="
                   deleteDialog = true;
-                  deleteData = item;
-                "
+                  deleteData = item;"
                 small
                 text
                 color="red darken-1"
-                >Delete Forever</v-btn
-              >
+                >Delete Forever</v-btn> -->
             </v-layout>
           </template>
         </v-data-table>
@@ -209,19 +189,82 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <v-dialog v-model="userInfoDialog" max-width="460">
+      <v-card class="pt-2 pl-4 pr-4 pb-2">
+        <v-layout align-center justify-center>
+          <v-card-text>
+            <v-layout justify-center>
+              <v-avatar class="ma-0 mt-2" size="150" color="primary">
+                <img
+                  class="cursor-pointer"
+                  @click.prevent="showProfile(userSelectedData.info.profile_img)"
+                  v-if="userSelectedData.info.profile_img"
+                  :src="`http://127.0.0.1:8000/images/profiles/${userSelectedData.info.profile_img}`"
+                />
+                <p v-else class="white--text font-weight-bold mb-0">{{ userSelectedData.info.first_name[0] }}{{ userSelectedData.info.last_name[0] }}</p>
+              </v-avatar>
+            </v-layout>
+            <p class="text-h5 mt-5 mb-0 font-weight-bold custom-primary-color text-center">{{ userSelectedData.info.first_name }} {{ userSelectedData.info.last_name }}</p>
+            <p class="grey--text text-center">{{userSelectedData.email}}</p>
+          </v-card-text>
+        </v-layout>
+        <v-layout class="pl-3 pr-3">
+          <v-col>
+            <p><span class="font-weight-bold">Contact:</span> {{ userSelectedData.info.contact_number }}</p>
+          </v-col>
+          <v-col>
+            <p><span class="font-weight-bold">Date of Birth:</span><br/> {{ userSelectedData.info.birthday }}</p>
+          </v-col>
+          <v-col>
+            <p><span class="font-weight-bold">Gender:</span><br/> {{ userSelectedData.info.gender }}</p>
+          </v-col>
+        </v-layout>
+        <v-layout class="pl-3 pr-4">
+          <v-col>
+            <p><span class="font-weight-bold">Addresss:</span><br/> {{ userSelectedData.address && userSelectedData.address.formatted_address ? userSelectedData.address.formatted_address : 'Address has not been set yet.' }}</p>
+          </v-col>
+          <v-col>
+            <p><span class="font-weight-bold">Created On:</span><br/> {{ userSelectedData.created_at }}</p>
+          </v-col>
+        </v-layout>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="grey darken-1" text @click="userInfoDialog = false"> Close </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 <script>
   import moment from 'moment';
   import { mapState } from 'vuex';
+  import { formatNumeric } from '@/assets/js/utilities.js';
   export default {
     components: {},
+    mixins: [formatNumeric],
     data: () => ({
       search: '',
       searchArchived: '',
       archiveDialog: false,
       deleteDialog: false,
       restoreDialog: false,
+      userInfoDialog: false,
+      userSelectedData: {
+        email: '',
+        address: {
+          formatted_address:''
+        },
+        info: {
+          image: '',
+          first_name: '',
+          last_name: '',
+          middle_name: '',
+          gender: '',
+          contact_number: '',
+          birthday: '',
+        },
+      },
       deleteData: {
         id: null,
       },
@@ -276,8 +319,9 @@
       this.isLoading = false;
     },
     methods: {
-      showModal() {
-        this.isModalVisible = true;
+      showModal(data) {
+        this.userInfoDialog = true;
+        this.userSelectedData = data;
       },
       closeModal() {
         this.isModalVisible = false;
@@ -322,7 +366,7 @@
       },
     },
     computed: {
-      ...mapState('adminUser', ['users', 'archivedUsers']),
+      ...mapState('adminUser', ['users', 'archivedUsers', 'newUsersCount']),
       isFluid() {
         return this.$vuetify.breakpoint.md ? true : false | this.$vuetify.breakpoint.sm ? true : false;
       },

@@ -1,8 +1,23 @@
 export const formatCurrency = {
  methods: {
   formatCurrency(data) {
-   const formattedData = (parseFloat(data)).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
-   return isNaN(formattedData) ?  '0.00' : formattedData
+   // const formattedData = (parseFloat(data)).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+   // return isNaN(formattedData) ?  '0.00' : formattedData
+   var formatter = new Intl.NumberFormat('en-PH', {
+    style: 'currency',
+    currency: 'PHP',
+    currencyDisplay: "code"
+   });
+
+   return formatter.format(data); /* $2,500.00 */
+  },
+ }
+}
+
+export const formatNumeric = {
+ methods: {
+  formatNumeric(data) {
+   return data < 10 ? '0' + data : data
   },
  }
 }

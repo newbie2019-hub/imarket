@@ -14,7 +14,7 @@ class AdminStoreController extends Controller
     public function destroy($id){
         Store::destroy($id);
         $store = Store::onlyTrashed()->where('id', $id)->first();
-        $store->load(['info', 'roles']);
+        $store->load(['user.info:id,first_name,last_name']);
         return $this->success('Store has been archived', $store);
     }
 }

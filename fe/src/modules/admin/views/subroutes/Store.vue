@@ -15,7 +15,7 @@
               <v-card-title class="text-h5 font-grotesk font-weight-bold mb-0 pa-0 pl-4 pb-2 pt-4">Total <br />Stores</v-card-title>
             </div>
             <div>
-              <p class="text-h1 font-grotesk pr-5 font-weight-bold mb-0">{{ stores.length + archivedStores.length }}</p>
+              <p class="text-h1 font-grotesk pr-5 font-weight-bold mb-0">{{ formatNumeric(stores.length + archivedStores.length) }}</p>
             </div>
           </div>
         </v-card>
@@ -30,7 +30,7 @@
               <v-card-title class="text-h5 font-grotesk font-weight-bold mb-0 pa-0 pl-4 pb-2 pt-4">Archived <br />Stores</v-card-title>
             </div>
             <div>
-              <p class="text-h1 font-grotesk pr-5 font-weight-bold mb-0">{{archivedStores.length}}</p>
+              <p class="text-h1 font-grotesk pr-5 font-weight-bold mb-0">{{ formatNumeric(archivedStores.length) }}</p>
             </div>
           </div>
         </v-card>
@@ -108,6 +108,21 @@
               <img class="cursor-pointer" @click.prevent="showProfile(item.logo)" v-if="item.logo" :src="`http://127.0.0.1:8000/images/logos/${item.logo}`" />
               <p v-else class="white--text font-weight-bold mb-0">{{ item.name[0] }}</p>
             </v-avatar>
+          </template>
+          <template v-slot:item.description="{ item }">
+            <p style="min-width: 220px" class="">{{ item.description }}</p>
+          </template>
+          <template v-slot:item.week_days_opening="{ item }">
+            <p class="text-no-wrap">{{ item.week_days_opening | formatTime }}</p>
+          </template>
+          <template v-slot:item.week_days_closing="{ item }">
+            <p class="text-no-wrap">{{ item.week_days_closing | formatTime }}</p>
+          </template>
+          <template v-slot:item.week_end_opening="{ item }">
+            <p class="text-no-wrap">{{ item.week_end_opening | formatTime }}</p>
+          </template>
+          <template v-slot:item.week_end_closing="{ item }">
+            <p class="text-no-wrap">{{ item.week_end_closing | formatTime }}</p>
           </template>
           <template v-slot:item.description="{ item }">
             <p style="min-width: 220px" class="">{{ item.description }}</p>
@@ -199,8 +214,10 @@
 <script>
   import moment from 'moment';
   import { mapState } from 'vuex';
+  import { formatNumeric } from '@/assets/js/utilities.js';
   export default {
     components: {},
+    mixins: [formatNumeric],
     filters: {
       formatTime(val) {
         if (val) {

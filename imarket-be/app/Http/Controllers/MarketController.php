@@ -9,7 +9,7 @@ class MarketController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['index', 'latestProducts']]);
+        $this->middleware('auth:api', ['except' => ['index', 'latestProducts', 'searchProduct']]);
     }
 
     public function latestProducts(){
@@ -23,7 +23,7 @@ class MarketController extends Controller
     }
 
     public function searchProduct(Request $request){
-        $products = Product::whereRelation('product_info', 'name', '%'.$request->search.'%')->withCount('rating')->with(['product_info', 'user:id,user_info_id', 'user.info:id,last_name'])->withAvg('rating', 'rating')->latest()->paginate(8);
+        $products = Product::whereRelation('product_info', 'name', 'like', '%'.$request->product.'%')->withCount('rating')->with(['product_info:id,name,category_id,price,image', 'store'])->withAvg('rating', 'rating')->latest()->paginate(12);
         return response()->json($products);
     }
 }

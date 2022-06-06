@@ -13,7 +13,18 @@
           <div class="image-overlay"></div>
         </div>
         <v-layout class="store-preview--content">
-          <v-avatar color="grey" size="140"></v-avatar>
+          <div align-center justify-center class="position-relative">
+            <v-avatar color="grey" size="140">
+              <img v-if="storeInfo.logo != '' && storeInfo.logo != null" :src="'http://127.0.0.1:8000/images/logos/' + storeInfo.logo" alt="Store Logo" />
+              <v-icon x-large color="primary" v-else> mdi-account-circle </v-icon>
+            </v-avatar>
+            <div class="upload-image-logo cursor-pointer v-btn">
+              <label for="uploadimg" class="cursor-pointer">
+                <v-icon small color="white">mdi-camera</v-icon>
+              </label>
+              <input type="file" id="uploadimg" @change="uploadBannerImage" />
+            </div>
+          </div>
           <v-layout column class="ml-5">
             <h1 class="font-rubik white--text">{{ storeInfo.name }}</h1>
             <p class="white--text">
@@ -280,65 +291,5 @@
   };
 </script>
 <style>
-  .store-preview {
-    background: rgb(223, 223, 223);
-    width: 100%;
-    height: 240px;
-    position: relative;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    padding-left: 1.8rem;
-  }
-
-  .store-preview--image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 240px;
-    object-fit: cover;
-    filter: grayscale(20%) blur(1px);
-    -webkit-filter: grayscale(20%) blur(1px);
-    border-radius: 8px;
-  }
-
-  .store-preview--content {
-    z-index: 2;
-    padding-left: 2rem;
-    margin-top: -5.2rem;
-    /* position: absolute; */
-  }
-
-  .upload-image-banner {
-    position: absolute;
-    top: 12px;
-    right: 15px;
-    background: rgba(163, 163, 163, 0.603);
-    border: 1px solid rgba(255, 255, 255, 0.39);
-    border-radius: 50%;
-    padding: 0.5rem 0.47rem 0.42rem 0.375rem;
-    display: flex;
-    align-items: center;
-    backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
-    justify-content: center;
-    transition: all 250ms ease-in-out;
-  }
-
-  .upload-image-banner:hover {
-    background: rgba(179, 179, 179, 0.884);
-  }
-
-  .image-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: rgba(61, 61, 61, 0.4);
-    height: 95px;
-    backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
-    z-index: 2;
-  }
+  
 </style>

@@ -15,7 +15,7 @@
               <v-card-title class="text-h5 font-weight-bold mb-0 pa-0 pl-4 pb-2 pt-4">Users</v-card-title>
             </div>
             <div>
-              <p class="text-h1 pr-5 font-weight-bold mb-0">22</p>
+              <p class="text-h1 pr-5 font-weight-bold mb-0">{{dashboardSummary.userCount}}</p>
             </div>
           </div>
         </v-card>
@@ -30,7 +30,7 @@
               <v-card-title class="text-h5 font-weight-bold mb-0 pa-0 pl-4 pb-2 pt-4">Stores</v-card-title>
             </div>
             <div>
-              <p class="text-h1 pr-5 font-weight-bold mb-0">15</p>
+              <p class="text-h1 pr-5 font-weight-bold mb-0">{{dashboardSummary.storeCount}}</p>
             </div>
           </div>
         </v-card>
@@ -45,7 +45,7 @@
               <v-card-title class="text-h5 font-weight-bold mb-0 pa-0 pl-4 pb-2 pt-4">Products</v-card-title>
             </div>
             <div>
-              <p class="text-h1 pr-5 font-weight-bold mb-0">15</p>
+              <p class="text-h1 pr-5 font-weight-bold mb-0">{{dashboardSummary.productCount}}</p>
             </div>
           </div>
         </v-card>
@@ -55,12 +55,12 @@
           <div class="d-flex flex-no-wrap justify-space-between align-end mb-2">
             <div>
               <div class="fit-content">
-                <v-icon large class=""> mdi-forum </v-icon>
+                <v-icon large class=""> mdi-package </v-icon>
               </div>
-              <v-card-title class="text-h5 font-weight-bold mb-0 pa-0 pl-4 pb-2 pt-4">Partners</v-card-title>
+              <v-card-title class="text-h5 font-weight-bold mb-0 pa-0 pl-4 pb-2 pt-4">Orders Today</v-card-title>
             </div>
             <div>
-              <p class="text-h1 pr-5 font-weight-bold mb-0">12</p>
+              <p class="text-h1 pr-5 font-weight-bold mb-0">{{formatNumeric(dashboardSummary.todaysOrderCount)}}</p>
             </div>
           </div>
         </v-card>
@@ -90,7 +90,7 @@
               <v-card-title class="text-h5 font-weight-bold mb-0 pa-0 pl-4 pb-2 pt-4">Categories</v-card-title>
             </div>
             <div>
-              <p class="text-h1 pr-5 font-weight-bold mb-0">17</p>
+              <p class="text-h1 pr-5 font-weight-bold mb-0">{{formatNumeric(dashboardSummary.categoryCount)}}</p>
             </div>
           </div>
         </v-card>
@@ -122,7 +122,9 @@
 </template>
 <script>
   import { mapState } from 'vuex';
+  import { formatNumeric } from '@/assets/js/utilities.js'
   export default {
+    mixins: [formatNumeric],
     data: () => ({
       headers: [
         {
@@ -141,7 +143,7 @@
     methods: {},
     computed: {
       ...mapState('auth', ['user']),
-      ...mapState('adminDashboard', ['latestProducts']),
+      ...mapState('adminDashboard', ['latestProducts', 'dashboardSummary']),
     },
   };
 </script>

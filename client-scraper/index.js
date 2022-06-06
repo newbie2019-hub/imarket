@@ -4,6 +4,8 @@ const path = require('path')
 const app = express();
 const puppeteer = require('puppeteer');
 
+let browser, page
+
 app.use('/static', express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(cors())
@@ -16,17 +18,31 @@ app.post('/search?', async (req, res) => {
  })
 });
 
+app.post('/recipe/:name', async (req, res) => {
+ console.log(req)
+ const result = await getRecipe(req)
+ res.json({
+  success: true,
+  result: result
+ })
+});
+
 const port = process.env.PORT || 8082
 
 app.listen(port)
 console.log(`app is listening on port: ${ port }`)
 
+
+async function loadBrowser(){
+  browser = await puppeteer.launch({ headless: true }); //defaults to true
+  page = await browser.newPage();
+}
+
+loadBrowser()
+
 async function searchRecipes(query) {
  // console.log(query)
  if (query == null) return 'No query'
-
- const browser = await puppeteer.launch();
- const page = await browser.newPage();
 
  await page.goto(`https://panlasangpinoy.com/?s=${ query }`)
 
@@ -72,13 +88,11 @@ async function getRecipe(query) {
  // console.log(query)
  if (query == null) return 'No query'
 
- const browser = await puppeteer.launch();
- const page = await browser.newPage();
+ console.log(query.body.link)
+ await page.goto(`${query.body.link}`)
 
- await page.goto(`${ query }`)
-
- const cardRecipes = await page.$$(`article.post.tag-${ query }.category-recipes`);
-
+ // const cardRecipes = await page.$$(`article.post.tag-${ query }.category-recipes`);
+ return 200
 }
 
 

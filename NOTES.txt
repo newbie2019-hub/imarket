@@ -1,0 +1,21 @@
+Repository for IMarket
+https://github.com/newbie2019-hub/imarket
+
+Google Maps -> https://developers.google.com/maps/documentation
+
+Distance Matrix
+ - Calculate ETA (estimated time arrival) and Distance in km
+Places API
+ - for autocomplete of place search
+Geocoding
+ - Convert coordinates into addresses and addresses into coordinates.
+
+Scraping - uses puppeteer -> link: https://github.com/puppeteer/puppeteer
+
+Scrape recipes from this site: https://panlasangpinoy.com/
+
+Headless - Does not open any browser on the background - Hides by default
+
+- Data Mining
+- Data Gathering
+- Automated Data Gathering

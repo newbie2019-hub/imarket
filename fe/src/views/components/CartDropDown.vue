@@ -34,7 +34,7 @@
             <v-list-item-content>
               <v-list-item-title class="font-weight-bold">{{ product.product.product_info.name }}</v-list-item-title>
               <v-list-item-subtitle>Quantity: {{ product.quantity }}</v-list-item-subtitle>
-              <v-list-item-subtitle>Subtotal: PHP {{ formatCurrency(product.subtotal) }}</v-list-item-subtitle>
+              <v-list-item-subtitle>Subtotal: {{ formatCurrency(product.subtotal) }}</v-list-item-subtitle>
             </v-list-item-content>
 
             <v-list-item-action>
@@ -54,7 +54,7 @@
 
         <v-divider></v-divider>
         <div class="cart-bottom" v-if="Object.keys(cart).length != 0 && cart.cart_info.length != 0">
-          <p class="mb-0"><span class="font-weight-bold">Sub Total:</span> PHP {{ formatCurrency(cart.cart_info_sum_subtotal) }}</p>
+          <p class="mb-0"><span class="font-weight-bold">Sub Total:</span> {{ formatCurrency(cart.cart_info_sum_subtotal) }}</p>
           <v-btn link to="/cart-checkout" class="" text depressed color="white darken-2" dark>Checkout</v-btn>
         </div>
       </v-card>

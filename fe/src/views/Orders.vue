@@ -24,8 +24,8 @@
                         {{ order.status }}
                       </v-chip>
                     </v-list-item-subtitle>
-                    <v-list-item-subtitle class="black--text">Subtotal: PHP {{ formatCurrency(order.subtotal) }}</v-list-item-subtitle>
-                    <v-list-item-subtitle class="black--text">Delivery Fee: PHP {{ formatCurrency(order.delivery_fee) }}</v-list-item-subtitle>
+                    <v-list-item-subtitle class="black--text">Subtotal: {{ formatCurrency(order.subtotal) }}</v-list-item-subtitle>
+                    <v-list-item-subtitle class="black--text">Delivery Fee: {{ formatCurrency(order.delivery_fee) }}</v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
                 <v-divider v-if="i != orders.data.length - 1"></v-divider>
