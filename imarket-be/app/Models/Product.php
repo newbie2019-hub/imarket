@@ -26,6 +26,10 @@ class Product extends Model
         return $this->hasMany(ProductRating::class, 'product_id', 'id');
     }
 
+    public function tags(){
+        return $this->hasMany(ProductTag::class, 'product_id', 'id');
+    }
+
     protected $casts = [
         'created_at' => 'datetime:Y-m-d h:i A',
         'updated_at' => 'datetime:Y-m-d h:i A',

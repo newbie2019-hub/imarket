@@ -17,4 +17,18 @@ class AdminStoreController extends Controller
         $store->load(['user.info:id,first_name,last_name']);
         return $this->success('Store has been archived', $store);
     }
+
+    public function approveStore($id){
+        $store = Store::where('id', $id)->first();
+        if($store){
+            $store->update([
+                'status' => 'Approved'
+            ]);
+        }
+        else {
+            return $this->error('Something went wrong!');
+        }
+
+        return $this->success('Store has been approved!');
+    }
 }

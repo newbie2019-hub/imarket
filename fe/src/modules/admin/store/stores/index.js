@@ -42,9 +42,27 @@ export default {
      state.archivedStores.splice(i, 1)
     }
    })
-  }
+  },
+  APPROVE_STORE(state, payload) {
+   console.log(payload)
+   state.stores.map((store, i) => {
+    if(store.id == payload.id){
+     state.stores[i].status = 'Approved'
+    }
+   })
+  },
  },
  actions: {
+  async approveStore({ commit }, payload) {
+   const res = await API.put(`admin/store/${payload.id}?token=${ localStorage.getItem('auth') }`, payload).then(res => {
+    commit('APPROVE_STORE', payload)
+    return res;
+   }).catch(err => {
+    return err.response;
+   })
+
+   return res;
+  },
   async getStores({ commit }, payload) {
    const res = await API.get(`admin/stores?token=${ localStorage.getItem('auth') }`, payload).then(res => {
     commit('SET_STORES', res.data)

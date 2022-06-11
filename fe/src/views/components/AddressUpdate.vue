@@ -174,7 +174,7 @@
           console.log(response);
           this.data.eta = response.rows[0].elements[1].duration.text
           this.data.total_distance = response.rows[0].elements[1].distance.text
-          console.log("HIII")
+          // console.log("HIII")
           // this.$store.commit('auth/SET_MATRIX', response);
         });
       },

@@ -24,7 +24,7 @@ class PartnerFactory extends Factory
         return [
             'user_id' => $user->id,
             'request_date' => Carbon::now(),
-            'status' => $this->faker->randomElement(['For Approval', 'Approved'])
+            // 'status' => $this->faker->randomElement(['For Approval', 'Approved'])
         ];
     }
 }

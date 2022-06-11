@@ -51,7 +51,7 @@
               <p v-else class="white--text font-weight-bold mb-0">{{ item.name[0] }}</p>
             </v-avatar>
           </template>
-          <template v-slot:item.week_days_opening="{ item }">
+          <!-- <template v-slot:item.week_days_opening="{ item }">
             <p class="text-no-wrap">{{ item.week_days_opening | formatTime }}</p>
           </template>
           <template v-slot:item.week_days_closing="{ item }">
@@ -62,15 +62,32 @@
           </template>
           <template v-slot:item.week_end_closing="{ item }">
             <p class="text-no-wrap">{{ item.week_end_closing | formatTime }}</p>
-          </template>
+          </template> -->
           <template v-slot:item.description="{ item }">
             <p style="min-width: 220px" class="">{{ item.description }}</p>
+          </template>
+          <template v-slot:item.address="{ item }">
+            <p style="min-width: 220px" class="">{{ item.address }}</p>
+          </template>
+          <template v-slot:item.created_at="{ item }">
+            <p class="text-no-wrap">{{ item.created_at }}</p>
           </template>
           <template v-slot:item.actions="{ item }">
             <v-layout>
               <v-btn
+                v-if="item.status == 'For Approval'"
                 @click.prevent="
-                  userData = item;
+                  storeData = item;
+                  showModal();
+                "
+                small
+                text
+                color="green darken-1"
+                >Approve</v-btn
+              >
+              <v-btn
+                @click.prevent="
+                  storeData = item;
                   showModal();
                 "
                 small
@@ -112,7 +129,7 @@
           <template v-slot:item.description="{ item }">
             <p style="min-width: 220px" class="">{{ item.description }}</p>
           </template>
-          <template v-slot:item.week_days_opening="{ item }">
+          <!-- <template v-slot:item.week_days_opening="{ item }">
             <p class="text-no-wrap">{{ item.week_days_opening | formatTime }}</p>
           </template>
           <template v-slot:item.week_days_closing="{ item }">
@@ -123,15 +140,21 @@
           </template>
           <template v-slot:item.week_end_closing="{ item }">
             <p class="text-no-wrap">{{ item.week_end_closing | formatTime }}</p>
-          </template>
+          </template> -->
           <template v-slot:item.description="{ item }">
             <p style="min-width: 220px" class="">{{ item.description }}</p>
+          </template>
+          <template v-slot:item.address="{ item }">
+            <p style="min-width: 220px" class="">{{ item.address }}</p>
+          </template>
+          <template v-slot:item.created_at="{ item }">
+            <p class="text-no-wrap">{{ item.created_at }}</p>
           </template>
           <template v-slot:item.actions="{ item }">
             <v-layout>
               <v-btn
                 @click.prevent="
-                  userData = item;
+                  storeData = item;
                   showModal();
                 "
                 small
@@ -195,6 +218,21 @@
       </v-card>
     </v-dialog>
 
+    <v-dialog v-model="approveModal" max-width="420">
+      <v-card>
+        <v-card-title class="text-h5"> Confirm Approval </v-card-title>
+        <v-card-text class="">
+          <span class="text-subtitle-1">Are you sure you want to approve this store?</span> <br/>
+          <span class="red--text lighten-4">Note: You can archive a store. Products from disabled store are not being retrieved</span>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="grey darken-2" text @click="approveModal = false"> Cancel </v-btn>
+          <v-btn color="green darken-1" text @click="approveStore" :loading="isLoading"> Approve </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
     <v-dialog v-model="restoreDialog" max-width="420">
       <v-card>
         <v-card-title class="text-h5"> Restore Account </v-card-title>
@@ -234,9 +272,9 @@
       deleteData: {
         id: null,
       },
-      userData: {},
+      storeData: {},
       restoreData: {},
-      isModalVisible: false,
+      approveModal: false,
       isLoading: false,
       headers: [
         {
@@ -248,10 +286,10 @@
         { text: 'Store Name', value: 'name' },
         { text: 'Description', value: 'description' },
         { text: 'Address', value: 'address' },
-        { text: 'Week Days Opening', value: 'week_days_opening' },
-        { text: 'Week Days Closing', value: 'week_days_closing' },
-        { text: 'Week End Opening', value: 'week_end_opening' },
-        { text: 'Week End Closing', value: 'week_end_closing' },
+        // { text: 'Week Days Opening', value: 'week_days_opening' },
+        // { text: 'Week Days Closing', value: 'week_days_closing' },
+        // { text: 'Week End Opening', value: 'week_end_opening' },
+        // { text: 'Week End Closing', value: 'week_end_closing' },
         { text: 'Status', value: 'status' },
         { text: 'Date Created', value: 'created_at' },
         { text: 'Actions', value: 'actions' },
@@ -266,10 +304,10 @@
         { text: 'Store Name', value: 'name' },
         { text: 'Description', value: 'description' },
         { text: 'Address', value: 'address' },
-        { text: 'Week Days Opening', value: 'week_days_opening' },
-        { text: 'Week Days Closing', value: 'week_days_closing' },
-        { text: 'Week End Opening', value: 'week_end_opening' },
-        { text: 'Week End Closing', value: 'week_end_closing' },
+        // { text: 'Week Days Opening', value: 'week_days_opening' },
+        // { text: 'Week Days Closing', value: 'week_days_closing' },
+        // { text: 'Week End Opening', value: 'week_end_opening' },
+        // { text: 'Week End Closing', value: 'week_end_closing' },
         { text: 'Status', value: 'status' },
         { text: 'Date Created', value: 'created_at' },
         { text: 'Deleted On', value: 'deleted_at' },
@@ -286,10 +324,13 @@
     },
     methods: {
       showModal() {
-        this.isModalVisible = true;
+        this.approveModal = true;
       },
-      closeModal() {
-        this.isModalVisible = false;
+      async approveStore() {
+        const { status, data } = await this.$store.dispatch('adminStore/approveStore', this.storeData);
+        this.toastData(status, data);
+        this.approveModal = false;
+        this.storeData = null;
       },
       async getStores() {
         await this.$store.dispatch('adminStore/getStores');

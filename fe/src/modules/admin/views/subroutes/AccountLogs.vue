@@ -13,6 +13,12 @@
       </v-row>
       <v-row>
         <v-col>
+          <v-layout justify-space-between>
+            <p>Account Logs</p>
+            <v-col sm="5" md="4" lg="4">
+              <v-text-field v-model="search" outlined dense append-icon="mdi-magnify" class="mb-5" label="Search" hide-details></v-text-field>
+            </v-col>
+          </v-layout>
           <v-data-table :loading="isLoading" :loading-text="'Retrieving your account logs. Please wait...'" :headers="headers" :items="userLogs" :search="search">
             <template v-slot:item.event="{ item }">
               <v-chip :color="getColor(item.event)" dark small>

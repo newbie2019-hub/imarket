@@ -15,6 +15,6 @@ class ProductRatingSeeder extends Seeder
      */
     public function run()
     {
-        ProductRating::factory(60)->create();
+        ProductRating::factory(70)->create();
     }
 }

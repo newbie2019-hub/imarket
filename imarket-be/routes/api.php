@@ -61,6 +61,7 @@ Route::middleware('api')->group(function () {
             Route::apiResource('category', AdminCategoryController::class);
             
             Route::apiResource('archived-stores', AdminArchivedStoreController::class);
+            Route::put('store/{store}', [AdminStoreController::class, 'approveStore']);
             Route::apiResource('stores', AdminStoreController::class);
             
             Route::apiResource('archived-products', AdminArchivedProductController::class);

@@ -1,7 +1,9 @@
 To-Do
 Dashboard Fix - Add Latest Transactions
 Remove setting address if no user is logged-in [x]
+Approval of Store [x]
 Fix settings of address [x]
+ - Fix bug of address [x]
 Fix dashboard card summary [x]
 Users - Card Summary [x]
 Soft Delete for User Address [x]
@@ -9,6 +11,7 @@ Account Logs - Retrieve [x]
 Store Management
   - Add formatNumeric on Card Summary [x]
   - Fix Archiving a store [x]
+  - Fix restore store with products [x]
   - Add card for viewing store info
   - Add count of total products from store 
   - Format Time and Date on store archive [x]

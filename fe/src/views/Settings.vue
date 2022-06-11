@@ -303,7 +303,7 @@
         </label>
         <v-container>
           <v-row class="ml-4 mr-4 mt-1 mb-1 border-orange position-relative" style="height: 400px">
-            <gmap-map @click="addLocationMarker" class="rounded-xl" :zoom="9" :options="{ mapTypeControl: false, streetViewControl: false }" :center="center" style="width: 100%; height: 100%">
+            <gmap-map @click="addLocationMarker" class="rounded-xl" :zoom="zoom" :options="{ mapTypeControl: false, streetViewControl: false }" :center="center" style="width: 100%; height: 100%">
               <gmap-marker :position="center"></gmap-marker>
             </gmap-map>
             <v-btn class="btn-setAddress" depressed color="primary darken-2" large @click="addressDialog = false"> SET ADDRESS </v-btn>
@@ -350,6 +350,7 @@
         lat: 12.8797,
         lng: 121.774,
       },
+      zoom: 9,
       menu: false,
       activePicker: null,
       valid: true,
@@ -380,6 +381,7 @@
       this.isLoading = true;
       this.maxDate();
       this.setInfo();
+      await this.locateGeoLocation()
       await this.$store.dispatch('auth/getLogs');
       this.isLoading = false;
     },
@@ -415,6 +417,7 @@
         };
         // console.log(loc)
         // console.log(this.codeAddress());
+        this.zoom = 18
         if (loc.address_components.length > 5) {
           this.data.street_number = loc.address_components[0].long_name;
           this.data.route = loc.address_components[1].long_name;
@@ -447,6 +450,7 @@
         this.center = marker;
       },
       locateGeoLocation: function () {
+        // console.log('Setting location ...')
         navigator.geolocation.getCurrentPosition((res) => {
           this.center = {
             lat: res.coords.latitude,
@@ -556,7 +560,13 @@
       ...mapState('auth', ['user', 'userLogs']),
       google: gmapApi,
     },
-    watch: {},
+    watch: {
+       addressDialog(){
+        if(this.center.lat == null){
+           this.locateGeoLocation()
+        }
+      }
+    },
   };
 </script>
 <style>

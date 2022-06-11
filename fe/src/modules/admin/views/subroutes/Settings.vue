@@ -195,7 +195,7 @@
                   >
                     Cancel
                   </v-btn>
-                  <v-btn @click.prevent="update" color="green darken-1" text> Save Changes </v-btn>
+                  <v-btn @click.prevent="update" color="green darken-1" text :loading="isLoading"> Save Changes </v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
@@ -218,7 +218,7 @@
         </label>
         <v-container>
           <v-row class="ml-4 mr-4 mt-1 mb-1 border-orange position-relative" style="height: 400px">
-            <gmap-map @click="addLocationMarker" class="rounded-xl" :zoom="9" :options="{ mapTypeControl: false, streetViewControl: false }" :center="center" style="width: 100%; height: 100%">
+            <gmap-map @click="addLocationMarker" class="rounded-xl" :zoom="zoom" :options="{ mapTypeControl: false, streetViewControl: false }" :center="center" style="width: 100%; height: 100%">
               <gmap-marker :position="center"></gmap-marker>
             </gmap-map>
             <v-btn class="btn-setAddress" color="primary darken-2" large @click="addressDialog = false"> SET ADDRESS </v-btn>
@@ -261,6 +261,7 @@
         adminstrative_area_level_2: '',
         adminstrative_area_level_1: '',
       },
+      zoom: 9,
       center: {
         lat: 12.8797,
         lng: 121.774,
@@ -295,6 +296,7 @@
       this.isLoading = true;
       this.maxDate();
       this.setInfo();
+      await this.locateGeoLocation();
       await this.$store.dispatch('auth/getLogs');
       this.isLoading = false;
     },
@@ -307,7 +309,7 @@
         this.center.lat = this.data.lat && parseFloat(this.data.lat);
         this.center.lng = this.data.lng && parseFloat(this.data.lng);
         // this.$refs.gmapAutoComplete.$el.value = this.data.address && this.data.address;
-        this.addressDialog = true
+        this.addressDialog = true;
       },
       codeAddress() {
         const geocoder = new this.google.maps.Geocoder();
@@ -332,6 +334,7 @@
         };
         // console.log(loc)
         // console.log(this.codeAddress());
+        this.zoom = 18;
         if (loc.address_components.length > 5) {
           this.data.street_number = loc.address_components[0].long_name;
           this.data.route = loc.address_components[1].long_name;
@@ -469,7 +472,13 @@
         this.data.address = this.user.address.formatted_address;
       },
     },
-    watch: {},
+    watch: {
+      addressDialog() {
+        if (this.center.lat == null) {
+          this.locateGeoLocation();
+        }
+      },
+    },
   };
 </script>
 <style>

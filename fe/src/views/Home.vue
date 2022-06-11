@@ -46,14 +46,14 @@
               It's all at your fingertips – the fresh fruits, vegetables and meat. Find the right food in the market and we will deliver it to your doorstep. Go ahead, download us.
             </h3>
             <div class="mt-4">
-              <v-btn depressed class="mt-3 me-2" text large>
+              <v-btn color="primary" depressed class="mt-3 me-2" text large disabled>
                 <v-icon class="mr-2"> mdi-download </v-icon>
                 Android
               </v-btn>
-              <v-btn depressed class="mt-3" text large>
+              <!-- <v-btn depressed class="mt-3" text large disabled>
                 <v-icon class="mr-2"> mdi-download </v-icon>
                 iOS
-              </v-btn>
+              </v-btn> -->
             </div>
           </v-col>
         </v-row>

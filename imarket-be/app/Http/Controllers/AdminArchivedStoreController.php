@@ -20,8 +20,8 @@ class AdminArchivedStoreController extends Controller
     public function update(Request $request, $id){
         $store = Store::withTrashed()->where('id', $id)->first();
         $store->restore();
-        $store->info()->restore();
-        $store->load(['info']);
+        $store->load(['user.info:id,first_name,last_name', 'product']);
+        $store->product()->restore();
         return $this->success('Store and its data has been restored successfully', $store);
     }
 

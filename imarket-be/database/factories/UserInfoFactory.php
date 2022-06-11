@@ -4,6 +4,8 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Faker\Factory as Faker;
+use Illuminate\Http\File;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\UserInfo>
@@ -30,7 +32,8 @@ class UserInfoFactory extends Factory
             'gender' => $gender,
             'contact_number' => $faker->mobileNumber(),
             'birthday' => $this->faker->dateTimeBetween('Y-m-d', '1999-03-20'),
-            'profile_img' => $this->faker->image('public\images\profiles', 480, 480, false),
+            'profile_img' => $this->faker->image(public_path('images/profiles'), 640, 480, false),
+            // 'profile_img' => Storage::disk('public')->putFile('images', new File($this->faker->image())),
         ];
     }
 }

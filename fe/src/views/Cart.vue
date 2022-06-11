@@ -13,7 +13,7 @@
             </div>
             <v-list>
               <div v-for="(product, i) in cart.cart_info" :key="i">
-                <v-list-item link>
+                <v-list-item @click="selectedProduct = product; quantityModal = true">
                   <v-list-item-avatar size="50" tile>
                     <v-img class="rounded-lg" :src="'http://127.0.0.1:8000/images/products/' + product.product.product_info.image"></v-img>
                   </v-list-item-avatar>
@@ -165,6 +165,25 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <v-dialog v-model="quantityModal" max-width="500">
+      <v-card>
+        <v-card-title class="text-h5"> Update Quantity </v-card-title>
+        <h4 class="font-weight-light ml-6 mr-5 mb-0">Enter a new value for the quantity of this product.</h4>
+        <v-layout class="ml-7 mt-3" align-center>
+          <p class="font-weight-bold mb-0 mr-2">QTY:</p>
+          <v-col lg="3" md="3" sm="4" cols="5">
+            <v-text-field v-model="selectedProduct.quantity" type="number" min="1" :max="selectedProduct.product.product_info.quantity" outlined dense hide-details="auto"></v-text-field>
+          </v-col>
+        </v-layout>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="gray darken-1" text @click="quantityModal = false"> Cancel </v-btn>
+          <v-btn @click.prevent="updateProductQuantity" color="green darken-1" text :loading="btnLoading"> Save </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
     <address-update v-show="showAddressEdit" @close="showAddressEdit = false" :showModal="showAddressEdit" />
   </div>
 </template>
@@ -174,7 +193,7 @@
   import { formatCurrency } from '@/assets/js/utilities';
   import AddressUpdate from './components/AddressUpdate.vue';
   import { gmapApi } from 'vue2-google-maps';
-  import PageLoading from './components/PageLoading.vue'
+  import PageLoading from './components/PageLoading.vue';
   export default {
     components: { Navbar, AddressUpdate, PageLoading },
     mixins: [formatCurrency],
@@ -183,6 +202,14 @@
       data: {
         search: '',
       },
+      selectedProduct: {
+        product: {
+          product_info: {
+            quantity: 0,
+          },
+        },
+      },
+      quantityModal: false,
       showAddressEdit: false,
       removeItemDialog: false,
       isLoading: false,
@@ -193,39 +220,39 @@
       btnLoading: false,
       addressLoading: false,
       hasLoaded: false,
-      delivery_fee: 0
+      delivery_fee: 0,
     }),
     async mounted() {
       this.isLoading = true;
       await this.$store.dispatch('market/getLatestProducts');
       await this.$store.dispatch('market/getCartItems');
-      this.showAddressEdit = false
-      window.scrollTo(0, 40)
-      this.calculateDeliveryFee()
+      this.showAddressEdit = false;
+      window.scrollTo(0, 40);
+      this.calculateDeliveryFee();
       this.isLoading = false;
     },
     methods: {
-      async calculateDeliveryFee(){
-        const INTIAL_PRICE = 15
-        const SUCCEEDING_PRICE = 7
-        const INITIAL_KM = 1.5
-        let DELIVERY_PRICE = 0
-        const DISTANCE = parseFloat(this.user.address.total_distance.replace('km', ''))
+      async updateProductQuantity() {},
+      async calculateDeliveryFee() {
+        const INTIAL_PRICE = 15;
+        const SUCCEEDING_PRICE = 7;
+        const INITIAL_KM = 1.5;
+        let DELIVERY_PRICE = 0;
+        const DISTANCE = parseFloat(this.user.address.total_distance.replace('km', ''));
 
-        console.log(DISTANCE)
+        // console.log(DISTANCE);
 
-        if(DISTANCE > 1.5){
-          DELIVERY_PRICE = INTIAL_PRICE
-          const remainingDistance = DISTANCE - INITIAL_KM
-          if(remainingDistance > 1){
-            DELIVERY_PRICE += ( SUCCEEDING_PRICE * remainingDistance )
+        if (DISTANCE > 1.5) {
+          DELIVERY_PRICE = INTIAL_PRICE;
+          const remainingDistance = DISTANCE - INITIAL_KM;
+          if (remainingDistance > 1) {
+            DELIVERY_PRICE += SUCCEEDING_PRICE * remainingDistance;
           }
-        }
-        else {
-          DELIVERY_PRICE += ( SUCCEEDING_PRICE * DISTANCE )
+        } else {
+          DELIVERY_PRICE += SUCCEEDING_PRICE * DISTANCE;
         }
 
-        this.delivery_fee = DELIVERY_PRICE.toFixed(2)
+        this.delivery_fee = DELIVERY_PRICE.toFixed(2);
       },
       async getProducts() {
         this.isLoading = true;

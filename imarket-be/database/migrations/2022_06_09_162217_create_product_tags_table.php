@@ -13,12 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('partners', function (Blueprint $table) {
+        Schema::create('product_tags', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->dateTime('request_date');
-            $table->dateTime('approval_date')->nullable();
-            // $table->string('status');
+            $table->foreignId('product_tag')->constrained()->onDelete('cascade');
+            $table->string('tag', 80);
             $table->softDeletes();
             $table->timestamps();
         });
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('partners');
+        Schema::dropIfExists('product_tags');
     }
 };
