@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\CartContent;
+use App\Models\ProductInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -68,6 +69,18 @@ class CartController extends Controller
         $cart = Cart::with(['cart_info', 'cart_info.product', 'cart_info.product.product_info'])->where('user_id', auth()->user()->id)->first();
 
         return response()->json($cart);
+    }
+
+    public function updateProductQuantity(Request $request, $cartID, $productID){
+        $cartProduct = CartContent::where('cart_id', $cartID)->where('product_id', $productID)->first();
+        $productInfo = ProductInfo::where('id', $productID)->first();
+
+        $cartProduct->update([
+            'quantity' => $request->quantity,
+            'subtotal' => $productInfo->price * $request->quantity
+        ]);
+
+        return $this->success('Quantity updated successfully!');
     }
 
     public function destroyCartItem($id) {

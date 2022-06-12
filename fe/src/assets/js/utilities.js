@@ -9,7 +9,9 @@ export const formatCurrency = {
     currencyDisplay: "code"
    });
 
-   return formatter.format(data); /* $2,500.00 */
+   let formattedData = formatter.format(data)
+   return formattedData; 
+   // return isNaN(formattedData) ? 'PHP 0.00' : formattedData; 
   },
  }
 }

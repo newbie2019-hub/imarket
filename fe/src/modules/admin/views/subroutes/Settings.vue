@@ -162,6 +162,11 @@
                   outlined
                 ></v-text-field>
               </v-col>
+              <v-col cols="11" sm="10" md="6" lg="6">
+                <v-text-field append-icon="mdi-key" class="" type="password" hide-details="auto" :rules="required" label="********" :loading="isLoading" disabled readonly outlined>
+                  <v-icon @click.prevent="dialogPassword = true" slot="append-outer" color="green"> mdi-pencil </v-icon>
+                </v-text-field>
+              </v-col>
             </v-row>
             <v-dialog v-model="dialog" persistent max-width="520">
               <template v-slot:activator="{ on, attrs }">
@@ -229,6 +234,58 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <v-dialog v-model="dialogPassword" max-width="480">
+      <v-card>
+        <v-form ref="formPass" @submit.prevent="savePassword" lazy-validation>
+          <v-card-title class="text-h5"> Change Password </v-card-title>
+          <v-card-text class="">
+            <p>Password is a confidential data. Please dont share it with anyone else.</p>
+            <v-text-field
+              type="password"
+              append-icon="mdi-key"
+              class="mt-3"
+              hide-details="auto"
+              v-model="password_data.current_password"
+              :rules="required"
+              label="Current Password"
+              required
+              outlined
+              dense
+            ></v-text-field>
+            <v-text-field
+              type="password"
+              append-icon="mdi-key-variant"
+              class="mt-3"
+              hide-details="auto"
+              v-model="password_data.new_password"
+              :rules="required"
+              label="New Password"
+              required
+              outlined
+              dense
+            ></v-text-field>
+            <v-text-field
+              type="password"
+              append-icon="mdi-key-variant"
+              class="mt-3"
+              hide-details="auto"
+              v-model="password_data.confirm_password"
+              :rules="[matchingPasswords]"
+              label="Confirm Password"
+              required
+              outlined
+              dense
+            ></v-text-field>
+          </v-card-text>
+          <v-card-actions class="pb-3 mt-2">
+            <v-spacer></v-spacer>
+            <v-btn color="grey darken-2" text @click="dialogPassword = false"> Cancel </v-btn>
+            <v-btn color="green darken-1" text type="submit" :loading="isLoading"> Confirm </v-btn>
+          </v-card-actions>
+        </v-form>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 <script>
@@ -273,7 +330,8 @@
       maxBirthDate: '',
       dialogRemove: false,
       dialog: false,
-      passData: {
+      dialogPassword: false,
+      password_data: {
         current_password: '',
         new_password: '',
         confirm_password: '',
@@ -375,7 +433,7 @@
         });
       },
       matchingPasswords: function () {
-        if (this.passData.new_password === this.passData.confirm_password) {
+        if (this.password_data.new_password === this.password_data.confirm_password) {
           return true;
         } else {
           return 'Passwords does not match.';
@@ -413,11 +471,16 @@
       },
       async savePassword() {
         const valid = this.$refs.formPass.validate();
+
         if (valid) {
-          const { status, data } = await this.$store.dispatch('auth/changePassword', this.passData);
+          this.isLoading = true;
+          const { status, data } = await this.$store.dispatch('auth/changePassword', this.password_data);
+          this.dialogPassword = false
           this.toastData(status, data);
           this.$refs.formPass.reset();
         }
+
+        this.isLoading = false;
       },
       async update() {
         this.valid = this.$refs.form.validate();

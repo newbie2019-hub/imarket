@@ -4,7 +4,7 @@
     <v-layout class="mt-15"></v-layout>
     <v-container class="mt-15">
       <v-row justify="center">
-        <v-col cols="12" md="9" lg="8">
+        <v-col cols="12" sm="11" md="5" lg="4">
           <v-card rounded="lg" elevation="0" class="pl-7 pr-7 pt-6 pb-5">
             <p class="mb-0 ml-4 text-h5 font-weight-bold">My Orders</p>
             <div class="pr-5" v-if="!orders || (orders.data && orders.data.length == 0)">
@@ -14,7 +14,7 @@
             <p v-else class="ml-4">Click any of the list below to view details of your order</p>
             <v-list>
               <div v-for="(order, i) in orders.data" :key="i">
-                <v-list-item link>
+                <v-list-item @click.prevent="orderContent = order.content" link>
                   <v-list-item-content>
                     <v-list-item-title class="font-weight-bold">{{ order.transaction_id }}</v-list-item-title>
                     <v-list-item-subtitle class="">{{ order.created_at }}</v-list-item-subtitle>
@@ -24,8 +24,8 @@
                         {{ order.status }}
                       </v-chip>
                     </v-list-item-subtitle>
-                    <v-list-item-subtitle class="black--text">Subtotal: {{ formatCurrency(order.subtotal) }}</v-list-item-subtitle>
-                    <v-list-item-subtitle class="black--text">Delivery Fee: {{ formatCurrency(order.delivery_fee) }}</v-list-item-subtitle>
+                    <v-list-item-subtitle class="black--text">Subtotal: {{ formatCurrency(parseFloat(order.subtotal)) }}</v-list-item-subtitle>
+                    <v-list-item-subtitle class="black--text">Delivery Fee: {{ formatCurrency(parseFloat(order.delivery_fee)) }}</v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
                 <v-divider v-if="i != orders.data.length - 1"></v-divider>
@@ -35,6 +35,31 @@
           <v-layout justify-center class="mt-5">
             <v-btn v-if="orders.last_page != page" @click.prevent="getOrders" large depressed color="blue darken-2" dark :loading="isLoading">LOAD MORE</v-btn>
           </v-layout>
+        </v-col>
+        <v-col cols="12" sm="11" md="7" lg="8">
+          <v-card elevation="0" class="pa-6 overflow-scroll" max-height="490">
+            <p class="mb-0 ml-4 text-h5 font-weight-bold">Order Content</p>
+            <p class="ml-4">Here are the content of your orders.</p>
+            <div class="pr-5" v-if="Object.keys(orderContent).length == 0 || orderContent.length == 0">
+              <p class="ml-4 mt-5 w-75">Select an order to view its content</p>
+            </div>
+            <v-list>
+              <div v-for="(product, i) in orderContent" :key="i">
+                <v-list-item>
+                  <v-list-item-avatar size="50" tile>
+                    <v-img class="rounded-lg" :src="'http://127.0.0.1:8000/images/products/' + product.product.product_info.image"></v-img>
+                  </v-list-item-avatar>
+
+                  <v-list-item-content>
+                    <v-list-item-title class="font-weight-bold">{{ product.product.product_info.name }}</v-list-item-title>
+                    <v-list-item-subtitle>Quantity: {{ product.quantity }}</v-list-item-subtitle>
+                    <v-list-item-subtitle>Subtotal: {{ formatCurrency(product.subtotal) }}</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-divider inset></v-divider>
+              </div>
+            </v-list>
+          </v-card>
         </v-col>
       </v-row>
     </v-container>
@@ -51,6 +76,9 @@
       search: '',
       data: {
         search: '',
+      },
+      orderContent: {
+
       },
       removeItemDialog: false,
       isLoading: false,

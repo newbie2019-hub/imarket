@@ -95,7 +95,7 @@
                 color="green darken-1"
                 >View</v-btn
               >
-              <v-btn small text color="primary darken-1">Update</v-btn>
+              <!-- <v-btn small text color="primary darken-1">Update</v-btn> -->
               <v-btn
                 @click="
                   deleteData = item;
@@ -290,6 +290,7 @@
         // { text: 'Week Days Closing', value: 'week_days_closing' },
         // { text: 'Week End Opening', value: 'week_end_opening' },
         // { text: 'Week End Closing', value: 'week_end_closing' },
+        { text: 'Products', value: 'product_count' },
         { text: 'Status', value: 'status' },
         { text: 'Date Created', value: 'created_at' },
         { text: 'Actions', value: 'actions' },
@@ -309,6 +310,7 @@
         // { text: 'Week End Opening', value: 'week_end_opening' },
         // { text: 'Week End Closing', value: 'week_end_closing' },
         { text: 'Status', value: 'status' },
+        { text: 'Products', value: 'product_count' },
         { text: 'Date Created', value: 'created_at' },
         { text: 'Deleted On', value: 'deleted_at' },
         { text: 'Actions', value: 'actions' },

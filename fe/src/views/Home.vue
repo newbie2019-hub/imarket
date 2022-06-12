@@ -48,7 +48,7 @@
             <div class="mt-4">
               <v-btn color="primary" depressed class="mt-3 me-2" text large disabled>
                 <v-icon class="mr-2"> mdi-download </v-icon>
-                Android
+                Coming Soon
               </v-btn>
               <!-- <v-btn depressed class="mt-3" text large disabled>
                 <v-icon class="mr-2"> mdi-download </v-icon>

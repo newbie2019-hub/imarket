@@ -45,6 +45,15 @@ export default {
 
    return res;
   },
+  async updateProductQuantity({ commit }, payload) {
+   const res = await API.put(`cart/${payload.cart_id}/product/${payload.product.id}`, payload).then(res => {
+    return res;
+   }).catch(error => {
+    return error.response;
+   })
+
+   return res;
+  },
   async updateProduct({ commit }, payload) {
    const res = await API.put(`products/${payload.id}`, payload).then(res => {
     return res;

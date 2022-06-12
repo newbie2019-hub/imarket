@@ -12,7 +12,7 @@ class OrderController extends Controller
 {
     public function index(Request $request)
     {
-        $orders = Order::with(['content'])->where('user_id', auth()->user()->id)->latest()->paginate(10);
+        $orders = Order::with(['content', 'content.product.product_info'])->where('user_id', auth()->user()->id)->latest()->paginate(10);
         return response()->json($orders);
     }
 
@@ -24,7 +24,7 @@ class OrderController extends Controller
             'transaction_id' => $request->uuid,
             'user_id' => $request->user_id,
             'subtotal' => $request->cart_info_sum_subtotal,
-            'delivery_fee' => 100,
+            'delivery_fee' => $request->delivery_fee,
             'total' => $request->cart_info_sum_subtotal + 100,
             'status' => 'Pending'
         ]);

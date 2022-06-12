@@ -8,12 +8,13 @@
         <v-col cols="12" md="7" lg="7">
           <v-card elevation="0" class="pa-6 overflow-scroll" max-height="490">
             <p class="mb-0 ml-4 text-h5 font-weight-bold">My Orders</p>
+            <p class="ml-4">Here are your added to cart products.</p>
             <div class="pr-5" v-if="Object.keys(cart).length == 0 || cart.cart_info.length == 0">
               <p class="ml-4 mt-5 w-75">There are no items in your cart. Continue shopping and start adding items to your cart now.</p>
             </div>
             <v-list>
               <div v-for="(product, i) in cart.cart_info" :key="i">
-                <v-list-item @click="selectedProduct = product; quantityModal = true">
+                <v-list-item>
                   <v-list-item-avatar size="50" tile>
                     <v-img class="rounded-lg" :src="'http://127.0.0.1:8000/images/products/' + product.product.product_info.image"></v-img>
                   </v-list-item-avatar>
@@ -24,7 +25,19 @@
                     <v-list-item-subtitle>Subtotal: {{ formatCurrency(product.subtotal) }}</v-list-item-subtitle>
                   </v-list-item-content>
 
-                  <v-list-item-action>
+                  <v-list-item-action >
+                    <v-btn
+                      @click="
+                        selectedProduct = product;
+                        quantityModal = true;
+                      "
+                      class="green--text lighten-1"
+                      text
+                      small
+                    >
+                      <v-icon small>mdi-pencil</v-icon>
+                      Update
+                    </v-btn>
                     <v-btn
                       @click.prevent="
                         itemId = product.id;
@@ -68,11 +81,11 @@
             </v-layout>
             <v-layout class="mt-8" justify-space-between>
               <p class="mb-2 font-weight-bold">Subtotal</p>
-              <p class="mb-2">{{ formatCurrency(cart.cart_info_sum_subtotal) }}</p>
+              <p class="mb-2">{{ cart.cart_info && cart.cart_info.length != 0 ? formatCurrency(cart.cart_info_sum_subtotal) : 'PHP 0.00' }}</p>
             </v-layout>
             <v-layout class="" justify-space-between>
               <p class="mb-2 font-weight-bold">Delivery Fee</p>
-              <p class="mb-2">PHP {{ delivery_fee }}</p>
+              <p class="mb-2 grey--text">PHP {{ delivery_fee }}</p>
             </v-layout>
             <v-layout class="" justify-space-between>
               <p class="font-weight-bold">Discount</p>
@@ -81,7 +94,7 @@
             <v-divider class="mt-2 mb-2" />
             <v-layout class="mt-3" justify-space-between>
               <p class="font-weight-bold">Total Payment</p>
-              <p class="">PHP 1580.00</p>
+              <p class="">{{ cart.cart_info && cart.cart_info.length != 0 ? formatCurrency(cart.cart_info_sum_subtotal + parseFloat(delivery_fee)) : 'PHP 0.00' }}</p>
             </v-layout>
             <v-btn
               :disabled="Object.keys(cart).length == 0 || cart.cart_info.length == 0 || user.address.formatted_address == null"
@@ -232,7 +245,14 @@
       this.isLoading = false;
     },
     methods: {
-      async updateProductQuantity() {},
+      async updateProductQuantity() {
+        this.isLoading = true;
+        const { status, data } = await this.$store.dispatch('products/updateProductQuantity', this.selectedProduct);
+        this.toastData(status, data);
+        await this.$store.dispatch('market/getCartItems');
+        this.isLoading = false;
+        this.quantityModal = false;
+      },
       async calculateDeliveryFee() {
         const INTIAL_PRICE = 15;
         const SUCCEEDING_PRICE = 7;
@@ -292,6 +312,7 @@
       },
       async checkout() {
         this.btnLoading = true;
+        this.cart.delivery_fee = this.delivery_fee
         const { status, data } = await this.$store.dispatch('market/checkout', this.cart);
         this.toastData(status, data);
         await this.$store.dispatch('market/cartCount');

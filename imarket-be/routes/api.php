@@ -74,13 +74,14 @@ Route::middleware('api')->group(function () {
     Route::get('market/search', [MarketController::class, 'searchProduct']);
     Route::get('market/latest-products', [MarketController::class, 'latestProducts']);
     Route::apiResource('market', MarketController::class);
-
+    
+    Route::put('cart/{cart}/product/{product}', [CartController::class, 'updateProductQuantity']);
     Route::get('cart/count-items', [CartController::class, 'cartCount']);
     Route::delete('cart/removeItem/{id}', [CartController::class, 'destroyCartItem']);
     Route::apiResource('cart', CartController::class);
-
+    
     Route::apiResource('checkout', OrderController::class);
-
+    
     Route::post('products/uploadImage', [ProductController::class, 'uploadImage']);
     Route::apiResource('products', ProductController::class);
 

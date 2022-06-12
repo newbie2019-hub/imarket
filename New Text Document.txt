@@ -1,5 +1,9 @@
 To-Do
 Dashboard Fix - Add Latest Transactions
+viewing of order content on user [x]
+accepting of order from seller - if rider has accepted already
+order section in admin and user
+password update on accounts [x]
 Remove setting address if no user is logged-in [x]
 Approval of Store [x]
 Fix settings of address [x]
@@ -13,7 +17,7 @@ Store Management
   - Fix Archiving a store [x]
   - Fix restore store with products [x]
   - Add card for viewing store info
-  - Add count of total products from store 
+  - Add count of total products from store [x]
   - Format Time and Date on store archive [x]
   - Add a view store option for redirecting to the store (New Page of store with its products) 
 User Magement
@@ -22,9 +26,8 @@ User Magement
   - Removed Delete Forever on User [x]
   - Viewing of User - Create card [x]
 Add Option for selecting as to what products should be checked out
-Edit of Qty on Checkout section
+Edit of Qty on Checkout section [x]
 Add changing of password on admin section
-Approval of Store
 Viewing of Product - Create card
 Partner Section
 Orders Section

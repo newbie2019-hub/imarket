@@ -10,6 +10,7 @@ use App\Models\UserLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class AuthenticationController extends Controller
 {
@@ -85,11 +86,11 @@ class AuthenticationController extends Controller
         UserLog::create([
             'name' => 'Account Logout',
             'event' => 'logout',
-            'user_id' => auth('api')->user()->id,
+            'user_id' => auth('api')->id(),
             'description' => 'You\'ve logged out your account'
         ]);
         
-        auth()->logout();
+        auth('api')->logout(true);
         return $this->success('Account logged out successfully!');
     }
 

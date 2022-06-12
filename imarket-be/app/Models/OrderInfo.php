@@ -16,6 +16,10 @@ class OrderInfo extends Model
         'updated_at' => 'datetime:Y-m-d h:i A',
     ];
 
+    public function product(){
+        return $this->belongsTo(Product::class, 'product_id', 'id');
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d h:i A');
