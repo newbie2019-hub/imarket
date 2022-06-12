@@ -1,6 +1,7 @@
 <template>
   <div>
     <Navbar />
+    <page-loading v-show="isSearching" :msg="'This may take a while. Please wait ...'" />
     <v-layout class="mt-15"></v-layout>
     <v-container class="mt-15">
       <v-row justify="center" align="center">
@@ -94,6 +95,7 @@
   import { formatCurrency } from '@/assets/js/utilities';
   import { mapState } from 'vuex';
   import API from '@/store/base/base';
+  import PageLoading from './components/PageLoading.vue';
 
   export default {
     data: () => ({
@@ -101,13 +103,15 @@
       productId: null,
       isCartLoading: false,
       isAddedSuccess: false,
+      isSearching: false,
       page: 1,
     }),
     mixins: [formatCurrency],
     async mounted() {},
     methods: {
       async scrapeRecipeContent(recipe) {
-        console.log(recipe)
+        console.log(recipe);
+        this.isSearching = true;
         const { status, data } = await API.post(`http://localhost:8082/recipe/${recipe.title}`, recipe)
           .then((res) => res)
           .catch((err) => err.response);
@@ -115,12 +119,13 @@
         if (status == 0) {
           this.$toast.error('Sorry, but our scraping service is not active. \n');
         } else {
-          console.log(data.result)
+          console.log(data.result);
           // this.$store.commit('market/SET_SCRAPE', data.result);
         }
+        this.isSearching = false;
       },
     },
-    components: { SearchProduct, Navbar },
+    components: { SearchProduct, Navbar, PageLoading },
     computed: {
       ...mapState('market', ['scrapedRecipes', 'searchedProducts']),
     },

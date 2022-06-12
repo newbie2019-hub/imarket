@@ -44,7 +44,10 @@ async function searchRecipes(query) {
   // console.log(query)
   if (query == null) return 'No query'
 
-  await page.goto(`https://panlasangpinoy.com/?s=${ query }`)
+  await page.goto(`https://panlasangpinoy.com/?s=${ query }`, {
+    waitUntil: 'networkidle2',
+    timeout: 0
+  })
 
   const cardRecipes = await page.$$(`article.post.tag-${ query }.category-recipes`);
 
@@ -101,12 +104,23 @@ async function getRecipe(query) {
     const ingredients = []
 
     for (const ingredient of recipeIngredients) {
+      
       const ingredientAmount = await page.evaluate(el =>
         el.querySelector('span.wprm-recipe-ingredient-amount').textContent,
         ingredient
       )
 
-      ingredients.push({amount: ingredientAmount})
+      const ingredientUnit = await page.evaluate(el =>
+        el.querySelector('span.wprm-recipe-ingredient-unit').textContent,
+        ingredient
+      )
+
+      const ingredientName = await page.evaluate(el =>
+        el.querySelector('wprm-recipe-ingredient-link').textContent,
+        ingredient
+      )
+
+      ingredients.push({ingredient: ingredientName, amount: ingredientAmount, unit: ingredientUnit})
     }
 
     console.log(ingredients)

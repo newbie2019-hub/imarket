@@ -1,5 +1,9 @@
 To-Do
 Dashboard Fix - Add Latest Transactions
+product info should be restored upon restoration of store
+product keywords 
+store rating
+product rating on seller account table
 viewing of order content on user [x]
 accepting of order from seller - if rider has accepted already
 order section in admin and user
@@ -8,6 +12,7 @@ Remove setting address if no user is logged-in [x]
 Approval of Store [x]
 Fix settings of address [x]
  - Fix bug of address [x]
+User violation
 Fix dashboard card summary [x]
 Users - Card Summary [x]
 Soft Delete for User Address [x]

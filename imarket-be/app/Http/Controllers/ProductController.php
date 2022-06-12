@@ -80,6 +80,10 @@ class ProductController extends Controller
         return $this->success('Product updated successfully!');
     }
 
+    public function updateQuantity(Request $request, $id){
+        
+    }
+
     public function uploadImage(Request $request){
         if($request->image){
             $fileName = 'image'.time().'.'.$request->image->extension();

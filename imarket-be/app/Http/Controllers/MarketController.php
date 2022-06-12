@@ -23,7 +23,7 @@ class MarketController extends Controller
     }
 
     public function searchProduct(Request $request){
-        $products = Product::whereRelation('product_info', 'name', 'like', '%'.$request->product.'%')->withCount('rating')->with(['product_info:id,name,category_id,price,image', 'store'])->withAvg('rating', 'rating')->latest()->paginate(12);
+        $products = Product::whereRelation('store', 'status', 'Approved')->whereRelation('product_info', 'name', 'like', '%'.$request->product.'%')->withCount('rating')->with(['product_info:id,name,category_id,price,image', 'store'])->withAvg('rating', 'rating')->latest()->paginate(12);
         return response()->json($products);
     }
 }

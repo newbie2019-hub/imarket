@@ -37,11 +37,16 @@ class OrderController extends Controller
                 'quantity' => $cartItems->quantity
             ]);
 
-            $product = ProductInfo::find($cartItems->product_id);
+            $product = ProductInfo::where('id', $cartItems->product_id)->first();
 
-            $product->update([
-                'quantity' => $product->quantity - $cartItems->quantity
-            ]);
+            if($product){
+                $product->update([
+                    'quantity' => $product->quantity - $cartItems->quantity
+                ]);
+            }
+            else {
+                return $this->error('Product not found!');
+            }
         }
 
         $cart->delete();
