@@ -1,6 +1,6 @@
 To-Do
 Dashboard Fix - Add Latest Transactions
-product info should be restored upon restoration of store
+product info should be restored upon restoration of store [x]
 product keywords 
 store rating
 product rating on seller account table

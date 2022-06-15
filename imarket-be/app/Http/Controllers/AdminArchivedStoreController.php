@@ -21,9 +21,11 @@ class AdminArchivedStoreController extends Controller
     public function update(Request $request, $id){
         $store = Store::withTrashed()->where('id', $id)->withCount(['product'])->first();
         $store->restore();
-        $store->load(['user.info:id,first_name,last_name', 'product']);
+        $store->load(['user.info:id,first_name,last_name', 'product', 'product.product_info']);
         $store->product()->restore();
-        //To-do restore product info
+        foreach($store->product as $product){
+            $product->product_info()->restore();
+        }
         return $this->success('Store and its data has been restored successfully', $store);
     }
 
