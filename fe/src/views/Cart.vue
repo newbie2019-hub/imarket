@@ -179,13 +179,13 @@
       </v-card>
     </v-dialog>
 
-    <v-dialog v-model="quantityModal" max-width="500">
+    <v-dialog v-model="quantityModal" max-width="400">
       <v-card>
         <v-card-title class="text-h5"> Update Quantity </v-card-title>
         <h4 class="font-weight-light ml-6 mr-5 mb-0">Enter a new value for the quantity of this product.</h4>
         <v-layout class="ml-7 mt-3" align-center>
           <p class="font-weight-bold mb-0 mr-2">QTY:</p>
-          <v-col lg="3" md="3" sm="4" cols="5">
+          <v-col lg="4" md="4" sm="5" cols="5">
             <v-text-field v-model="selectedProduct.quantity" type="number" min="1" :max="selectedProduct.product.product_info.quantity" outlined dense hide-details="auto"></v-text-field>
           </v-col>
         </v-layout>

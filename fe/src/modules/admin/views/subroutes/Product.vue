@@ -251,7 +251,7 @@
         { text: 'Price', value: 'product_info.price' },
         { text: 'Quantity', value: 'product_info.quantity' },
         { text: 'Category', value: 'product_info.category.category' },
-        { text: 'Date Created', value: 'created_at' },
+        { text: 'Date Added', value: 'created_at' },
         { text: 'Actions', value: 'actions' },
       ],
       archivedHeaders: [
@@ -267,7 +267,7 @@
         { text: 'Price', value: 'product_info.price' },
         { text: 'Quantity', value: 'product_info.quantity' },
         { text: 'Category', value: 'product_info.category.category' },
-        { text: 'Date Created', value: 'created_at' },
+        { text: 'Date Added', value: 'created_at' },
         { text: 'Deleted On', value: 'deleted_at' },
         { text: 'Actions', value: 'actions' },
       ],

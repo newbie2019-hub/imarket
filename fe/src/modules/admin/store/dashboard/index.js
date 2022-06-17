@@ -10,7 +10,10 @@ export default {
    categoryCount: 0,
    todaysOrderCount: 0,
    userCount: 0,
-  }
+  },
+  latestTransactions: [
+   
+  ]
  },
  getters: {
  },
@@ -27,6 +30,7 @@ export default {
    state.dashboardSummary.categCount = payload.categoryCount
    state.dashboardSummary.userCount = payload.userCount
    state.latestProducts = payload.latestProducts
+   state.latestTransactions = payload.latestTransactions
   },
 
  },

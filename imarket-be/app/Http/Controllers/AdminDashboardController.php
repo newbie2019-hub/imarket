@@ -17,20 +17,21 @@ class AdminDashboardController extends Controller
     }
 
     public function index(){
-        $latestProducts = Product::with(['store:id,name', 'product_info:id,quantity,name,price', 'product_info.category:id,category'])->latest()->take(15)->get();
+        $latestProducts = Product::with(['store:id,name', 'product_info:id,quantity,name,price', 'product_info.category:id,category'])->withSum('orders', 'quantity')->latest()->take(15)->get();
         $storeCount = Store::count();
         $productCount = Product::count();
         $categCount = Category::count();
-        $todaysOrder = Order::where('created_at', now())->count();
+        $todaysOrder = Order::whereDate('created_at', now())->count();
         $userCount = User::where('id', '<>', auth()->user()->id)->count();
-        
+        $latestTransaction = Order::with(['content.product.product_info', 'buyer:id,first_name,last_name'])->whereDate('created_at', '<=', now()->addDays(3))->get();
         return response()->json([
             'latestProducts' => $latestProducts,
             'productsCount' => $productCount,
             'storeCount' => $storeCount,
             'categCount' => $categCount,
             'todaysOrderCount' => $todaysOrder,
-            'userCount' => $userCount
+            'userCount' => $userCount,
+            'latestTransactions' => $latestTransaction
         ]);
     }
 }

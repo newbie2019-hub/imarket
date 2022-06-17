@@ -30,6 +30,10 @@ class Product extends Model
         return $this->hasMany(ProductTag::class, 'product_id', 'id');
     }
 
+    public function orders(){
+        return $this->hasMany(OrderInfo::class, 'product_id', 'id');
+    }
+
     protected $casts = [
         'created_at' => 'datetime:Y-m-d h:i A',
         'updated_at' => 'datetime:Y-m-d h:i A',

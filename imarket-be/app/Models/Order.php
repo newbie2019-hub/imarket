@@ -15,6 +15,10 @@ class Order extends Model
         return $this->hasMany(OrderInfo::class, 'order_id', 'id');
     }
 
+    public function buyer(){
+        return $this->belongsTo(UserInfo::class, 'user_id', 'id');
+    }
+
     protected $casts = [
         'created_at' => 'datetime:Y-m-d h:i A',
         'updated_at' => 'datetime:Y-m-d h:i A',

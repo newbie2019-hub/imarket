@@ -6,7 +6,7 @@
     </div>
     <v-row>
       <v-col cols="12" sm="6" md="4" lg="4" xl="4">
-        <v-card elevation="2" color="blue darken-1" class="pa-3" rounded="lg" dark>
+        <v-card elevation="2" color="blue darken-1" class="pa-3" rounded="lg" dark link to="/admin/users">
           <div class="d-flex flex-no-wrap justify-space-between align-end mb-2">
             <div>
               <div class="fit-content">
@@ -15,13 +15,13 @@
               <v-card-title class="text-h5 font-weight-bold mb-0 pa-0 pl-4 pb-2 pt-4">Users</v-card-title>
             </div>
             <div>
-              <p class="text-h1 pr-5 font-weight-bold mb-0">{{dashboardSummary.userCount}}</p>
+              <p class="text-h1 pr-5 font-weight-bold mb-0">{{ dashboardSummary.userCount }}</p>
             </div>
           </div>
         </v-card>
       </v-col>
       <v-col cols="12" sm="6" md="4" lg="4" xl="4">
-        <v-card elevation="2" color="deep-purple" class="pa-3" rounded="lg" dark>
+        <v-card elevation="2" color="deep-purple" class="pa-3" rounded="lg" dark link to="/admin/stores">
           <div class="d-flex flex-no-wrap justify-space-between align-end mb-2">
             <div>
               <div class="fit-content">
@@ -30,22 +30,22 @@
               <v-card-title class="text-h5 font-weight-bold mb-0 pa-0 pl-4 pb-2 pt-4">Stores</v-card-title>
             </div>
             <div>
-              <p class="text-h1 pr-5 font-weight-bold mb-0">{{dashboardSummary.storeCount}}</p>
+              <p class="text-h1 pr-5 font-weight-bold mb-0">{{ dashboardSummary.storeCount }}</p>
             </div>
           </div>
         </v-card>
       </v-col>
       <v-col cols="12" sm="6" md="4" lg="4" xl="4">
-        <v-card elevation="2" color="blue-grey" class="pa-3" rounded="lg" dark>
+        <v-card elevation="2" color="blue-grey" class="pa-3" rounded="lg" dark link to="/admin/products">
           <div class="d-flex flex-no-wrap justify-space-between align-end mb-2">
             <div>
               <div class="fit-content">
-                <v-icon large class=""> mdi-car </v-icon>
+                <v-icon large class=""> mdi-bookmark-multiple </v-icon>
               </div>
               <v-card-title class="text-h5 font-weight-bold mb-0 pa-0 pl-4 pb-2 pt-4">Products</v-card-title>
             </div>
             <div>
-              <p class="text-h1 pr-5 font-weight-bold mb-0">{{dashboardSummary.productCount}}</p>
+              <p class="text-h1 pr-5 font-weight-bold mb-0">{{ dashboardSummary.productCount }}</p>
             </div>
           </div>
         </v-card>
@@ -60,13 +60,13 @@
               <v-card-title class="text-h5 font-weight-bold mb-0 pa-0 pl-4 pb-2 pt-4">Orders Today</v-card-title>
             </div>
             <div>
-              <p class="text-h1 pr-5 font-weight-bold mb-0">{{formatNumeric(dashboardSummary.todaysOrderCount)}}</p>
+              <p class="text-h1 pr-5 font-weight-bold mb-0">{{ formatNumeric(dashboardSummary.todaysOrderCount) }}</p>
             </div>
           </div>
         </v-card>
       </v-col>
       <v-col cols="12" sm="6" md="4" lg="4" xl="4">
-        <v-card elevation="2" color="green " class="pa-3" rounded="lg" dark>
+        <v-card elevation="2" color="green " class="pa-3" rounded="lg" dark link to="/admin/riders">
           <div class="d-flex flex-no-wrap justify-space-between align-end mb-2">
             <div>
               <div class="fit-content">
@@ -81,7 +81,7 @@
         </v-card>
       </v-col>
       <v-col cols="12" sm="6" md="4" lg="4" xl="4">
-        <v-card elevation="2" color="deep-orange lighten-1 " class="pa-3" rounded="lg" dark>
+        <v-card elevation="2" color="deep-orange lighten-1 " class="pa-3" rounded="lg" dark link to="/admin/categories">
           <div class="d-flex flex-no-wrap justify-space-between align-end mb-2">
             <div>
               <div class="fit-content">
@@ -90,7 +90,7 @@
               <v-card-title class="text-h5 font-weight-bold mb-0 pa-0 pl-4 pb-2 pt-4">Categories</v-card-title>
             </div>
             <div>
-              <p class="text-h1 pr-5 font-weight-bold mb-0">{{formatNumeric(dashboardSummary.categoryCount)}}</p>
+              <p class="text-h1 pr-5 font-weight-bold mb-0">{{ formatNumeric(dashboardSummary.categoryCount) }}</p>
             </div>
           </div>
         </v-card>
@@ -102,29 +102,36 @@
         <p>Here is your product summary as of today</p>
       </div>
       <v-row align="strech">
-        <v-col cols="12" sm="12" md="7" lg="7" xl="8">
+        <v-col cols="12" sm="12" md="6" lg="5" xl="5">
           <v-card elevation="1" class="pa-5">
-            <v-data-table :footer-props="{ disableItemsPerPage: true }" :headers="headers" :items="latestProducts" :items-per-page="5" class="elevation-0"></v-data-table>
+            <v-data-table :footer-props="{ disableItemsPerPage: true }" :headers="headers" :items="latestProducts" :items-per-page="5" class="elevation-0">
+              <template v-slot:item.orders_sum_quantity="{ item }">
+                <p>{{item.orders_sum_quantity ? item.orders_sum_quantity : '0'}}</p>
+              </template>
+            </v-data-table>
           </v-card>
         </v-col>
-        <v-col cols="12" sm="12" md="5" lg="5" xl="4">
+        <v-col cols="12" sm="12" md="6" lg="7" xl="7">
           <v-card class="h-100 pa-5" elevation="1">
             <v-row justify="center" align="center" class="h-100"> Chart Goes Here </v-row>
           </v-card>
         </v-col>
       </v-row>
     </div>
-    <div class="mt-10">
+    <div class="mt-15">
       <p class="text-h5 font-weight-bold mt-4 custom-primary-color mb-0">Latest Transaction</p>
       <p>Here are your latest transactions for this day</p>
+      <latest-transactions :data="latestTransactions"/>
     </div>
   </div>
 </template>
 <script>
   import { mapState } from 'vuex';
-  import { formatNumeric } from '@/assets/js/utilities.js'
+  import { formatNumeric } from '@/assets/js/utilities.js';
+  import LatestTransactions from '../components/LatestTransactions.vue' 
   export default {
     mixins: [formatNumeric],
+    components: { LatestTransactions },
     data: () => ({
       headers: [
         {
@@ -133,8 +140,9 @@
           value: 'id',
         },
         { text: 'Product', value: 'product_info.name' },
-        { text: 'Qty', value: 'product_info.quantity' },
-        { text: 'Sold', value: 'sold' },
+        { text: 'Available', value: 'product_info.quantity'},
+        { text: 'Sold', value: 'orders_sum_quantity'},
+        // { text: 'Sold', value: 'orders_sum_quantity'},
       ],
     }),
     async mounted() {
@@ -143,7 +151,7 @@
     methods: {},
     computed: {
       ...mapState('auth', ['user']),
-      ...mapState('adminDashboard', ['latestProducts', 'dashboardSummary']),
+      ...mapState('adminDashboard', ['latestProducts', 'dashboardSummary', 'latestTransactions']),
     },
   };
 </script>
