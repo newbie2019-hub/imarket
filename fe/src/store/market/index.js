@@ -16,6 +16,7 @@ export default {
     },
     scrapedRecipes: [],
     searchedProducts: [],
+    selectedStore: []
   },
   getters: {
 
@@ -64,6 +65,9 @@ export default {
     },
     SET_CART(state, payload) {
       state.cart = payload
+    },
+    SET_SELECTED_STORE(state, payload) {
+      state.selectedStore = payload.data
     }
   },
   actions: {
@@ -78,7 +82,7 @@ export default {
       return res;
     },
     async getProducts({ commit }, payload) {
-      console.log(payload)
+      // console.log(payload)
       const res = await API.get(`market?page=${ payload }`).then(res => {
         commit('SET_PRODUCTS', res.data)
         return res;
@@ -155,7 +159,17 @@ export default {
 
       return res;
     },
+    async getSelectedStoreInfo({ commit }, payload) {
+      console.log(payload)
+      const res = await API.get(`store/${payload}`).then(res => {
+        commit('SET_SELECTED_STORE', res.data)
+        return res;
+      }).catch(error => {
+        return error.response;
+      })
 
+      return res;
+    },
     async getStoreInfo({ commit }) {
       const res = await API.get('store').then(res => {
         commit('SET_STORE', res.data)

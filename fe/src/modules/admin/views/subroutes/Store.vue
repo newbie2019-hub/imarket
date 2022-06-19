@@ -51,18 +51,6 @@
               <p v-else class="white--text font-weight-bold mb-0">{{ item.name[0] }}</p>
             </v-avatar>
           </template>
-          <!-- <template v-slot:item.week_days_opening="{ item }">
-            <p class="text-no-wrap">{{ item.week_days_opening | formatTime }}</p>
-          </template>
-          <template v-slot:item.week_days_closing="{ item }">
-            <p class="text-no-wrap">{{ item.week_days_closing | formatTime }}</p>
-          </template>
-          <template v-slot:item.week_end_opening="{ item }">
-            <p class="text-no-wrap">{{ item.week_end_opening | formatTime }}</p>
-          </template>
-          <template v-slot:item.week_end_closing="{ item }">
-            <p class="text-no-wrap">{{ item.week_end_closing | formatTime }}</p>
-          </template> -->
           <template v-slot:item.description="{ item }">
             <p style="min-width: 220px" class="">{{ item.description }}</p>
           </template>
@@ -86,16 +74,14 @@
                 >Approve</v-btn
               >
               <v-btn
-                @click.prevent="
-                  storeData = item;
-                  showModal();
-                "
+                link
+                :to="`/imarket/store/${item.id}`"
                 small
                 text
+                target="_blank"
                 color="green darken-1"
                 >View</v-btn
               >
-              <!-- <v-btn small text color="primary darken-1">Update</v-btn> -->
               <v-btn
                 @click="
                   deleteData = item;
@@ -129,18 +115,6 @@
           <template v-slot:item.description="{ item }">
             <p style="min-width: 220px" class="">{{ item.description }}</p>
           </template>
-          <!-- <template v-slot:item.week_days_opening="{ item }">
-            <p class="text-no-wrap">{{ item.week_days_opening | formatTime }}</p>
-          </template>
-          <template v-slot:item.week_days_closing="{ item }">
-            <p class="text-no-wrap">{{ item.week_days_closing | formatTime }}</p>
-          </template>
-          <template v-slot:item.week_end_opening="{ item }">
-            <p class="text-no-wrap">{{ item.week_end_opening | formatTime }}</p>
-          </template>
-          <template v-slot:item.week_end_closing="{ item }">
-            <p class="text-no-wrap">{{ item.week_end_closing | formatTime }}</p>
-          </template> -->
           <template v-slot:item.description="{ item }">
             <p style="min-width: 220px" class="">{{ item.description }}</p>
           </template>
@@ -153,25 +127,13 @@
           <template v-slot:item.actions="{ item }">
             <v-layout>
               <v-btn
-                @click.prevent="
-                  storeData = item;
-                  showModal();
-                "
-                small
-                text
-                color="green darken-1"
-                >View</v-btn
-              >
-              <v-btn
                 @click="
                   restoreDialog = true;
                   restoreData = item;
                 "
                 small
                 text
-                color="grey darken-1"
-                >Restore</v-btn
-              >
+                color="grey darken-1">Restore</v-btn>
               <v-btn
                 @click="
                   deleteDialog = true;
@@ -179,9 +141,7 @@
                 "
                 small
                 text
-                color="red darken-1"
-                >Delete Forever</v-btn
-              >
+                color="red darken-1">Delete Forever</v-btn>
             </v-layout>
           </template>
         </v-data-table>
@@ -286,11 +246,7 @@
         { text: 'Store Name', value: 'name' },
         { text: 'Description', value: 'description' },
         { text: 'Address', value: 'address' },
-        // { text: 'Week Days Opening', value: 'week_days_opening' },
-        // { text: 'Week Days Closing', value: 'week_days_closing' },
-        // { text: 'Week End Opening', value: 'week_end_opening' },
-        // { text: 'Week End Closing', value: 'week_end_closing' },
-        { text: 'Products', value: 'product_count' },
+        { text: 'Products', value: 'products_count' },
         { text: 'Status', value: 'status' },
         { text: 'Date Created', value: 'created_at' },
         { text: 'Actions', value: 'actions' },
@@ -305,12 +261,8 @@
         { text: 'Store Name', value: 'name' },
         { text: 'Description', value: 'description' },
         { text: 'Address', value: 'address' },
-        // { text: 'Week Days Opening', value: 'week_days_opening' },
-        // { text: 'Week Days Closing', value: 'week_days_closing' },
-        // { text: 'Week End Opening', value: 'week_end_opening' },
-        // { text: 'Week End Closing', value: 'week_end_closing' },
         { text: 'Status', value: 'status' },
-        { text: 'Products', value: 'product_count' },
+        { text: 'Products', value: 'products_count' },
         { text: 'Date Created', value: 'created_at' },
         { text: 'Deleted On', value: 'deleted_at' },
         { text: 'Actions', value: 'actions' },

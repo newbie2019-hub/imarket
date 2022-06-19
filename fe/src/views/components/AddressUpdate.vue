@@ -125,8 +125,8 @@
           lng: e.latLng.lng(),
         };
 
-        this.codeAddress();
         this.center = marker;
+        this.codeAddress();
       },
       locateGeoLocation: function () {
         navigator.geolocation.getCurrentPosition((res) => {

@@ -13,7 +13,7 @@ class Store extends Model
     use HasFactory, SoftDeletes, CascadeSoftDeletes;
     protected $guarded = [];
 
-    protected $cascadeDeletes = ['product'];
+    protected $cascadeDeletes = ['products'];
 
     public function partner(){
         return $this->belongsTo(Partner::class, 'partner_id', 'id');
@@ -23,7 +23,7 @@ class Store extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function product(){
+    public function products(){
         return $this->hasMany(Product::class, 'store_id', 'id')->withTrashed();
     }
 

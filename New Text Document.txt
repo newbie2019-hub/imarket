@@ -1,6 +1,7 @@
 To-Do
-Dashboard Fix - Add Latest Transactions
+Dashboard Fix - Add Latest Transactions [x]
 product info should be restored upon restoration of store [x]
+Fix market related product clickable functionality [x]
 product keywords 
 store rating
 product rating on seller account table

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\Store;
 use App\Models\UserLog;
 use Illuminate\Http\Request;
@@ -17,6 +18,23 @@ class StoreInfoController extends Controller
     public function index(){
         $store = Store::where('user_id', auth()->user()->id)->first();
         return response()->json($store);
+    }
+
+    public function show(Request $request, $id){
+        $store = Store::where('status', 'Approved')->where('id', $id)->first();
+        
+        if($store){
+            $products = Product::where('store_id', $id)->whereRelation('store', 'status', 'Approved')->withCount('rating')->with(['product_info:id,name,category_id,price,image', 'store'])->withAvg('rating', 'rating')->latest()->get();
+            $data = [
+                'store' => $store,
+                'products' => $products
+            ];
+        }
+        else {
+            return $this->error('Store you\'ve selected isn\'t approved or non-existent');
+        }
+
+        return $this->success('Store retrieved successfully!', $data);
     }
 
     public function update(Request $request, $id){

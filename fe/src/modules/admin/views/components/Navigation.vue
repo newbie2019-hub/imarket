@@ -136,7 +136,7 @@
       overwriteBreakpoint: false,
     }),
     async mounted() {
-      console.log(this.$vuetify.theme.isDark)
+      // console.log(this.$vuetify.theme.isDark)
     },
     methods: {
       async logout() {
@@ -167,7 +167,7 @@
             this.toastData(200, { msg: 'Profile image updated successfully!' });
           })
           .catch((error) => {
-            console.log({ error });
+            // console.log({ error });
           });
         await this.$store.dispatch('auth/checkUser');
       },

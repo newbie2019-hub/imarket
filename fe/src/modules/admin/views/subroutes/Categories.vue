@@ -91,16 +91,14 @@
         <v-data-table :headers="archivedHeaders" :items="archivedCategories" :search="searchArchived" :loading="isLoading" :loading-text="'Retrieving categories data. Please wait ...'">
           <template v-slot:item.actions="{ item }">
             <v-layout>
-              <v-btn
+              <!-- <v-btn
                 @click.prevent="
                   userData = item;
                   showModal();
                 "
                 small
                 text
-                color="green darken-1"
-                >View</v-btn
-              >
+                color="green darken-1">View</v-btn> -->
               <v-btn
                 @click="
                   restoreDialog = true;
@@ -214,7 +212,7 @@
           value: 'icon',
         },
         { text: 'Category', value: 'category' },
-        { text: 'Products', value: 'product_count' },
+        { text: 'Products', value: 'products_count' },
         { text: 'Date Created', value: 'created_at' },
         { text: 'Updated At', value: 'updated_at' },
         { text: 'Actions', value: 'actions' },
@@ -226,17 +224,11 @@
           sortable: false,
           value: 'icon',
         },
-        {
-          text: 'Logo',
-          align: 'start',
-          sortable: false,
-          value: 'logo',
-        },
         { text: 'Category', value: 'category' },
-        { text: 'Products', value: 'product_count' },
+        { text: 'Products', value: 'products_count' },
         { text: 'Date Created', value: 'created_at' },
         { text: 'Deleted On', value: 'deleted_at' },
-        { text: 'Updated On', value: 'updated_at' },
+        // { text: 'Updated On', value: 'updated_at' },
         { text: 'Actions', value: 'actions' },
       ],
     }),

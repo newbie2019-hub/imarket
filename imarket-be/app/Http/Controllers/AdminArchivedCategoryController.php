@@ -13,12 +13,12 @@ class AdminArchivedCategoryController extends Controller
     }
 
     public function index(){
-        $category = Category::onlyTrashed()->withCount(['product'])->get();
+        $category = Category::onlyTrashed()->withCount(['products'])->get();
         return $this->success('User accounts has been retrieved successfully!', $category);
     }
 
     public function update(Request $request, $id){
-        $category = Category::withTrashed()->where('id', $id)->first();
+        $category = Category::withTrashed()->withCount(['products'])->where('id', $id)->first();
         $category->restore();
         // $category->product_info->restore();
         // $user->load(['info']);

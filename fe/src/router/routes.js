@@ -6,7 +6,7 @@ const routes = [
     name: 'Home',
     component: Home,
     meta: {
-      title: 'Home Page'
+      title: 'Welcome to IMarket - Your one stop shop solution for market products'
     }
   },
   {
@@ -14,7 +14,7 @@ const routes = [
     name: 'Market',
     component: () => import(/* webpackChunkName: "imarket" */ '../views/Market.vue'),
     meta: {
-      title: 'Market - Make your order and we will deliver it to you right ahead'
+      title: 'IMarket - Make your order and we will deliver it to you right ahead'
     }
   },
   {
@@ -23,6 +23,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "productInfo" */ '../views/ProductInfo.vue'),
     meta: {
       title: ''
+    }
+  },
+  {
+    path: '/imarket/store/:id',
+    name: 'ProductInfo',
+    component: () => import(/* webpackChunkName: "productInfo" */ '../views/StoreMarket.vue'),
+    meta: {
+      title: 'IMarket - Store Information'
     }
   },
   {
@@ -47,7 +55,7 @@ const routes = [
     name: 'Settings',
     component: () => import(/* webpackChunkName: "imarket" */ '../views/Settings.vue'),
     meta: {
-      title: 'IMarket Account Settings',
+      title: 'IMarket - User Account Settings',
       requiresAuth: true
     }
   },

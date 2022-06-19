@@ -101,7 +101,6 @@
                 <v-icon class="mr-2"> mdi-download </v-icon>
                 Coming Soon
               </v-btn>
-             
             </div>
           </v-col>
         </v-row>
@@ -292,7 +291,16 @@
           : this.products.data.slice().sort((a, b) => b.product_info.price - a.product_info.price);
       },
     },
-    watch: {},
+    watch: {
+      selectedCategory() {
+        console.log('Execute');
+        //Filter on backend 
+        // this.sortedProducts.slice().filter((product) => {
+        //   console.log(this.selectedCategory.includes(product.product_info.category_id))
+        //   return this.selectedCategory.includes(product.product_info.category_id);
+        // });
+      },
+    },
   };
 </script>
 <style>

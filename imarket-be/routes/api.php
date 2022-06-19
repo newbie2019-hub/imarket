@@ -51,22 +51,22 @@ Route::middleware('api')->group(function () {
 
         Route::post('update-profile', 'updateProfileImg');
         Route::post('remove-profile', 'deleteProfileImg');
+    });    
 
-        Route::prefix('admin')->group(function () {
-            Route::apiResource('archived-users', AdminArchivedUserController::class);
-            Route::apiResource('users', AdminUserController::class);
-            
-            Route::apiResource('dashboard', AdminDashboardController::class);
-            Route::apiResource('archived-category', AdminArchivedCategoryController::class);
-            Route::apiResource('category', AdminCategoryController::class);
-            
-            Route::apiResource('archived-stores', AdminArchivedStoreController::class);
-            Route::put('store/{store}', [AdminStoreController::class, 'approveStore']);
-            Route::apiResource('stores', AdminStoreController::class);
-            
-            Route::apiResource('archived-products', AdminArchivedProductController::class);
-            Route::apiResource('products', AdminProductController::class);
-        });
+    Route::prefix('admin')->group(function () {
+        Route::apiResource('archived-users', AdminArchivedUserController::class);
+        Route::apiResource('users', AdminUserController::class);
+        
+        Route::apiResource('dashboard', AdminDashboardController::class);
+        Route::apiResource('archived-category', AdminArchivedCategoryController::class);
+        Route::apiResource('category', AdminCategoryController::class);
+        
+        Route::apiResource('archived-stores', AdminArchivedStoreController::class);
+        Route::put('store/{store}', [AdminStoreController::class, 'approveStore']);
+        Route::apiResource('stores', AdminStoreController::class);
+        
+        Route::apiResource('archived-products', AdminArchivedProductController::class);
+        Route::apiResource('products', AdminProductController::class);
     });
 
     Route::apiResource('categories', CategoryController::class);

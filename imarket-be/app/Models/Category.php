@@ -12,8 +12,7 @@ class Category extends Model
 {
     use HasFactory, SoftDeletes, CascadeSoftDeletes;
 
-
-    protected $cascadeDeletes = ['product'];
+    protected $cascadeDeletes = ['products'];
     protected $guarded = [];
 
     protected $casts = [
@@ -26,7 +25,7 @@ class Category extends Model
         return $date->format('Y-m-d h:i A');
     }
 
-    public function product(){
+    public function products(){
         return $this->hasMany(ProductInfo::class, 'category_id', 'id')->withTrashed();
     }
 }
