@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Partner;
 use App\Models\Store;
 use App\Models\User;
+use App\Models\UserAddress;
 use App\Models\UserInfo;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -17,7 +18,6 @@ class PartnershipController extends Controller
         $partner = Partner::create([
             'user_id' => $user->id,
             'request_date' => Carbon::now(),
-            'status' => 'Pending'
         ]);
 
         $store = Store::create([
@@ -40,14 +40,27 @@ class PartnershipController extends Controller
         $userinfo = UserInfo::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
-            'address' => $data['address'],
             'gender' => $data['gender'],
             'contact_number' => $data['contact_number'],
             'birthday' => $data['birthday'],
         ]);
 
+
+        $userAddress = UserAddress::create([
+            'lat' => $data['lat'],
+            'lng' => $data['lng'],
+            'street_number' => $data['street_number'],
+            'route' => $data['route'],
+            'adminstrative_area_level_2' => $data['adminstrative_area_level_2'],
+            'adminstrative_area_level_1' => $data['adminstrative_area_level_1'],
+            'locality' => $data['locality'],
+            'country' => $data['country'],
+            'formatted_address' => $data['address'],
+        ]);
+
         $user = User::create([
             'user_info_id' => $userinfo->id,
+            'user_address_id' => $userAddress->id,
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);

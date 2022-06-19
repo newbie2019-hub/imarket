@@ -299,6 +299,13 @@ p.text-h5.font-rubik {
  /* position: absolute; */
 }
 
+#chart {
+ max-width: 760px;
+ margin: 20px auto;
+ overflow-x: scroll;
+ overflow-y: hidden;
+}
+
 .upload-image-logo {
  position: absolute;
  bottom: 12px;

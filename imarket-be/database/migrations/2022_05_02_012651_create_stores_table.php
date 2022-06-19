@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('week_end_opening');
             $table->string('week_end_closing');
             $table->string('status'); 
-            $table->string('opening_status'); 
+            // $table->string('opening_status'); 
             $table->softDeletes();
             $table->timestamps();
         });

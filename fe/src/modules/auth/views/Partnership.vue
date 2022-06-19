@@ -68,6 +68,8 @@
                       auto-grow
                       hide-details="auto"
                       label="Address"
+                      readonly
+                      @click.prevent="showAddressEdit = true"
                       required
                       outlined
                     ></v-textarea>
@@ -235,6 +237,7 @@
           </v-stepper>
         </v-col>
       </v-row>
+      <set-address v-show="showAddressEdit" @close="showAddressEdit = false" :showModal="showAddressEdit" @address="setAddress"/>
     </v-container>
   </div>
 </template>
@@ -242,14 +245,16 @@
   import Navbar from '@/views/components/Navbar.vue';
   import { rules } from '@/assets/js/rules.js';
   import { birthdate } from '@/assets/js/utilities.js';
+  import SetAddress from './components/SetAddress.vue'
   export default {
-    components: { Navbar },
+    components: { Navbar, SetAddress },
     mixins: [rules, birthdate],
     data: () => ({
       valid: true,
       step: 1,
       menu: false,
       date: null,
+      showAddressEdit: false,
       data: {
         email: '',
         password: '',
@@ -275,6 +280,17 @@
       this.maxDate();
     },
     methods: {
+      setAddress(e){
+          this.data.street_number = e.street_number;
+          this.data.route = e.route;
+          this.data.locality = e.locality;
+          this.data.adminstrative_area_level_2 = e.adminstrative_area_level_2;
+          this.data.adminstrative_area_level_1 = e.adminstrative_area_level_1;
+          this.data.country = e.country;
+          this.data.lng = e.lng;
+          this.data.lat = e.lat;
+          this.data.address = e.address;
+      },
       async register() {
         const valid = this.$refs.form.validate();
 

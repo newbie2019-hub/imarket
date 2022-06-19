@@ -105,15 +105,26 @@
         <v-col cols="12" sm="12" md="6" lg="5" xl="5">
           <v-card elevation="1" class="pa-5">
             <v-data-table :footer-props="{ disableItemsPerPage: true }" :headers="headers" :items="latestProducts" :items-per-page="5" class="elevation-0">
+              <template v-slot:item.product_info.name="{ item }">
+                <v-layout align-center class="pt-3 pb-3">
+                  <v-avatar class="ma-0" size="45" color="primary" tile>
+                    <img class="cursor-pointer" v-if="item.product_info.image" :src="`http://127.0.0.1:8000/images/products/${item.product_info.image}`" />
+                    <p v-else class="white--text font-weight-bold mb-0">{{ item.product_info.name[0] }}</p>
+                  </v-avatar>
+                  <p class="mb-0 ml-3">{{ item.product_info.name }}</p>
+                </v-layout>
+              </template>
               <template v-slot:item.orders_sum_quantity="{ item }">
-                <p>{{item.orders_sum_quantity ? item.orders_sum_quantity : '0'}}</p>
+                <p>{{ item.orders_sum_quantity ? item.orders_sum_quantity : '0' }}</p>
               </template>
             </v-data-table>
           </v-card>
         </v-col>
         <v-col cols="12" sm="12" md="6" lg="7" xl="7">
           <v-card class="h-100 pa-5" elevation="1">
-            <v-row justify="center" align="center" class="h-100"> Chart Goes Here </v-row>
+            <v-row justify="center" align="center" class="h-100">
+              <area-chart :data="areaChart"/>
+            </v-row>
           </v-card>
         </v-col>
       </v-row>
@@ -121,27 +132,23 @@
     <div class="mt-15">
       <p class="text-h5 font-weight-bold mt-4 custom-primary-color mb-0">Latest Transaction</p>
       <p>Here are your latest transactions for this day</p>
-      <latest-transactions :data="latestTransactions"/>
+      <latest-transactions :data="latestTransactions" />
     </div>
   </div>
 </template>
 <script>
   import { mapState } from 'vuex';
   import { formatNumeric } from '@/assets/js/utilities.js';
-  import LatestTransactions from '../components/LatestTransactions.vue' 
+  import LatestTransactions from '../components/LatestTransactions.vue';
+  import AreaChart from '../components/AreaChart.vue'
   export default {
     mixins: [formatNumeric],
-    components: { LatestTransactions },
+    components: { LatestTransactions, AreaChart },
     data: () => ({
       headers: [
-        {
-          text: 'ID',
-          align: 'start',
-          value: 'id',
-        },
         { text: 'Product', value: 'product_info.name' },
-        { text: 'Available', value: 'product_info.quantity'},
-        { text: 'Sold', value: 'orders_sum_quantity'},
+        { text: 'Available', value: 'product_info.quantity' },
+        { text: 'Sold', value: 'orders_sum_quantity' },
         // { text: 'Sold', value: 'orders_sum_quantity'},
       ],
     }),
@@ -151,7 +158,7 @@
     methods: {},
     computed: {
       ...mapState('auth', ['user']),
-      ...mapState('adminDashboard', ['latestProducts', 'dashboardSummary', 'latestTransactions']),
+      ...mapState('adminDashboard', ['latestProducts', 'dashboardSummary', 'latestTransactions', 'areaChart']),
     },
   };
 </script>

@@ -11,19 +11,16 @@ export default {
    todaysOrderCount: 0,
    userCount: 0,
   },
+  areaChart: [],
   latestTransactions: [
-   
+
   ]
  },
  getters: {
  },
  mutations: {
   SET_PRODUCTS(state, payload) {
-   // 'productsCount' => $productCount,
-   // 'storeCount' => $storeCount,
-   // 'categCount' => $categCount,
-   // 'todaysOrderCount' => $todaysOrder,
-   // 'userCount' => $userCount
+   console.log(payload)
    state.dashboardSummary.productCount = payload.productsCount
    state.dashboardSummary.storeCount = payload.storeCount
    state.dashboardSummary.todaysOrderCount = payload.todaysOrderCount
@@ -31,6 +28,7 @@ export default {
    state.dashboardSummary.userCount = payload.userCount
    state.latestProducts = payload.latestProducts
    state.latestTransactions = payload.latestTransactions
+   state.areaChart = payload.areaChart
   },
 
  },

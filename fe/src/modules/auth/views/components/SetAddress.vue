@@ -45,7 +45,7 @@
         lat: 12.8797,
         lng: 121.774,
       },
-      zoom: 9,
+      zoom: 15,
       settingAddress: false,
     }),
     props: {
@@ -115,9 +115,9 @@
           this.data.lat = marker.lat;
           this.data.address = loc.formatted_address;
         }
-        
         this.center = marker;
-        await this.calculateDistanceMatrix()
+
+        // await this.calculateDistanceMatrix()
       },
       addLocationMarker(e) {
         const marker = {
@@ -137,12 +137,8 @@
         });
       },
       async setUserAddress() {
-        this.settingAddress = true;
-        const { status, data } = await this.$store.dispatch('auth/updateAddress', this.data);
-        await this.$store.dispatch('auth/checkUser');
-        this.toastData(status, data);
-        this.settingAddress = false;
         this.calculateDistanceMatrix()
+        this.$emit('address', this.data)
         this.close();
       },
       async calculateDistanceMatrix() {

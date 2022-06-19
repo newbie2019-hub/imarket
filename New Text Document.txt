@@ -1,4 +1,7 @@
 To-Do
+Dashboard - Add chart [x]
+Fix address on partnership [x]
+removed entity on database store [x]
 Dashboard Fix - Add Latest Transactions [x]
 product info should be restored upon restoration of store [x]
 Fix market related product clickable functionality [x]
@@ -22,10 +25,9 @@ Store Management
   - Add formatNumeric on Card Summary [x]
   - Fix Archiving a store [x]
   - Fix restore store with products [x]
-  - Add card for viewing store info
   - Add count of total products from store [x]
   - Format Time and Date on store archive [x]
-  - Add a view store option for redirecting to the store (New Page of store with its products) 
+  - Add a view store option for redirecting to the store (New Page of store with its products) [x]
 User Magement
   - Removed update button as it is 
     against the privacy of users [x]
@@ -33,7 +35,7 @@ User Magement
   - Viewing of User - Create card [x]
 Add Option for selecting as to what products should be checked out
 Edit of Qty on Checkout section [x]
-Add changing of password on admin section
+Add changing of password on admin section [x]
 Viewing of Product - Create card
 Partner Section
 Orders Section

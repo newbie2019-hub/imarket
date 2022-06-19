@@ -34,7 +34,7 @@ class StoreFactory extends Factory
             'banner_image' => $this->faker->image(public_path('images/banners'), 640, 480, false),
             'status' => $this->faker->randomElement(['For Approval', 'Approved']),
             // 'status' => $partner->status == 'For Approval' ? 'For Approval' : 'Approved',
-            'opening_status' => $this->faker->randomElement(['Automatic', 'Open', 'Closed'])
+            // 'opening_status' => $this->faker->randomElement(['Automatic', 'Open', 'Closed'])
         ];
     }
 }

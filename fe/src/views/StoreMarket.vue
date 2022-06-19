@@ -3,9 +3,7 @@
     <page-loading v-show="initialLoading" :msg="'Retrieving data of the store. Please wait...'" />
     <navbar />
     <v-container class="mt-15">
-      <v-layout class="mt-15">
-        <search-product />
-      </v-layout>
+      <search-product />
       <v-layout class="" column>
         <div class="store-preview">
           <v-img :src="`http://127.0.0.1:8000/images/banners/${selectedStore.store.banner_image}`" class="store-preview--image"></v-img>
@@ -139,8 +137,8 @@
       isCartLoading: false,
       btnLoading: false,
       data: {
-        id: ''
-      }
+        id: '',
+      },
     }),
     async mounted() {
       if (this.$route.params.id == null) {
@@ -183,7 +181,7 @@
     },
     computed: {
       ...mapState('market', ['selectedStore']),
-      ...mapState('auth', ['user'])
+      ...mapState('auth', ['user']),
     },
   };
 </script>
