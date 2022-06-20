@@ -2,6 +2,7 @@ To-Do
 Dashboard - Add chart [x]
 Fix address on partnership [x]
 Signup for Rider
+product tags [x]
 Seeder for Rider User [x]
 Rider Section Archived and Non-Archived[x]
 removed entity on database store [x]
