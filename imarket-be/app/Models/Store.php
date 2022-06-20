@@ -15,15 +15,18 @@ class Store extends Model
 
     protected $cascadeDeletes = ['products'];
 
-    public function partner(){
+    public function partner()
+    {
         return $this->belongsTo(Partner::class, 'partner_id', 'id');
     }
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function products(){
+    public function products()
+    {
         return $this->hasMany(Product::class, 'store_id', 'id')->withTrashed();
     }
 

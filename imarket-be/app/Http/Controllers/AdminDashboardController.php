@@ -31,6 +31,7 @@ class AdminDashboardController extends Controller
             'categCount' => Category::count(),
             'todaysOrderCount' => Order::whereDate('created_at', now())->count(),
             'userCount' => User::where('id', '<>', auth()->user()->id)->count(),
+            'ridersCount' => User::role('Rider')->where('id', '<>', auth()->user()->id)->count(),
             'latestTransactions' => Order::with(['content.product.product_info', 'buyer:id,first_name,last_name'])->whereDate('created_at', '<=', now()->addDays(3))->get(),
             'areaChart' => $areaChart
         ]);

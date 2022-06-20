@@ -10,6 +10,7 @@ export default {
    categoryCount: 0,
    todaysOrderCount: 0,
    userCount: 0,
+   ridersCount: 0,
   },
   areaChart: [],
   latestTransactions: [
@@ -26,6 +27,7 @@ export default {
    state.dashboardSummary.todaysOrderCount = payload.todaysOrderCount
    state.dashboardSummary.categCount = payload.categoryCount
    state.dashboardSummary.userCount = payload.userCount
+   state.dashboardSummary.ridersCount = payload.ridersCount
    state.latestProducts = payload.latestProducts
    state.latestTransactions = payload.latestTransactions
    state.areaChart = payload.areaChart

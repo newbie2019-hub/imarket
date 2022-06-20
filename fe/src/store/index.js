@@ -6,6 +6,7 @@ import orders from './orders'
 import products from './products'
 
 import adminUser from '../modules/admin/store/user/index'
+import adminRider from '../modules/admin/store/riders/index'
 import adminStore from '../modules/admin/store/stores/'
 import adminProduct from '../modules/admin/store/products/'
 import adminDashboard from '../modules/admin/store/dashboard/'
@@ -18,7 +19,7 @@ export default new Vuex.Store({
   mutations: {},
   actions: {},
   modules: {
-    market, orders, products, adminUser, adminStore, adminProduct, adminDashboard, adminCategory
+    market, orders, products, adminUser, adminStore, adminProduct, adminDashboard, adminCategory, adminRider
   }
 });
 

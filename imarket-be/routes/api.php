@@ -2,11 +2,13 @@
 
 use App\Http\Controllers\AdminArchivedCategoryController;
 use App\Http\Controllers\AdminArchivedProductController;
+use App\Http\Controllers\AdminArchivedRiderController;
 use App\Http\Controllers\AdminArchivedStoreController;
 use App\Http\Controllers\AdminArchivedUserController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminProductController;
+use App\Http\Controllers\AdminRiderController;
 use App\Http\Controllers\AdminStoreController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AuthenticationController;
@@ -54,6 +56,9 @@ Route::middleware('api')->group(function () {
     });    
 
     Route::prefix('admin')->group(function () {
+        Route::apiResource('archived-riders', AdminArchivedRiderController::class);
+        Route::apiResource('riders', AdminRiderController::class);
+
         Route::apiResource('archived-users', AdminArchivedUserController::class);
         Route::apiResource('users', AdminUserController::class);
         

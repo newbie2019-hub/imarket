@@ -14,7 +14,7 @@ class ProductController extends Controller
     }
 
     public function index(){
-        $product = Product::whereRelation('store.partner', 'user_id', auth()->user()->id)->with(['product_info:id,name,category_id,price,image,quantity,description', 'product_info.category:id,category'])->latest()->get();
+        $product = Product::whereRelation('store.partner', 'user_id', auth()->user()->id)->with(['tags:id,product_id,tag', 'product_info:id,name,category_id,price,image,quantity,description', 'product_info.category:id,category'])->latest()->get();
         return response()->json($product);
     }
 
@@ -23,6 +23,7 @@ class ProductController extends Controller
             'store',
             'product_info:id,description,name,category_id,price,image,quantity', 
             'product_info.category:id,category', 
+            'tags:id,product_id,tag',
             'rating.user_info'])
             ->where('id', $id)
             ->withCount('rating')
@@ -33,12 +34,12 @@ class ProductController extends Controller
         ->with([
             'store',
             'product_info:id,description,name,category_id,price,image', 
-            'product_info.category:id,category'])
+            'product_info.category:id,category', 'tags:id,product_id,tag'])
             ->whereRelation('store', 'status', 'Approved')
             ->whereRelation('product_info.category', 'id', $product->product_info->category_id)
             ->latest()->take(8)->get();
 
-        $moreProducts = Product::where('id', '<>', $product->id)->with(['store','product_info:id,description,name,category_id,price,image', 'product_info.category:id,category'])->whereRelation('store', 'status', 'Approved')->whereRelation('store', 'id', $product->store->id)->latest()->take(8)->get();
+        $moreProducts = Product::where('id', '<>', $product->id)->with(['store','product_info:id,description,name,category_id,price,image', 'product_info.category:id,category', 'tags:id,product_id,tag'])->whereRelation('store', 'status', 'Approved')->whereRelation('store', 'id', $product->store->id)->latest()->take(8)->get();
         return response()->json(['product' => $product, 'relatedProduct' => $relatedCategory, 'moreProducts' => $moreProducts]);
     }
 

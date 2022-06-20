@@ -1,6 +1,9 @@
 To-Do
 Dashboard - Add chart [x]
 Fix address on partnership [x]
+Signup for Rider
+Seeder for Rider User [x]
+Rider Section Archived and Non-Archived[x]
 removed entity on database store [x]
 Dashboard Fix - Add Latest Transactions [x]
 product info should be restored upon restoration of store [x]

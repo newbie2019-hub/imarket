@@ -75,7 +75,7 @@
               <v-card-title class="text-h5 font-weight-bold mb-0 pa-0 pl-4 pb-2 pt-4">Riders</v-card-title>
             </div>
             <div>
-              <p class="text-h1 pr-5 font-weight-bold mb-0">15</p>
+              <p class="text-h1 pr-5 font-weight-bold mb-0">{{dashboardSummary.ridersCount}}</p>
             </div>
           </div>
         </v-card>

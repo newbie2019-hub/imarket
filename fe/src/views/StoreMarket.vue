@@ -2,6 +2,7 @@
   <div>
     <page-loading v-show="initialLoading" :msg="'Retrieving data of the store. Please wait...'" />
     <navbar />
+    <v-layout class="mt-15"></v-layout>
     <v-container class="mt-15">
       <search-product />
       <v-layout class="" column>
@@ -17,7 +18,9 @@
             </v-avatar>
           </div>
           <v-layout column class="ml-5">
-            <h1 class="font-rubik white--text">{{ selectedStore.store.name }}</h1>
+            <v-badge class="d-inline content-fit line-height-default" offset-y="20" color="green" :content="storeRating" overlap>
+              <h1 class="font-rubik white--text d-inline">{{ selectedStore.store.name }}</h1>
+            </v-badge>
             <p class="white--text">
               <v-icon color="white"> mdi-map-marker</v-icon>
               {{ selectedStore.store.address }}
@@ -55,6 +58,7 @@
           </v-layout>
         </v-layout>
       </v-layout>
+
       <div class="mt-10 mb-3">
         <h2 class="font-weight-bold mb-0">Store Products</h2>
         <p class="mb-8 grey--text">Here are the products from this store</p>
@@ -182,6 +186,19 @@
     computed: {
       ...mapState('market', ['selectedStore']),
       ...mapState('auth', ['user']),
+      storeRating() {
+        let rating = 0;
+        let notCounted = 0;
+        this.selectedStore.products.map((product) => {
+          if (product.rating_count != 0) {
+            rating += product.rating_avg_rating;
+          } else {
+            notCounted++;
+          }
+        });
+
+        return rating / (this.selectedStore.products.length - notCounted);
+      },
     },
   };
 </script>

@@ -4,7 +4,7 @@
     <v-layout class="mt-15"></v-layout>
     <v-container class="mt-15">
       <search-product />
-      <v-row v-if="productSelected.product_info" class="mb-15 mt-8">
+      <v-row v-if="productSelected.product_info" class="mb-10 mt-8">
         <v-col cols="12" sm="12" md="7" lg="6">
           <v-img max-height="46 0" :src="`http://127.0.0.1:8000/images/products/${productSelected.product_info.image}`"></v-img>
         </v-col>
@@ -45,9 +45,18 @@
           </v-btn>
         </v-col>
       </v-row>
-
+      <v-row class="mb-12">
+        <v-col class="" cols="10" sm="12" md="7" lg="12">
+          <h2>Product Tags</h2>
+          <v-layout d-flex wrap >
+            <div class="lh-xsmall" v-for="(tags, i) in productSelected.tags" :key="i + 20">
+              <v-chip class="mt-2 mr-1" color="gray"> {{ tags.tag }} </v-chip>
+            </div>
+          </v-layout>
+        </v-col>
+      </v-row>
       <v-row class="mb-15">
-        <v-col class="" cols="12" sm="12" md="7" lg="8">
+        <v-col class="" cols="12" sm="12" md="10" lg="8">
           <h2 class="font-rubik text-uppercase" :class="{ 'mb-10': productSelected.rating > 0 }">Reviews</h2>
           <h4 class="font-rubik font-weight-regular mt-2" v-if="productSelected.rating == 0">No reviews for this product yet. Buy now so you can make a review for this product</h4>
           <v-layout d-flex class="mt-5" v-for="(rating, i) in productSelected.rating" :key="i">

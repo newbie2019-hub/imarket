@@ -31,5 +31,13 @@ class UserSeeder extends Seeder
             $user->assignRole('User');
             $x++;
         }
+
+        $y = 1;
+
+        while($y <= 8){
+            $user = User::factory()->create();
+            $user->assignRole('Rider');
+            $y++;
+        }
     }
 }
